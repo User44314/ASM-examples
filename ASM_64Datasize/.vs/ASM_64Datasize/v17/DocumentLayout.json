@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\alexB\\source\\repos\\ASM_64Datasize\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{57ACAAD9-70E9-447E-89A9-FA04B3DBDBA7}|ASM_64Datasize\\ASM_64Datasize.vcxproj|C:\\Users\\alexB\\source\\repos\\ASM_64Datasize\\ASM_64Datasize\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{57ACAAD9-70E9-447E-89A9-FA04B3DBDBA7}|ASM_64Datasize\\ASM_64Datasize.vcxproj|solutionrelative:ASM_64Datasize\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.asm",
+              "DocumentMoniker": "C:\\Users\\alexB\\source\\repos\\ASM_64Datasize\\ASM_64Datasize\\main.asm",
+              "RelativeDocumentMoniker": "ASM_64Datasize\\main.asm",
+              "ToolTip": "C:\\Users\\alexB\\source\\repos\\ASM_64Datasize\\ASM_64Datasize\\main.asm",
+              "RelativeToolTip": "ASM_64Datasize\\main.asm",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-10-09T17:36:23.854Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
