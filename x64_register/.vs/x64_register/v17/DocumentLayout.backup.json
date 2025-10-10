@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\alexB\\source\\repos\\x64_register\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F032497C-F6BC-46C9-8BFF-D39FE221E239}|x64_register\\x64_register.vcxproj|C:\\Users\\alexB\\source\\repos\\x64_register\\x64_register\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{F032497C-F6BC-46C9-8BFF-D39FE221E239}|x64_register\\x64_register.vcxproj|solutionrelative:x64_register\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.asm",
+              "DocumentMoniker": "C:\\Users\\alexB\\source\\repos\\x64_register\\x64_register\\main.asm",
+              "RelativeDocumentMoniker": "x64_register\\main.asm",
+              "ToolTip": "C:\\Users\\alexB\\source\\repos\\x64_register\\x64_register\\main.asm",
+              "RelativeToolTip": "x64_register\\main.asm",
+              "ViewState": "AgIAABMAAAAAAAAAAAArwBgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-10-10T14:47:55.123Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
