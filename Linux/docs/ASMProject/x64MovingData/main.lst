@@ -995,60 +995,73 @@
     14 00000037 2222                    	someWord		dw	2222h
     15 00000039 33333333                	someDWord		dd	33333333h
     16 0000003D 4444444444444444        	someQWord		dq	4444444444444444h
-    17                                  
-    18                                  SECTION .bss
+    17                                  	
+    18                                  	
     19                                  
-    20                                  SECTION     .text
-    21                                  	global      _start
-    22                                  
-    23                                  _start:
-    24 00000000 90                      	nop
-    25                                  	
-    26 00000001 68[00000000]                push	openPrompt
-    27 00000006 E8(00000000)                call	PrintString
-    28 0000000B E8(00000000)                call	Printendl
-    29                                      
-    30                                      ;moving memory into register
-    31 00000010 B800000000                  mov		rax,0h
-    32 00000015 8A0425[36000000]            mov		al, [someByte]
-    33                                      ;movzx		rax, BYTE [someByte]   ;mov		rax, [someByte]
+    20                                  SECTION .bss
+    21 00000000 ????????????????        	somePointer		resq	1
+    22                                  SECTION     .text
+    23                                  	global      _start
+    24                                  
+    25                                  _start:
+    26 00000000 90                      	nop
+    27                                  	
+    28 00000001 68[00000000]                push	openPrompt
+    29 00000006 E8(00000000)                call	PrintString
+    30 0000000B E8(00000000)                call	Printendl
+    31                                      
+    32 00000010 48BE-                       mov		rsi,	someByte
+    32 00000012 [3600000000000000] 
+    33 0000001A 48893425[00000000]          mov		[somePointer], rsi
     34                                      
-    35                                      ;[]around a memory label 
-    36                                      ;means go get the dataa (dereferencing)
-    37                                      ;without the [], it will put the addresss 
-    38                                      ;of the label into the register
-    39                                      
+    35                                      ;windows method
+    36                                      ;mov		rsi, OFFSET someByte
+    37                                      ;mov		[somePointer], rsi
+    38                                      
+    39 00000022 48890425[3D000000]          mov		[someQWord], rax
     40                                      
     41                                      
-    42                                      
-    43                                      ;moving leterals to registers
-    44 0000001C B843000000                  mov		rax, 01000011b
-    45 00000021 B823010000                  mov		eax, 123h
-    46 00000026 66B85500                    mov		ax,	55h
-    47 0000002A B032                        mov 	al, 32h
-    48 0000002C B412                        mov		ah, 12h
-    49 0000002E B041                        mov		al, 'A'
-    50                                      
-    51                                      ;moving between registers
-    52 00000030 4989C0                      mov		r8, rax
-    53 00000033 4C89C1                      mov 	rcx, r8
-    54 00000036 480FB6C8                    movzx	rcx, al		;movzx - move zero extend moving something smaller 
-    55                                  						;into some bigger amd make all of teh more signnificat bits zeros Used for unsiggned data
-    56                                  
-    57 0000003A B800000000              	mov		rax, 0h
-    58 0000003F B0F4                    	mov		al, -12
-    59 00000041 480FB6C8                	movzx	rcx, al  ;use sign number
-    60 00000045 480FBEC8                	movsx	rcx,al		;use unsign number
-    61                                  	
-    62 00000049 68[16000000]                push	closePrompt			;The prompt address - argument #1
-    63 0000004E E8(00000000)                call  	PrintString
-    64 00000053 E8(00000000)                call  	Printendl
-    65                                      
-    66 00000058 90                          nop
-    67                                  ;
-    68                                  ;Setup the registers for exit and poke the kernel
-    69                                  ;Exit: 
-    70                                  Exit:
-    71 00000059 B83C000000              	mov		rax, 60					;60 = system exit
-    72 0000005E BF00000000              	mov		rdi, 0					;0 = return code
-    73 00000063 0F05                    	syscall							;Poke the kernel
+    42                                      ;moving memory into register
+    43 0000002A B800000000                  mov		rax,0h
+    44 0000002F 8A0425[36000000]            mov		al, [someByte]
+    45                                      ;movzx		rax, BYTE [someByte]   ;mov		rax, [someByte]
+    46                                      
+    47                                      ;[]around a memory label 
+    48                                      ;means go get the dataa (dereferencing)
+    49                                      ;without the [], it will put the addresss 
+    50                                      ;of the label into the register
+    51                                      
+    52                                      
+    53                                      
+    54                                      
+    55                                      ;moving leterals to registers
+    56 00000036 B843000000                  mov		rax, 01000011b
+    57 0000003B B823010000                  mov		eax, 123h
+    58 00000040 66B85500                    mov		ax,	55h
+    59 00000044 B032                        mov 	al, 32h
+    60 00000046 B412                        mov		ah, 12h
+    61 00000048 B041                        mov		al, 'A'
+    62                                      
+    63                                      ;moving between registers
+    64 0000004A 4989C0                      mov		r8, rax
+    65 0000004D 4C89C1                      mov 	rcx, r8
+    66 00000050 480FB6C8                    movzx	rcx, al		;movzx - move zero extend moving something smaller 
+    67                                  						;into some bigger amd make all of teh more signnificat bits zeros Used for unsiggned data
+    68                                  
+    69 00000054 B800000000              	mov		rax, 0h
+    70 00000059 B0F4                    	mov		al, -12
+    71 0000005B 480FB6C8                	movzx	rcx, al  ;use sign number
+    72 0000005F 480FBEC8                	movsx	rcx,al		;use unsign number
+    73                                  	
+    74 00000063 68[16000000]                push	closePrompt			;The prompt address - argument #1
+    75 00000068 E8(00000000)                call  	PrintString
+    76 0000006D E8(00000000)                call  	Printendl
+    77                                      
+    78 00000072 90                          nop
+    79                                  ;
+    80                                  ;Setup the registers for exit and poke the kernel
+    81                                  ;Exit: 
+    82                                  Exit:
+    83 00000073 B83C000000              	mov		rax, 60					;60 = system exit
+    84 00000078 BF00000000              	mov		rdi, 0					;0 = return code
+    85 0000007D 0F05                    	syscall							;Poke the kernel

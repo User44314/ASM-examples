@@ -1,0 +1,106 @@
+AARCH64 GAS  main.asm 			page 1
+
+
+   1              	/* ARM 64-bit assembly template */
+   2              	
+   3              	.section .data
+   4 0000 48656C6C 	msg:	.ascii "Hello, ARM64!\n"
+   4      6F2C2041 
+   4      524D3634 
+   4      210A
+   5              	len = . - msg
+   6              	
+   7 000e 12       	aByte:	.byte 18
+   8 000f FF       	aByte2:	.byte 0xff
+   9              	
+  10              	/* byte =1 byte, half-world = 2 bytes, word = 4 bytes, double-world = 8 bytes */
+  11              	
+  12 0010 FFFF     	aHWord:		.hword 0xffff
+  13 0012 1600     	aHWord2:	.hword 22
+  14              	
+  15 0014 FFFFFFFF 	aWord:	.word	0xffffffff
+  16              	
+  17 0018 22000000 	aDWord:	.dword	34
+  17      00000000 
+  18 0020 5678FF00 	aDWord2:	.dword	0xff7856
+  18      00000000 
+  19              	
+  20              	/*floating points */
+  21              	
+  22 0028 B757     	float16b: .float16 123.45  /*16bit float*/
+  23 002a BAE9F642 	float32b:	.float 123.4565  /*32bit float*/
+  24 002e E27A3F2E 	float64b: .double 123.445567667 /*64bit float*/
+  24      84DC5E40 
+  25              	
+  26              	/*strings*/
+  27              	
+  28 0036 68656C6C 	someStrings: .ascii	"hello hi", /*not a null terminated string*/
+  28      6F206869 
+  29 003e 68656C6C 	someStrings2: .asciz	"hello alex" /*null terminated string*/
+  29      6F20616C 
+  29      657800
+  30              	
+  31 0049 00000000 	array1:	.skip 50  /*array 50 bytes*/
+  31      00000000 
+  31      00000000 
+  31      00000000 
+  31      00000000 
+  32 007b 0A000000 	array2:	.word	10, 20, 30 ,40, 50
+  32      14000000 
+  32      1E000000 
+  32      28000000 
+  32      32000000 
+  33 008f 0A14411E 	array3: .byte	10, 20, 'A', 30
+  34              	
+  35              	
+  36              	.section .bss
+  37              	
+  38              	.section .text
+  39              	.global _start
+  40              	
+AARCH64 GAS  main.asm 			page 2
+
+
+  41              	_start:
+  42              	/* syscall write(int fd, const void *buf, size_t count) */
+  43 0000 200080D2 	    mov x0, #1     
+  44 0004 E1000058 	    ldr x1, =msg 
+  45 0008 02010058 	    ldr x2, =len 
+  46 000c 08088052 	    mov w8, #64 
+  47 0010 010000D4 	    svc #0
+  48              	
+  49              	/* syscall exit(int status) */
+  50 0014 000080D2 	    mov x0, #0 
+  51 0018 A80B8052 	    mov w8, #93 
+  52 001c 010000D4 	    svc #0
+  53 0020 00000000 	
+  53      00000000 
+  53      0E000000 
+  53      00000000 
+AARCH64 GAS  main.asm 			page 3
+
+
+DEFINED SYMBOLS
+            main.asm:4      .data:0000000000000000 msg
+            main.asm:5      *ABS*:000000000000000e len
+            main.asm:7      .data:000000000000000e aByte
+            main.asm:8      .data:000000000000000f aByte2
+            main.asm:12     .data:0000000000000010 aHWord
+            main.asm:13     .data:0000000000000012 aHWord2
+            main.asm:15     .data:0000000000000014 aWord
+            main.asm:17     .data:0000000000000018 aDWord
+            main.asm:18     .data:0000000000000020 aDWord2
+            main.asm:22     .data:0000000000000028 float16b
+            main.asm:23     .data:000000000000002a float32b
+            main.asm:24     .data:000000000000002e float64b
+            main.asm:28     .data:0000000000000036 someStrings
+            main.asm:29     .data:000000000000003e someStrings2
+            main.asm:31     .data:0000000000000049 array1
+            main.asm:31     .data:0000000000000049 $d
+            main.asm:32     .data:000000000000007b array2
+            main.asm:33     .data:000000000000008f array3
+            main.asm:41     .text:0000000000000000 _start
+            main.asm:43     .text:0000000000000000 $x
+            main.asm:53     .text:0000000000000020 $d
+
+NO UNDEFINED SYMBOLS

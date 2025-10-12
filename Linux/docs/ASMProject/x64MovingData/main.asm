@@ -14,9 +14,11 @@ SECTION .data
 	someWord		dw	2222h
 	someDWord		dd	33333333h
 	someQWord		dq	4444444444444444h
+	
+	
 
 SECTION .bss
-
+	somePointer		resq	1
 SECTION     .text
 	global      _start
 
@@ -26,6 +28,16 @@ _start:
     push	openPrompt
     call	PrintString
     call	Printendl
+    
+    mov		rsi,	someByte
+    mov		[somePointer], rsi
+    
+    ;windows method
+    ;mov		rsi, OFFSET someByte
+    ;mov		[somePointer], rsi
+    
+    mov		[someQWord], rax
+    
     
     ;moving memory into register
     mov		rax,0h
