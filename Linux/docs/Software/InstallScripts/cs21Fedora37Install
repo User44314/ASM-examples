@@ -1,0 +1,73 @@
+#!/bin/bash
+clear
+echo "Hello There!"
+echo "This script will install all of the components you need for LPC's CS-21 Course"
+echo "Please be patient, this will update your operating system and will also install all of the necessary development tools"
+echo ""
+echo "If you are ever asked if you wish to continue, always say Yes (y)"
+echo ""
+echo "You should have begun this script like this:  sudo cs21Fedora34Install"
+echo ""
+echo "If you did not, press <CONTROL> <C> on your keyboard and start it correctly.  The password is password"
+read -p "Press the ENTER key to continue ==> " theID
+if [ "$EUID" -ne 0 ]
+  then echo "Please restart with the command sudo cs21Fedora37Install"
+  exit
+fi
+sudo yum update -y
+echo "Pausing for 45 seconds to assure updates take effect"
+sleep 45s
+sudo yum groupinstall "Development Tools" -y
+sudo yum install nasm -y
+sudo yum install gnome-tweak-tool -y
+sudo yum install ddd -y
+sudo yum install kdbg -y
+sudo yum install gfortran -y
+sudo yum install gnucobol -y
+sudo yum install vim -y
+sudo yum install gitg -y
+sudo yum install gitk -y
+sudo yum install g++ -y
+sudo yum install geany -y
+sudo yum install ghex -y
+sudo yum install valgrind -y
+sudo yum install kompare -y
+sudo yum install kdiff3 -y
+sudo yum install sqlite-devel -y
+sudo yum install sqlite-tcl -y
+sudo yum install sqlitebrowser -y
+sudo yum install golang -y
+sudo yum install luckybackup -y
+sudo yum install htop -y
+sudo yum install remmina -y
+sudo yum install community-mysql-server -y
+sudo yum install cool-retro-term -y
+sudo yum insall python3-pip -y
+pip3 install mysql-connector-python
+sudo yum install python3-idle -y
+cd /home/linuxuser/Downloads
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/eclipsePortable.tar.gz
+chown linuxuser:linuxuser *
+tar -xvf ./eclipsePortable.tar.gz
+sudo mv ./eclipse/ /opt
+sudo cp /opt/eclipse/eclipse.desktop /usr/share/applications
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/jetbrains-toolbox-1.20.8804.tar.gz
+tar -xvf ./jetbrains-toolbox-1.20.8804.tar.gz
+chown -R linuxuser:linuxuser *
+mv ./jetbrains-toolbox-1.20.8804/* /home/linuxuser/Documents
+mkdir /home/linuxuser/Documents/ASMProjs
+chown linuxuser:linuxuser /home/linuxuser/Documents/ASMProjs
+cd /home/linuxuser/Documents/ASMProjs
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/LinuxASM32bitFunctionsTemplate.zip
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/LinuxASM32bitTemplate.zip
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/LinuxASM64bitFunctionsTemplate.zip
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/LinuxASM64bitTemplate.zip
+chown linuxuser:linuxuser *
+
+echo ""
+echo ""
+echo "Your virtual machine will now be re-started to enable any updated changes"
+echo "After that happens, it is recommended that you shut it down, then take a VMWare snapshot of the operating system to save your changes"
+read -p "Press the ENTER key to continue ==> " theID
+sudo reboot
+

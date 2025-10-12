@@ -1,0 +1,86 @@
+#!/bin/bash
+clear
+echo "Hello There!"
+echo "This script will install all of the components you need for LPC's CS-21 Course"
+echo "Please be patient, this will update your operating system and will also install all of the necessary development tools"
+echo ""
+echo "If you are ever asked if you wish to continue, always say Yes (y)"
+echo ""
+echo "You should have begun this script like this:  sudo cs21Fedora38Install"
+echo ""
+echo "If you did not, press <CONTROL> <C> on your keyboard and start it correctly.  The password is password"
+read -p "Press the ENTER key to continue ==> " theID
+if [ "$EUID" -ne 0 ]
+  then echo "Please restart with the command sudo cs21Fedora38Install"
+  exit
+fi
+sudo dnf check-update
+sudo dnf install vim
+sudo dnf groupinstall "Development Tools" -y
+sudo dnf install nasm -y
+sudo dnf install gnome-tweak-tool -y
+sudo dnf install ddd -y
+sudo dnf install kdbg -y
+sudo dnf install gfortran -y
+sudo dnf install gnucobol -y
+sudo dnf install gitg -y
+sudo dnf install gitk -y
+sudo dnf install g++ -y
+sudo dnf install geany -y
+sudo dnf install ghex -y
+sudo dnf install valgrind -y
+sudo dnf install kompare -y
+sudo dnf install kdiff3 -y
+sudo dnf install sqlite-devel -y
+sudo dnf install sqlite-tcl -y
+sudo dnf install sqlitebrowser -y
+sudo dnf install golang -y
+sudo dnf install luckybackup -y
+sudo dnf install htop -y
+sudo dnf install remmina -y
+sudo dnf install community-mysql-server -y
+sudo dnf install cool-retro-term -y
+sudo dnf install python3-pip -y
+pip3 install mysql-connector-python
+sudo dnf install python3-idle -y
+sudo dnf install qemu-user -y
+
+#
+# For Cross-Compileing ARM
+# Doesn't really work on fedcora
+# 
+sudo dnf install binutils-aarch64-linux-gnu.x86_64 -y
+sudo dnf install gcc-aarch64-linux-gnu.x86_64 -y
+sudo dnf install qemu-system-aarch64.x86_64 -y
+sudo dnf install qemu-system-aarch64-core.x86_64 -y
+sudo dnf install qemu-user-static-aarch64.x86_64 -y
+sudo dnf install gcc-arm-linux-gnu.x86_64 -y
+sudo dnf install arm-none-eabi-*
+#
+
+sudo dnf install -y terminator
+
+cd /home/linuxuser/Downloads
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/eclipsePortable.tar.gz
+chown linuxuser:linuxuser *
+tar -xvf ./eclipsePortable.tar.gz
+sudo mv ./eclipse/ /opt
+sudo cp /opt/eclipse/eclipse.desktop /usr/share/applications
+mkdir /home/linuxuser/Documents/ASMProjs
+chown linuxuser:linuxuser /home/linuxuser/Documents/ASMProjs
+cd /home/linuxuser/Documents/ASMProjs
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/LinuxASM32bitFunctionsTemplate.zip
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/LinuxASM32bitTemplate.zip
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/LinuxASM64bitFunctionsTemplate.zip
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/LinuxASM64bitTemplate.zip
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/LinuxARM32bitTemplate.zip
+wget https://thekomanetskys.com/LasPositas/Courses/CS21/software/LinuxARM64bitTemplate.zip
+chown linuxuser:linuxuser *
+
+echo ""
+echo ""
+echo "Your virtual machine will now be re-started to enable any updated changes"
+echo "After that happens, it is recommended that you shut it down, then take a VMWare snapshot of the operating system to save your changes"
+read -p "Press the ENTER key to continue ==> " theID
+sudo reboot
+

@@ -1,0 +1,124 @@
+#!/bin/bash
+clear
+echo "Hello There!"
+echo "This script will install all of the components you need for LPC's CS-21 Course"
+echo "Please be patient, this will update your operating system and will also install all of the necessary development tools"
+echo ""
+echo "If you are ever asked if you wish to continue, always say Yes (y)"
+echo ""
+echo "You should have begun this script like this:  sudo cs21Ubuntu23Install"
+echo ""
+echo "If you did not, press <CONTROL> <C> on your keyboard and start it correctly.  The password is password"
+read -p "Press the ENTER key to continue ==> " theID
+if [ "$EUID" -ne 0 ]
+  then echo "Please restart with the command sudo cs21Mint22Install"
+  exit
+fi
+sudo apt update
+sudo apt upgrade -y
+sudo apt autoremove -y
+echo "Pausing for 45 seconds to assure updates take effect"
+sleep 20s
+sudo apt install -y build-essential
+sudo apt install -y g++
+sudo apt install -y gcc-multilib g++-multilib
+sudo apt install -y gfortran
+sudo apt install -y nasm
+sudo apt install -y ddd
+sudo apt install -y vim
+sudo apt install -y vim-gnome
+sudo apt install -y geany
+sudo apt install -y geany-plugins
+sudo apt install -y ghex
+sudo apt install -y git
+sudo apt install -y gitg
+sudo apt install -y gitk
+sudo apt install -y valgrind
+sudo apt install -y sqlite3
+sudo apt install -y libsqlite3-dev
+sudo apt install -y kompare
+sudo apt install -y kdiff3
+sudo apt install -y gedit
+sudo apt install -y xterm
+sudo apt install -y golang
+sudo apt install -y apache2
+sudo apt install -y php
+sudo apt install -y php-all-dev
+sudo apt install -y libapache2-mod-php
+
+# For Tweaks
+sudo add-apt-repository -y universe
+sudo apt install -y gnome-tweak-tool
+
+#For kdbg
+sudo apt install -y cmake
+sudo apt install -y extra-cmake-modules
+sudo apt install -y libkf5activities-dev libphonon4qt5-dev
+sudo apt install -y libkf5baloowidgets-dev libkf5filemetadata-dev libkf5kdelibs4support-dev 
+sudo apt install -y baloo-kf5-dev
+sudo apt install -y gettext
+cd /home/linuxuser/Downloads
+wget https://thekomanetskys.com/AssemblySoftware/kdbg-3.0.1.tar.gz
+tar -xvf ./*.gz
+cd kdbg-3.0.1
+cmake .
+make
+sudo make install
+cd /home/linuxuser
+sudo rm -fR /home/linuxuser/Downloads/kdbg-3.0.1
+
+sudo apt install -y mysql-client
+sudo apt install -y mysql-workbench
+sudo apt install -y default-libmysqlclient-dev
+sudo apt install -y libmysqlcppconn-dev
+sudo apt install -y libmysql-c++
+sudo apt install -y libmysql-java
+sudo apt install -y pyhon3-pip
+pip3 install mysql-connector-python --break-system-packages
+sudo apt install -y idle
+sudo apt install -y idle3
+sudo apt install -y open-vm-tools
+sudo apt install -y open-vm-tools-desktop
+sudo apt install -y htop
+sudo apt install -y sasm
+sudo apt install -y qemu-user qemu-user-static gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu binutils-aarch64-linux-gnu-dbg build-essential
+sudo apt install -y gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf binutils-arm-linux-gnueabihf-dbg
+sudo apt install -y gdb-multiarch qemu-user
+sudo apt install -y clang
+sudo apt install -y libgtk-4-dev
+sudo apt install -y gnucobol4
+sudo apt install -y terminator
+sudo apt remove -y --auto-remove openjdk*
+sudo apt install -y openjdk-19-jre-headless
+sudo apt install -y openjdk-19-jdk-headless
+wget https://thekomanetskys.com/AssemblySoftware/eclipsePortable.tar.gz
+chown linuxuser:linuxuser *
+tar -xvf ./eclipsePortable.tar.gz
+sudo mv ./eclipse/ /opt
+sudo cp /opt/eclipse/eclipse.desktop /home/linuxuser/Desktop
+sudo cp /opt/eclipse/eclipse.desktop /usr/share/applications
+sudo chown linuxuser:linuxuser /home/linuxuser/Desktop/eclipse.desktop
+sudo chmod +x /home/linuxuser/Desktop/*.desktop
+sudo chown linuxuser:linuxuser /home/linuxuser/Desktop/*.desktop
+mkdir /home/linuxuser/Documents/ASMProjs
+chown linuxuser:linuxuser /home/linuxuser/Documents/ASMProjs
+cd /home/linuxuser/Documents/ASMProjs
+wget https://thekomanetskys.com/AssemblySoftware/LinuxASM32bitFunctionsTemplate.zip
+wget https://thekomanetskys.com/AssemblySoftware/LinuxASM32bitTemplate.zip
+wget https://thekomanetskys.com/AssemblySoftware/LinuxASM64bitFunctionsTemplate.zip
+wget https://thekomanetskys.com/AssemblySoftware/LinuxASM64bitTemplate.zip
+wget https://thekomanetskys.com/AssemblySoftware/LinuxARM32bitTemplate.zip
+wget https://thekomanetskys.com/AssemblySoftware/LinuxARM64bitTemplate.zip
+wget https://thekomanetskys.com/AssemblySoftware/LinuxC32bitTemplate.zip
+wget https://thekomanetskys.com/AssemblySoftware/LinuxC64bitTemplate.zip
+wget https://thekomanetskys.com/AssemblySoftware/LinuxCPP32bitTemplate.zip
+wget https://thekomanetskys.com/AssemblySoftware/LinuxCPP64bitTemplate.zip
+chown linuxuser:linuxuser *
+rm /home/linuxuser/Downloads/*.gz
+rm /home/linuxuser/Downloads/*.deb
+
+echo ""
+echo ""
+echo "Your virtual machine will now be re-started to enable any updated changes"
+echo "After that happens, it is recommended that you shut it down, then take a VMWare snapshot of the operating system to save your changes"
+read -p "Press the ENTER key to continue ==> " theID
