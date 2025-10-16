@@ -24,8 +24,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{57acaad9-70e9-447e-89a9-fa04b3dbdba7}</ProjectGuid>
-    <RootNamespace>ASM_64Datasize</RootNamespace>
+    <ProjectGuid>{72c51b04-4b2c-453d-b433-447e504b23c3}</ProjectGuid>
+    <RootNamespace>_64bit_Constants</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -112,9 +112,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
-    <MASM>
-      <AssembledCodeListingFile>main.lst</AssembledCodeListingFile>
-    </MASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

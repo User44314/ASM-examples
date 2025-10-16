@@ -1,0 +1,62 @@
+Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0   10/15/25 05:46:59
+main.asm						     Page 1 - 1
+
+
+				ExitProcess PROTO
+ 00000000			.data
+
+				;define a single byte
+ 00000000 12			byteVaribale	db	12h
+				;define word
+ 00000001 1112			vordVarible		dw	1112h
+				;define a double word
+ 00000003 11223344		dwordVariable	dd	11223344h
+ 00000007			quadWordVarabie	dq	1122334455667788h
+	   1122334455667788
+
+ 0000000F 83			sbyteVariable	db	-125
+ 00000010 F5F9			swordVariable	dw	-2567
+ 00000012 FFFB0390		sdwordVariable	dd	-326768
+ 00000016			sqwordVariable	dq	-7476523459
+	   FFFFFFFE425D4E3D
+
+ 00000000			.code
+ 00000000			main PROC
+ 00000000  90				nop
+
+
+ 00000001  90				nop
+ 00000002  48/ C7 C1			mov rcx, 0
+	   00000000
+ 00000009  E8 00000000 E		call ExitProcess
+ 0000000E			main ENDP
+				END
+Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0   10/15/25 05:46:59
+main.asm						     Symbols 2 - 1
+
+
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P 	 00000000 Length= 00000000 External
+main . . . . . . . . . . . . . .	P 	 00000000 _TEXT	Length= 0000000E Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+byteVaribale . . . . . . . . . .	Byte	 00000000 _DATA	
+dwordVariable  . . . . . . . . .	DWord	 00000003 _DATA	
+quadWordVarabie  . . . . . . . .	QWord	 00000007 _DATA	
+sbyteVariable  . . . . . . . . .	Byte	 0000000F _DATA	
+sdwordVariable . . . . . . . . .	DWord	 00000012 _DATA	
+sqwordVariable . . . . . . . . .	QWord	 00000016 _DATA	
+swordVariable  . . . . . . . . .	Word	 00000010 _DATA	
+vordVarible  . . . . . . . . . .	Word	 00000001 _DATA	
+
+	   0 Warnings
+	   0 Errors
