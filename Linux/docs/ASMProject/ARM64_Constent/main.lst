@@ -1,0 +1,52 @@
+AARCH64 GAS  main.asm 			page 1
+
+
+   1              	/* ARM 64-bit assembly template */
+   2              	
+   3              	.equ MY_CONSTANT1, 0x22
+   4              	
+   5              	.section .data
+   6              	msg:
+   7 0000 48656C6C 	.ascii "Hello, ARM64!\n"
+   7      6F2C2041 
+   7      524D3634 
+   7      210A
+   8              	len = . - msg
+   9              	
+  10              	.section .bss
+  11              	
+  12              	.section .text
+  13              	.global _start
+  14              	
+  15              	_start:
+  16              	/* syscall write(int fd, const void *buf, size_t count) */
+  17 0000 200080D2 	    mov x0, #1     
+  18 0004 21010058 	    ldr x1, =msg 
+  19 0008 42010058 	    ldr x2, =len 
+  20 000c 08088052 	    mov w8, #64 
+  21 0010 010000D4 	    svc #0
+  22              	    
+  23              	    
+  24 0014 400480D2 	    mov x0, MY_CONSTANT1
+  25 0018 41048052 	    mov w1, MY_CONSTANT1
+  26              	
+  27              	/* syscall exit(int status) */
+  28 001c 000080D2 	    mov x0, #0 
+  29 0020 A80B8052 	    mov w8, #93 
+  30 0024 010000D4 	    svc #0
+  31 0028 00000000 	
+  31      00000000 
+  31      0E000000 
+  31      00000000 
+AARCH64 GAS  main.asm 			page 2
+
+
+DEFINED SYMBOLS
+            main.asm:3      *ABS*:0000000000000022 MY_CONSTANT1
+            main.asm:6      .data:0000000000000000 msg
+            main.asm:8      *ABS*:000000000000000e len
+            main.asm:15     .text:0000000000000000 _start
+            main.asm:17     .text:0000000000000000 $x
+            main.asm:31     .text:0000000000000028 $d
+
+NO UNDEFINED SYMBOLS

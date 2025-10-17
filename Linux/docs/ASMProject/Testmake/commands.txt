@@ -1,0 +1,6 @@
+nasm -g -f elf32 -F dwarf main.asm -l main.lst
+make clean
+
+
+	ld main.o functions64.o -o main
+	nasm -g -f elf64 -F dwarf main.asm -l main.lst

@@ -1,0 +1,83 @@
+ARM GAS  main.asm 			page 1
+
+
+   1              	/* Assembler ARM 32bit template */
+   2              	.section .data
+   3 0000 48656C6C 		msg: .ascii "Hello, ARM32!\n"
+   3      6F2C2041 
+   3      524D3332 
+   3      210A
+   4              			len = . - msg
+   5              	
+   6 000e 00010000 		dWordVar1:	.word 0x100
+   7 0012 00020000 		dWordVar2:	.word 0x200
+   8              	
+   9              	
+  10              	.section .bss
+  11              	
+  12              	.section .text
+  13              	.global _start
+  14              	
+  15              	_start:
+  16              	/* syscall write(int fd, const void *buf, size_t count) */
+  17 0000 0100A0E3 	    mov r0, #1 
+  18 0004 58109FE5 	    ldr r1, =msg 
+  19 0008 0E20A0E3 	    ldr r2, =len 
+  20 000c 0470A0E3 	    mov r7, #4 
+  21 0010 000000EF 	    svc #0
+  22              	    
+  23 0014 6400A0E3 	    mov r0, #100
+  24 0018 C810A0E3 	    mov r1, #200
+  25 001c 010080E0 	    add r0, r0, r1
+  26              	    
+  27 0020 6400A0E3 	    mov r0, #100
+  28 0024 C80080E2 	    add r0, r0, #200
+  29              	    
+  30 0028 4B0F40E2 	    sub r0, r0, #300
+  31 002c 010040E0 	    sub r0, r0, r1
+  32              	    
+  33              	
+  34 0030 30309FE5 	    ldr r3, =dWordVar1
+  35 0034 000093E5 	    ldr	r0,	[r3]
+  36              	    
+  37 0038 2C309FE5 	    ldr r3, =dWordVar2
+  38 003c 001093E5 	    ldr r1, [r3]
+  39 0040 010080E0 	    add r0, r0, r1
+  40              	    
+  41 0044 0000E0E3 	    mov r0, #0xffffffff
+  42 0048 010090E2 	    adds r0,r0, #1
+  43 004c 0000002A 	    bcs	PrintError
+  44 0050 000000EA 	    b endAll
+  45              	    
+  46              	    PrintError:
+  47 0054 0100A0E3 			mov r0, #1
+  48              	    
+  49              	    
+  50              	    endAll:
+  51              	    
+  52              	
+  53              	/* syscall exit(int status) */
+  54 0058 0000A0E3 	    mov r0, #0 
+ARM GAS  main.asm 			page 2
+
+
+  55 005c 0170A0E3 	    mov r7, #1 
+  56 0060 000000EF 	    svc #0
+  57 0064 00000000 	
+  57      0E000000 
+  57      12000000 
+ARM GAS  main.asm 			page 3
+
+
+DEFINED SYMBOLS
+            main.asm:3      .data:00000000 msg
+            main.asm:4      *ABS*:0000000e len
+            main.asm:6      .data:0000000e dWordVar1
+            main.asm:7      .data:00000012 dWordVar2
+            main.asm:15     .text:00000000 _start
+            main.asm:17     .text:00000000 $a
+            main.asm:46     .text:00000054 PrintError
+            main.asm:50     .text:00000058 endAll
+            main.asm:57     .text:00000064 $d
+
+NO UNDEFINED SYMBOLS

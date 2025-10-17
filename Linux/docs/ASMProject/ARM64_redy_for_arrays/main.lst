@@ -1,0 +1,104 @@
+AARCH64 GAS  main.asm 			page 1
+
+
+   1              	/* ARM 64-bit assembly template */
+   2              	
+   3              	.section .data
+   4              	msg:
+   5 0000 48656C6C 	.ascii "Hello, ARM64!\n"
+   5      6F2C2041 
+   5      524D3634 
+   5      210A
+   6              	len = . - msg
+   7              	
+   8 000e 11223344 		AByteArray: .byte 0x11, 0x22, 0x33, 0x44, 0x55
+   8      55
+   9              			AByteArray.TYPE   =1
+  10              			AByteArray.SIZEOF = (. - AByteArray)
+  11              			AByteArray.LENGHOF = (AByteArray.SIZEOF / AByteArray.TYPE)
+  12              			
+  13 0013 66666666 			AWordArray:	.dword 0x66666666, 0x77777777, 0x88888888
+  13      00000000 
+  13      77777777 
+  13      00000000 
+  13      88888888 
+  14              			AWordArray.TYPE   =8
+  15              			AWordArray.SIZEOF = (. - AWordArray)
+  16              			AWordArray.LENGHOF = (AWordArray.SIZEOF / AWordArray.TYPE)
+  17              	
+  18 002b 66666666 		ADWordArray:	.dword 0x6666666666666666, 0x7777777777777777, 0x8888888888888888
+  18      66666666 
+  18      77777777 
+  18      77777777 
+  18      88888888 
+  19              			ADWordArray.TYPE   =8
+  20              			ADWordArray.SIZEOF = (. - ADWordArray)
+  21              			ADWordArray.LENGHOF = (ADWordArray.SIZEOF / ADWordArray.TYPE)
+  22              	
+  23              	.section .bss
+  24              	
+  25              	.section .text
+  26              	.global _start
+  27              	
+  28              	_start:
+  29              	/* syscall write(int fd, const void *buf, size_t count) */
+  30 0000 200080D2 	    mov x0, #1     
+  31 0004 21020058 	    ldr x1, =msg 
+  32 0008 42020058 	    ldr x2, =len 
+  33 000c 08088052 	    mov w8, #64 
+  34 0010 010000D4 	    svc #0
+  35              	    
+  36 0014 200080D2 	    ;mov x0 ,AByteArray.TYPE
+  37              	    
+  38              	    /*mov rsi, OFFSET AByteArray ;in Microsoft*/
+  39              	    /*mov rsi, AByteArray  ; in linux*/
+  40              	    
+  41 0018 01020058 	    ldr x1, =AByteArray   /*in arm*/
+  42              	    
+  43              	   /* mov w0, BYTE PTR [x1]
+  44              	    ldrb w0, [x1] */
+  45              	    
+AARCH64 GAS  main.asm 			page 2
+
+
+  46 001c 20004039 	    ldrb w0, [x1]
+  47 0020 21040091 	    add x1, x1, AByteArray.TYPE
+  48 0024 20004039 	    ldrb w0, [x1]
+  49              	    
+  50 0028 C1010058 	    ldr x1, =ADWordArray   /*in arm*/
+  51 002c 200040F9 	    ldr x0, [x1]
+  52 0030 21200091 	    add x1, x1, ADWordArray.TYPE
+  53 0034 200040F9 	    ldr x0, [x1]
+  54              	
+  55              	/* syscall exit(int status) */
+  56 0038 000080D2 	    mov x0, #0 
+  57 003c A80B8052 	    mov w8, #93 
+  58 0040 010000D4 	    svc #0
+  59 0044 00000000 	
+  59      00000000 
+  59      00000000 
+  59      0E000000 
+  59      00000000 
+AARCH64 GAS  main.asm 			page 3
+
+
+DEFINED SYMBOLS
+            main.asm:4      .data:0000000000000000 msg
+            main.asm:6      *ABS*:000000000000000e len
+            main.asm:8      .data:000000000000000e AByteArray
+            main.asm:9      *ABS*:0000000000000001 AByteArray.TYPE
+            main.asm:10     *ABS*:0000000000000005 AByteArray.SIZEOF
+            main.asm:11     *ABS*:0000000000000005 AByteArray.LENGHOF
+            main.asm:13     .data:0000000000000013 AWordArray
+            main.asm:14     *ABS*:0000000000000008 AWordArray.TYPE
+            main.asm:15     *ABS*:0000000000000018 AWordArray.SIZEOF
+            main.asm:16     *ABS*:0000000000000003 AWordArray.LENGHOF
+            main.asm:18     .data:000000000000002b ADWordArray
+            main.asm:19     *ABS*:0000000000000008 ADWordArray.TYPE
+            main.asm:20     *ABS*:0000000000000018 ADWordArray.SIZEOF
+            main.asm:21     *ABS*:0000000000000003 ADWordArray.LENGHOF
+            main.asm:28     .text:0000000000000000 _start
+            main.asm:30     .text:0000000000000000 $x
+            main.asm:59     .text:0000000000000048 $d
+
+NO UNDEFINED SYMBOLS

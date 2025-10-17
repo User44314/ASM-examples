@@ -1,0 +1,112 @@
+AARCH64 GAS  main.asm 			page 1
+
+
+   1              	/* ARM 64-bit assembly template */
+   2              	
+   3              	.section .data
+   4              	msg:
+   5 0000 48656C6C 	.ascii "Hello, ARM64!\n"
+   5      6F2C2041 
+   5      524D3634 
+   5      210A
+   6              	len = . - msg
+   7              	
+   8 000e 88776655 		dWordVar:	.dword	0x1122334455667788
+   8      44332211 
+   9 0016 DDCCBBAA 		wordVar:	.word 	0xaabbccdd
+  10 001a 41       		byteVar:	.byte 	'A'
+  11 001b F6       		sByteVar:	.byte 	-10
+  12 001c E703     		hWordVar:	.hword	999
+  13              		
+  14 001e 00000000 		dWordVar2:	.dword	0
+  14      00000000 
+  15              		
+  16              		
+  17              	
+  18              	.section .bss
+  19              	
+  20              	.section .text
+  21              	.global _start
+  22              	
+  23              	_start:
+  24              	/* syscall write(int fd, const void *buf, size_t count) */
+  25 0000 200080D2 	    mov x0, #1     
+  26 0004 61030058 	    ldr x1, =msg 
+  27 0008 82030058 	    ldr x2, =len 
+  28 000c 08088052 	    mov w8, #64 
+  29 0010 010000D4 	    svc #0
+  30              	
+  31              	
+  32              		//move some literales or immidiate values into our register
+  33              		
+  34 0014 800C80D2 		mov x0,	#100 //move the decimal value 100 into x0
+  35 0018 012080D2 		mov x1, #0x100 // move the hexadecimal value 100 into x1
+  36              		
+  37              		//move some register values into other register
+  38              		
+  39 001c E30300AA 		mov x3,	x0
+  40 0020 E40301AA 		mov x4, x1
+  41              		
+  42              		//move some data from variables into our registers
+  43              		//1) move the address of the variable into a registers
+  44              		//2) deference that register and  put that data into a register
+  45              		
+  46 0024 E3020058 		ldr x3, =dWordVar // put the address of dWordVar into x3
+  47 0028 600040F9 		ldr x0, [x3]
+  48              		
+  49              		//move a word into X0
+  50              		
+  51 002c E3020058 		ldr x3, =wordVar
+  52 0030 600040B9 		ldr w0, [x3]
+AARCH64 GAS  main.asm 			page 2
+
+
+  53              		
+  54              		//move a byte into x0
+  55              		
+  56 0034 E3020058 		ldr	x3, 	=byteVar
+  57 0038 60004039 		ldrb	w0, [x3]
+  58              	
+  59              		//move a signed byte into x0
+  60 003c E3020058 		ldr	x3, 	=sByteVar
+  61 0040 6000C039 		ldrsb	w0, [x3]
+  62              		
+  63 0044 E3020058 		ldr		x3, =hWordVar
+  64 0048 60004079 		ldrh	w0, [x3]
+  65 004c 6000C079 		ldrsh	w0, [x3]
+  66              		
+  67 0050 C3020058 		ldr	x3,	=dWordVar2
+  68 0054 600000F9 		str	x0, [x3]
+  69              		
+  70              		
+  71 0058 60000039 		strb	w0,	[x3]
+  72 005c 60000079 		strh	w0,	[x3]
+  73              		
+  74              		
+  75              	/* syscall exit(int status) */
+  76              	
+  77 0060 000080D2 	    mov x0, #0 
+  78 0064 A80B8052 	    mov w8, #93 
+  79 0068 010000D4 	    svc #0
+  80 006c 00000000 	
+  80      00000000 
+  80      00000000 
+  80      0E000000 
+  80      00000000 
+AARCH64 GAS  main.asm 			page 3
+
+
+DEFINED SYMBOLS
+            main.asm:4      .data:0000000000000000 msg
+            main.asm:6      *ABS*:000000000000000e len
+            main.asm:8      .data:000000000000000e dWordVar
+            main.asm:9      .data:0000000000000016 wordVar
+            main.asm:10     .data:000000000000001a byteVar
+            main.asm:11     .data:000000000000001b sByteVar
+            main.asm:12     .data:000000000000001c hWordVar
+            main.asm:14     .data:000000000000001e dWordVar2
+            main.asm:23     .text:0000000000000000 _start
+            main.asm:25     .text:0000000000000000 $x
+            main.asm:80     .text:0000000000000070 $d
+
+NO UNDEFINED SYMBOLS

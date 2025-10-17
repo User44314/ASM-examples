@@ -1,0 +1,65 @@
+AARCH64 GAS  main.asm 			page 1
+
+
+   1              	/* ARM 64-bit assembly template */
+   2              	
+   3              	.section .data
+   4              	msg:
+   5 0000 48656C6C 	.ascii "Hello, ARM64!\n"
+   5      6F2C2041 
+   5      524D3634 
+   5      210A
+   6              	len = . - msg
+   7              	
+   8              	.section .bss
+   9              	
+  10              	.section .text
+  11              	.global _start
+  12              	
+  13              	_start:
+  14              	/* syscall write(int fd, const void *buf, size_t count) */
+  15 0000 200080D2 	    mov x0, #1     
+  16 0004 21020058 	    ldr x1, =msg 
+  17 0008 42020058 	    ldr x2, =len 
+  18 000c 08088052 	    mov w8, #64 
+  19 0010 010000D4 	    svc #0
+  20              	    
+  21              	    
+  22 0014 00008092 	    mov x0, 0xffffffffffffffff  //first number lower-half
+  23 0018 E13F80D2 	    mov x1, 0x00000000000001ff  //first number upper-half
+  24              			   // first number 0000000000000000 : ffffffffffffffff
+  25 001c 220080D2 	    mov x2, 0x0000000000000001  //second number lower half
+  26 0020 032080D2 	    mov x3, 0x0000000000000100  // second number upper half
+  27              			// second number 0000000000000100 : 0000000000000001
+  28              	    
+  29 0024 040002AB 	    adds x4, x0, x2 // add lower  half of the  two numbers setiing the setting carry flag
+  30 0028 2500039A 	    adc x5, x1, x3 // add the upper of the two number as well as the carry flag
+  31              	    
+  32 002c 070080D2 	    mov x7, #0
+  33 0030 820400F1 	    subs x2, x4, #1  // subtract 1 from the lower half x4 into x2
+  34 0034 A10007DA 	    sbc x1, x5, x7  //subtract zero from the upper half and the value in the carry
+  35              	    
+  36              	    
+  37              	    
+  38              	    
+  39              	
+  40              	/* syscall exit(int status) */
+  41 0038 000080D2 	    mov x0, #0 
+  42 003c A80B8052 	    mov w8, #93 
+  43 0040 010000D4 	    svc #0
+  44 0044 00000000 	
+  44      00000000 
+  44      00000000 
+  44      0E000000 
+  44      00000000 
+AARCH64 GAS  main.asm 			page 2
+
+
+DEFINED SYMBOLS
+            main.asm:4      .data:0000000000000000 msg
+            main.asm:6      *ABS*:000000000000000e len
+            main.asm:13     .text:0000000000000000 _start
+            main.asm:15     .text:0000000000000000 $x
+            main.asm:44     .text:0000000000000048 $d
+
+NO UNDEFINED SYMBOLS
