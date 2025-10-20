@@ -1,0 +1,160 @@
+ARM GAS  main.asm 			page 1
+
+
+   1              	/* Assembler ARM 32bit template */
+   2              	.section .data
+   3              	msg:
+   4 0000 48656C6C 	.ascii "Hello, ARM32!\n"
+   4      6F2C2041 
+   4      524D3332 
+   4      210A
+   5              	len = . - msg
+   6              	
+   7 000e 72BDEA22 		dWordbynary1: .word	0b00100010111010101011110101110010
+   8 0012 0F000000 		dWordbynary2: .word 0b00000000000000000000000000001111
+   9 0016 00200000 		dWordbynary3: .word 0b00000000000000000010000000000000
+  10 001a 04200000 		dWordbynary4: .word 0b00000000000000000010000000000100
+  11              		
+  12              	
+  13              	
+  14              	
+  15              	.section .bss
+  16              	
+  17              	.section .text
+  18              	.global _start
+  19              	
+  20              	_start:
+  21              	/* syscall write(int fd, const void *buf, size_t count) */
+  22 0000 0100A0E3 	    mov r0, #1 
+  23 0004 A0109FE5 	    ldr r1, =msg 
+  24 0008 0E20A0E3 	    ldr r2, =len 
+  25 000c 0470A0E3 	    mov r7, #4 
+  26 0010 000000EF 	    svc #0
+  27              	    
+  28              	    @dWordbynary1: .word 0b00100010111010101011110101110010
+  29              		@dWordbynary2: .word 0b00000000000000000000000000001111
+  30              		@dWordbynary3: .word 0b00000000000000000010000000000000
+  31              		@dWordbynary4: .word 0b00000000000000000010000000000100
+  32              		
+  33              		
+  34              		
+  35              		@test the AND operation
+  36 0014 94009FE5 		ldr r0, =dWordbynary1 	 @put the address of dwordbinary1 into r0
+  37 0018 001090E5 		ldr r1, [r0]			 @put the dwwordbinary value into r1
+  38 001c 90009FE5 		ldr r0, =dWordbynary2	 @put the adress of dwordbinary2 into r0
+  39 0020 002090E5 		ldr r2, [r0]			@put the dWordbinary2 value into r2
+  40 0024 020001E0 		and r0, r1, r2			@and r1 and r2 and  place the value into r0
+  41              		
+  42              		
+  43              		@dWordbynary1: .word 0b00100010111010101011110101110010
+  44              		@dWordbynary2: .word 0b00000000000000000000000000001111
+  45              		@res or	result		 0b00100010111010101011110101111111
+  46              		@dWordbynary3: .word 0b00000000000000000010000000000000
+  47              		@dWordbynary4: .word 0b00000000000000000010000000000100
+  48              		
+  49              		
+  50              		@test the OR operation
+  51 0028 80009FE5 		ldr r0, =dWordbynary1 	 @put the address of dwordbinary1 into r0
+  52 002c 001090E5 		ldr r1, [r0]			 @put the dwwordbinary value into r1
+  53 0030 7C009FE5 		ldr r0, =dWordbynary2	 @put the adress of dwordbinary2 into r0
+  54 0034 002090E5 		ldr r2, [r0]			 @put the dWordbinary2 value into r2
+ARM GAS  main.asm 			page 2
+
+
+  55 0038 020081E1 		orr r0, r1, r2			 @or r1 and r2 and  place the value into r0
+  56              	
+  57              		@dWordbynary1: .word 0b00100010111010101011110101110010
+  58              		@dWordbynary2: .word 0b00000000000000000000000000001111
+  59              		@res eor	result   0b00100010111010101011110101111101
+  60              		@dWordbynary3: .word 0b00000000000000000010000000000000
+  61              		@dWordbynary4: .word 0b00000000000000000010000000000100
+  62              		
+  63              		
+  64              		@test the XOR operation
+  65 003c 6C009FE5 		ldr r0, =dWordbynary1 	 @put the address of dwordbinary1 into r0
+  66 0040 001090E5 		ldr r1, [r0]			 @put the dwwordbinary value into r1
+  67 0044 68009FE5 		ldr r0, =dWordbynary2	 @put the adress of dwordbinary2 into r0
+  68 0048 002090E5 		ldr r2, [r0]			 @put the dWordbinary2 value into r2
+  69 004c 020021E0 		eor r0, r1, r2			 @eor r1 and r2 and  place the value into r0
+  70              	
+  71              		@dWordbynary1: .word 0b00100010111010101011110101110010
+  72              		@the nt resultL      0b11011101000101010100001010001101
+  73              		@                       d   d    1   5   0   2    8  d
+  74              		@dWordbynary2: .word 0b00000000000000000000000000001111
+  75              		@res eor	result   0b00100010111010101011110101111101
+  76              		@dWordbynary3: .word 0b00000000000000000010000000000000
+  77              		@dWordbynary4: .word 0b00000000000000000010000000000100
+  78              		
+  79              		
+  80              		@test the XOR operation
+  81 0050 58009FE5 		ldr r0, =dWordbynary1 	 @put the address of dwordbinary1 into r0
+  82 0054 001090E5 		ldr r1, [r0]			 @put the dwwordbinary value into r1
+  83 0058 0110E0E1 		mvn r1, r1
+  84              		
+  85              		
+  86              		@dWordbynary1: .word 0b00100010111010101011110101110010
+  87              		@dWordbynary2: .word 0b00000000000000000000000000001111
+  88              		@dWordbynary3: .word 0b00000000000000000010000000000000
+  89              		@dWordbynary4: .word 0b00000000000000000010000000000100
+  90              	
+  91              		@is the 14th bit turned on
+  92 005c 4C009FE5 		ldr r0, =dWordbynary1
+  93 0060 001090E5 		ldr r1, [r0]     @number to test
+  94 0064 4C009FE5 		ldr r0, =dWordbynary3
+  95 0068 000090E5 		ldr r0, [r0]      @our bit mask with bit 14th turned on
+  96 006c 000011E0 		ands r0, r1, r0   @and our r1 with r0 and set any flags
+  97 0070 0000000A 		beq bitIsNotSet   @beq = the zero flag is o so the bits were not together so branch
+  98 0074 0100A0E3 		mov r0, #1			@no branch so the zeo flag must be off so the bits was on
+  99              		bitIsNotSet:
+ 100 0078 0000A0E3 		mov r0, #0
+ 101              		
+ 102              		
+ 103              		@dWordbynary1: .word 0b00100010111010101011110101110010
+ 104              		@dWordbynary2: .word 0b00000000000000000000000000001111
+ 105              		@dWordbynary3: .word 0b00000000000000000010000000000000
+ 106              		@dWordbynary4: .word 0b00000000000000000010000000000100
+ 107              		
+ 108              		@is the 14th and 3th bit turned on
+ 109 007c 2C009FE5 		ldr r0, =dWordbynary1
+ 110 0080 001090E5 		ldr r1, [r0]     @number to test
+ 111 0084 30009FE5 		ldr r0, =dWordbynary4
+ARM GAS  main.asm 			page 3
+
+
+ 112 0088 002090E5 		ldr r2, [r0]      @our bit mask with bit 14th turned on
+ 113 008c 020001E0 		and r0, r1, r2   @and our r1 with r0 and set any flags
+ 114 0090 020050E1 		cmp r0, r2
+ 115 0094 0000000A 		beq bothbitSet   @beq = the zero flag is o so the bits were not together so branch
+ 116 0098 0100A0E3 		mov r0, #1			@no branch so the zeo flag must be off so the bits was on
+ 117              		bothbitSet:
+ 118 009c 0000A0E3 		mov r0, #0
+ 119              		
+ 120              		
+ 121              		
+ 122              	
+ 123              	/* syscall exit(int status) */
+ 124 00a0 0000A0E3 	    mov r0, #0 
+ 125 00a4 0170A0E3 	    mov r7, #1 
+ 126 00a8 000000EF 	    svc #0
+ 127 00ac 00000000 	
+ 127      0E000000 
+ 127      12000000 
+ 127      16000000 
+ 127      1A000000 
+ARM GAS  main.asm 			page 4
+
+
+DEFINED SYMBOLS
+            main.asm:3      .data:00000000 msg
+            main.asm:5      *ABS*:0000000e len
+            main.asm:7      .data:0000000e dWordbynary1
+            main.asm:8      .data:00000012 dWordbynary2
+            main.asm:9      .data:00000016 dWordbynary3
+            main.asm:10     .data:0000001a dWordbynary4
+            main.asm:20     .text:00000000 _start
+            main.asm:22     .text:00000000 $a
+            main.asm:99     .text:00000078 bitIsNotSet
+            main.asm:117    .text:0000009c bothbitSet
+            main.asm:127    .text:000000ac $d
+
+NO UNDEFINED SYMBOLS
