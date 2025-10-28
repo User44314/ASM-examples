@@ -1,0 +1,95 @@
+AARCH64 GAS  main.asm 			page 1
+
+
+   1              	/* ARM 64-bit assembly template */
+   2              	
+   3              	.macro PUSH Xn
+   4              		str \Xn, [sp]    // store x0 to the stack pointer memory acess
+   5              		sub sp, sp, 16   // go to the next location on the stack
+   6              	.endm
+   7              	
+   8              	.macro POP Xn
+   9              		add sp, sp, 16   // store x0 to the stack pointer memory acess
+  10              		ldr \Xn, [sp]   // go to the next location on the stack
+  11              	.endm
+  12              		
+  13              	
+  14              	.section .data
+  15              	msg:
+  16 0000 48656C6C 	.ascii "Hello, ARM64!\n"
+  16      6F2C2041 
+  16      524D3634 
+  16      210A
+  17              	len = . - msg
+  18              	
+  19              	.section .bss
+  20              	
+  21              	.section .text
+  22              	.global _start
+  23              	
+  24              	_start:
+  25              	/* syscall write(int fd, const void *buf, size_t count) */
+  26 0000 200080D2 	    mov x0, #1     
+  27 0004 21030058 	    ldr x1, =msg 
+  28 0008 42030058 	    ldr x2, =len 
+  29 000c 08088052 	    mov w8, #64 
+  30 0010 010000D4 	    svc #0
+  31              	    
+  32              	    
+  33 0014 002080D2 	    mov x0, 0x100  // initialize the register
+  34 0018 014080D2 	    mov x1, 0x200
+  35 001c 026080D2 	    mov x2, 0x300
+  36              	    
+  37              	//    str x0, [sp]  // store x0 to the stack pointer [sp] memory adress
+  38              	  //  sub sp, sp, 16 // go to the next location on the stack
+  39 0020 E00300F9 	    PUSH x0
+  39      FF4300D1 
+  40              	 //   str x1, [sp]  // store x1 to the stack pointer memory adress
+  41              	 //   sub sp, sp, 16 // go to the next location on the stack
+  42 0028 E10300F9 		PUSH x1
+  42      FF4300D1 
+  43              	 //   str x2, [sp]  // store x2 to the stack pointer memory adress
+  44              	 //   sub sp, sp, 16 // go to the next location on the stack
+  45 0030 E20300F9 	    PUSH x2
+  45      FF4300D1 
+  46              	    
+  47              	    
+  48 0038 000080D2 	    mov x0, 0  //clear out registers
+  49 003c 010080D2 	    mov x1, 0  //
+  50 0040 020080D2 	    mov x2, 0  //
+  51              	    
+AARCH64 GAS  main.asm 			page 2
+
+
+  52              	   // add sp, sp,16  //go to the begining of the previues value in the stack
+  53              	  //  ldr x2, [sp]   // pop the data from the stack
+  54 0044 FF430091 	  POP x2
+  54      E20340F9 
+  55              	  //  add sp, sp,16
+  56              	   // ldr x1, [sp]
+  57 004c FF430091 	   POP x1
+  57      E10340F9 
+  58              	  //  add sp, sp,16
+  59              	  //  ldr x4, [sp]
+  60 0054 FF430091 	  POP x0
+  60      E00340F9 
+  61              	
+  62              	/* syscall exit(int status) */
+  63 005c 000080D2 	    mov x0, #0 
+  64 0060 A80B8052 	    mov w8, #93 
+  65 0064 010000D4 	    svc #0
+  66 0068 00000000 	
+  66      00000000 
+  66      0E000000 
+  66      00000000 
+AARCH64 GAS  main.asm 			page 3
+
+
+DEFINED SYMBOLS
+            main.asm:15     .data:0000000000000000 msg
+            main.asm:17     *ABS*:000000000000000e len
+            main.asm:24     .text:0000000000000000 _start
+            main.asm:26     .text:0000000000000000 $x
+            main.asm:66     .text:0000000000000068 $d
+
+NO UNDEFINED SYMBOLS

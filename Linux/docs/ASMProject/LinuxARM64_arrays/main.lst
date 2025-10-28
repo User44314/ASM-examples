@@ -1,0 +1,219 @@
+AARCH64 GAS  main.asm 			page 1
+
+
+   1              	/* ARM 64-bit assembly template */
+   2              	
+   3              	.section .data
+   4              	msg:
+   5 ???? 48656C6C 	.ascii "Hello, ARM64!\n"
+   5      6F2C2041 
+   5      524D3634 
+   5      210A
+   6              	len = . - msg
+   7              	
+   8              	//alocate a seven double word (8-bytes) array
+   9 ???? BBBBBBBB 	AQWordArray: .dword 0x0bbbbbbbbbbbbbbbb, 0x0cccccccccccccccc, 0x0dddddddddddddddd
+   9      BBBBBBBB 
+   9      CCCCCCCC 
+   9      CCCCCCCC 
+   9      DDDDDDDD 
+  10 ???? EEEEEEEE 		         .dword 0x0eeeeeeeeeeeeeeee, 0x0ffffffffffffffff, 0x00000000000000000
+  10      EEEEEEEE 
+  10      FFFFFFFF 
+  10      FFFFFFFF 
+  10      00000000 
+  11 ???? 11111111 		         .dword 0x01111111111111111
+  11      11111111 
+  12              		AQWordArray.TYPE = 8
+  13              		AQWordArray.SIZEOF = (. - AQWordArray)
+  14              		AQWordArray.LENGTHOF = (AQWordArray.SIZEOF/AQWordArray.TYPE)
+  15              	
+  16              	
+  17              	//alocate a seven double word (8-bytes) array
+  18 ???? 11111111 	AQWordArray2: .dword 0x0111111111111111, 0x0222222222222222, 0x0333333333333333
+  18      11111101 
+  18      22222222 
+  18      22222202 
+  18      33333333 
+  19 ???? 44444444 		          .dword 0x0444444444444444, 0x0555555555555555,  0x6666666666666666
+  19      44444404 
+  19      55555555 
+  19      55555505 
+  19      66666666 
+  20 ???? 77777777 		          .dword 0x0777777777777777
+  20      77777707 
+  21              		AQWordArray2.TYPE = 8
+  22              		AQWordArray2.SIZEOF = (. - AQWordArray2)
+  23              		AQWordArray2.LENGTHOF = (AQWordArray2.SIZEOF/AQWordArray2.TYPE)
+  24              	.section .bss
+  25 ???? 00000000 		SumQWordArray: .skip AQWordArray.SIZEOF
+  25      00000000 
+  25      00000000 
+  25      00000000 
+  25      00000000 
+  26              	
+  27              	.section .text
+  28              	.global _start
+  29              	
+  30              	_start:
+  31              	/* syscall write(int fd, const void *buf, size_t count) */
+  32 ???? 200080D2 	    mov x0, #1     
+AARCH64 GAS  main.asm 			page 2
+
+
+  33 ???? 61070058 	    ldr x1, =msg 
+  34 ???? 82070058 	    ldr x2, =len 
+  35 ???? 08088052 	    mov w8, #64 
+  36 ???? 010000D4 	    svc #0
+  37              	    /*
+  38              	    //inderct array manipulation
+  39              	    ldr x1, =AQWordArray  //put the address of AQwordarray into x1
+  40              	    ldr x0, [x1]   /// put our first array value into x0
+  41              	    add x1, x1, AQWordArray.TYPE // will add the size of an 8 byte value to x1
+  42              	    ldr x0, [x1]
+  43              	    add x1, x1, AQWordArray.TYPE // will add the size of an 8 byte value to x1
+  44              	    ldr x0, [x1]
+  45              	    add x1, x1, AQWordArray.TYPE // will add the size of an 8 byte value to x1
+  46              	    ldr x0, [x1]
+  47              	    */
+  48              	    
+  49              	    //index array manipulation
+  50              	    //using constans imediates
+  51 ???? 60070058 	    ldr x0, =AQWordArray
+  52 ???? 010040F9 	    ldr x1, [x0, #0]
+  53 ???? 010440F9 	    ldr x1, [x0, #8]
+  54 ???? 010840F9 	    ldr x1, [x0, #16]
+  55 ???? 010C40F9 	    ldr x1, [x0, #24]
+  56              	    
+  57              	    
+  58              	    // using an index register
+  59 ???? C0060058 	    ldr x0, =AQWordArray
+  60 ???? 020080D2 	    mov x2, #0
+  61 ???? 016862F8 	    ldr x1, [x0, x2]
+  62 ???? 42200091 	    add x2, x2, #8
+  63 ???? 016862F8 	    ldr x1, [x0, x2]
+  64 ???? 42200091 	    add x2, x2, #8
+  65 ???? 016862F8 	    ldr x1, [x0, x2]
+  66 ???? 42200091 	    add x2, x2, #8
+  67 ???? 016862F8 	    ldr x1, [x0, x2]
+  68 ???? 42200091 	    add x2, x2, #8
+  69              	    
+  70              	    //an indexed loop 
+  71              	    // x0 is our accumulator
+  72              	    // x1 is the address of our array
+  73              	    // x2 is our index register
+  74              	    // x3 is or loop counter
+  75              	    // x4 is our temporary register
+  76 ???? 81050058 	    ldr x1, = AQWordArray
+  77 ???? 020080D2 	    mov x2, #0
+  78 ???? E30080D2 	    mov x3, AQWordArray.LENGTHOF
+  79 ???? 000000CA 	    eor x0, x0, x0
+  80              	    indexedLoop:
+  81 ???? 246862F8 			ldr x4, [x1, x2]
+  82 ???? 0000048B 			add x0, x0, x4
+  83 ???? 630400D1 			sub x3, x3, 1
+  84 ???? 7F0000F1 			cmp x3, #0
+  85 ???? 60000054 			beq indexedLoopExit
+  86 ???? 42200091 			add x2, x2, AQWordArray.TYPE
+  87 ???? FAFFFF17 			b indexedLoop
+  88              		indexedLoopExit:
+  89              			
+AARCH64 GAS  main.asm 			page 3
+
+
+  90              	    
+  91              	    
+  92              	    //inderect array loop
+  93              	    // x0 will be our accumulator
+  94              	    // x1 willl cotain the adress
+  95              	    // x2 is our temporary rigister
+  96              	    // x3 is our loop counter
+  97              	    
+  98 ???? 21040058 	    ldr x1, =AQWordArray
+  99 ???? E30080D2 	    mov x3, AQWordArray.LENGTHOF
+ 100 ???? 000000CA 	    eor x0, x0, x0
+ 101              	    intirectLoop:
+ 102 ???? 220040F9 			ldr x2, [x1]  //load  a value into x2
+ 103 ???? 0000028B 			add x0, x0, x2 // add our value to x0
+ 104 ???? 630400D1 			sub x3, x3, #1 // reduce our counter by 1
+ 105 ???? 7F0000F1 			cmp x3, #0 // if x3 is zero  we are done
+ 106 ???? 60000054 			beq indirectLoopExit  // so branch out of the loop
+ 107 ???? 21200091 			add x1, x1, AQWordArray.TYPE // go to the next value of the array
+ 108 ???? FAFFFF17 			b intirectLoop
+ 109              	    indirectLoopExit:
+ 110              	    
+ 111              	    
+ 112              	    //an index sum two arrays loop
+ 113              	    //x0 is our accumulator
+ 114              	    // x1 is the adress for each array
+ 115              	    // x2 is our index register
+ 116              	    // x3 is our loop counter
+ 117              	    // x4 is our temporary register
+ 118 ???? 020080D2 	    mov x2, #0
+ 119 ???? E30080D2 	    mov x3, AQWordArray.LENGTHOF
+ 120 ???? 000000CA 	    eor x0, x0, x0
+ 121              	    intirectSumLoop:
+ 122 ???? 81020058 			ldr x1, =AQWordArray
+ 123 ???? 206862F8 			ldr x0, [x1, x2]
+ 124 ???? 81020058 			ldr x1, =AQWordArray2
+ 125 ???? 246862F8 			ldr x4, [x1, x2]
+ 126 ???? 0000048B 			add x0, x0, x4
+ 127              			ldr x0, x0, x4
+ 128 ???? 61020058 			ldr x1, =SumQWordArray
+ 129 ???? 206822F8 			str x0, [x1, x2]
+ 130 ???? 630400D1 			sub  x3, x3, #1
+ 131 ???? 7F0000F1 			cmp x3, #0
+ 132 ???? 60000054 			beq indexedSumLoopExit
+ 133 ???? 42200091 			add x2, x2, AQWordArray.TYPE
+ 134 ???? 00000014 			b indexedSumLoop
+ 135              			
+ 136              	    
+ 137              	    
+ 138              	    
+ 139              	    indexedSumLoopExit:
+ 140              	    
+ 141              	    
+ 142              	    
+ 143              	    
+ 144              	    
+ 145              	/* syscall exit(int status) */
+ 146 ???? 000080D2 	    mov x0, #0 
+AARCH64 GAS  main.asm 			page 4
+
+
+ 147 ???? A80B8052 	    mov w8, #93 
+ 148 ???? 010000D4 	    svc #0
+ 149 ???? 00000000 	
+ 149      00000000 
+ 149      00000000 
+ 149      0E000000 
+ 149      00000000 
+AARCH64 GAS  main.asm 			page 5
+
+
+DEFINED SYMBOLS
+            main.asm:4      .data:0000000000000000 msg
+            main.asm:6      *ABS*:000000000000000e len
+            main.asm:9      .data:000000000000000e AQWordArray
+            main.asm:12     *ABS*:0000000000000008 AQWordArray.TYPE
+            main.asm:13     *ABS*:0000000000000038 AQWordArray.SIZEOF
+            main.asm:14     *ABS*:0000000000000007 AQWordArray.LENGTHOF
+            main.asm:18     .data:0000000000000046 AQWordArray2
+            main.asm:21     *ABS*:0000000000000008 AQWordArray2.TYPE
+            main.asm:22     *ABS*:0000000000000038 AQWordArray2.SIZEOF
+            main.asm:23     *ABS*:0000000000000007 AQWordArray2.LENGTHOF
+            main.asm:25     .bss:0000000000000000 SumQWordArray
+            main.asm:25     .bss:0000000000000000 $d
+            main.asm:30     .text:0000000000000000 _start
+            main.asm:32     .text:0000000000000000 $x
+            main.asm:80     .text:0000000000000060 indexedLoop
+            main.asm:88     .text:000000000000007c indexedLoopExit
+            main.asm:101    .text:0000000000000088 intirectLoop
+            main.asm:109    .text:00000000000000a4 indirectLoopExit
+            main.asm:121    .text:00000000000000b0 intirectSumLoop
+            main.asm:139    .text:00000000000000e0 indexedSumLoopExit
+            main.asm:149    .text:00000000000000f0 $d
+
+UNDEFINED SYMBOLS
+x0
+indexedSumLoop

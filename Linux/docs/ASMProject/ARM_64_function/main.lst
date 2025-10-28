@@ -1,0 +1,107 @@
+AARCH64 GAS  main.asm 			page 1
+
+
+   1              	/* ARM 64-bit assembly template */
+   2              	
+   3              	
+   4              	.extern AddTwo
+   5              	.section .data
+   6              	msg:
+   7 0000 48656C6C 	.ascii "Hello, ARM64!\n"
+   7      6F2C2041 
+   7      524D3634 
+   7      210A
+   8              	len = . - msg
+   9              	
+  10              	.section .bss
+  11              	
+  12              	.section .text
+  13              	.global _start
+  14              	
+  15              	_start:
+  16              	/* syscall write(int fd, const void *buf, size_t count) */
+  17 0000 200080D2 	    mov x0, #1     
+  18 0004 A1010058 	    ldr x1, =msg 
+  19 0008 C2010058 	    ldr x2, =len 
+  20 000c 08088052 	    mov w8, #64 
+  21 0010 010000D4 	    svc #0
+  22 0014 1F2003D5 	    nop
+  23              	    
+  24              	    
+  25 0018 81010058 	    ldr x1, = 0x10
+  26 001c A2010058 	    ldr x2, = 0x20
+  27 0020 00000094 	    bl AddTwo
+  28 0024 1F2003D5 	    nop
+  29              	    
+  30              		/* old variant 
+  31              		b AddTwo
+  32              		retAddTwo:
+  33              		//bunch of stuf
+  34              		b AddTwo
+  35              		retAddTwoB:
+  36              		*/
+  37              		
+  38              	/* syscall exit(int status) */
+  39 0028 000080D2 	    mov x0, #0 
+  40 002c A80B8052 	    mov w8, #93 
+  41 0030 010000D4 	    svc #0
+  42              	
+  43              	
+  44              	
+  45              	/*
+  46              	
+  47              	//description add the two integer argment
+  48              	//inputs: x1 aand x2 will be used as afruments
+  49              	// outputs: x0 will contain the result
+  50              	//example:
+  51              		//ldr x1, = 0x10
+  52              		//ldr x2, = 0x20
+  53              		//bl AddTwo
+  54              	    
+AARCH64 GAS  main.asm 			page 2
+
+
+  55              	AddTwo:
+  56              		sub sp, sp, 16  //backup our return address
+  57              		str x30, [sp]  //
+  58              		bl AddThree
+  59              		nop
+  60              		ldr x0, =0x0
+  61              		add x0, x1, x2
+  62              		nop
+  63              		ldr x30, [sp]  //restore our x30 return register
+  64              		add sp, sp, 16  //
+  65              		
+  66              	ret
+  67              	
+  68              	
+  69              	AddThree:
+  70              		sub sp, sp, 16  //backup our return address
+  71              		str x30, [sp]  //
+  72              		nop
+  73              		ldr x30, [sp]  //restore our x30 return register
+  74              		add sp, sp, 16  //
+  75              	ret
+  76              	
+  77              	//b	retAddTwo
+  78              	
+  79              	
+  80              	*/
+  81              	
+  82 0034 00000000 	
+  82      00000000 
+  82      00000000 
+  82      0E000000 
+  82      00000000 
+AARCH64 GAS  main.asm 			page 3
+
+
+DEFINED SYMBOLS
+            main.asm:6      .data:0000000000000000 msg
+            main.asm:8      *ABS*:000000000000000e len
+            main.asm:15     .text:0000000000000000 _start
+            main.asm:17     .text:0000000000000000 $x
+            main.asm:82     .text:0000000000000038 $d
+
+UNDEFINED SYMBOLS
+AddTwo

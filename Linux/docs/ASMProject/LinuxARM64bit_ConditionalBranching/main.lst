@@ -1,0 +1,142 @@
+AARCH64 GAS  main.asm 			page 1
+
+
+   1              	/* ARM 64-bit assembly template */
+   2              	
+   3              	.section .data
+   4              	msg:
+   5 0000 48656C6C 	.ascii "Hello, ARM64!\n"
+   5      6F2C2041 
+   5      524D3634 
+   5      210A
+   6              	len = . - msg
+   7              	
+   8              	.section .bss
+   9              	
+  10              	.section .text
+  11              	.global _start
+  12              	
+  13              	_start:
+  14              	/* syscall write(int fd, const void *buf, size_t count) */
+  15 0000 200080D2 	    mov x0, #1     
+  16 0004 61050058 	    ldr x1, =msg 
+  17 0008 82050058 	    ldr x2, =len 
+  18 000c 08088052 	    mov w8, #64 
+  19 0010 010000D4 	    svc #0
+  20              	    
+  21              	    
+  22 0014 610C8092 	    mov x1, #-100
+  23 0018 420680D2 	    mov x2, #50
+  24 001c 3F0002EB 	    cmp x1, x2
+  25 0020 68000054 	    bhi strangeResult
+  26 0024 1F2003D5 	    nop
+  27 0028 1F2003D5 	    nop
+  28              	    
+  29              	    strangeResult:
+  30 002c 1F2003D5 	    nop
+  31              	    
+  32              	    
+  33              	    
+  34              	    
+  35 0030 03000014 	    b labelname
+  36 0034 1F2003D5 	    nop
+  37 0038 1F2003D5 	    nop
+  38              	    
+  39              	    labelname:
+  40 003c 1F2003D5 	    nop
+  41              	    
+  42              	    
+  43              	    /*
+  44              	    mov x1, #0xffffffffffffffff
+  45              	    adds x1, x1, 1
+  46              	    bvc carryFlagSet
+  47              	    nop
+  48              	    
+  49              	    carryFlagSet:
+  50              			nop
+  51              		*/
+  52              		
+  53 0040 211E80D2 		mov x1, #0xf1
+  54 0044 210400D1 		sub x1, x1, 1
+AARCH64 GAS  main.asm 			page 2
+
+
+  55              	    /*subs x1, x1, 1 */
+  56 0048 45000054 	    bpl zeroFlagSet
+  57 004c 1F2003D5 	    nop
+  58              	    
+  59              	    zeroFlagSet:
+  60 0050 1F2003D5 			nop
+  61              		 
+  62              		
+  63 0054 010080D2 		mov x1, #0x0
+  64 0058 210400F1 		subs x1, x1, #1
+  65 005c 64000054 	    bmi negativeResult
+  66 0060 1F2003D5 	    nop
+  67 0064 1F2003D5 	    nop
+  68              	    
+  69              	    negativeResult:
+  70 0068 1F2003D5 			nop
+  71              			
+  72 006c 810C80D2 		mov x1, #100
+  73 0070 420680D2 		mov x2, #50
+  74 0074 3F0002EB 		cmp x1, x2
+  75 0078 6C000054 		bgt someLabel
+  76              		/*blt someLabel*/
+  77 007c 1F2003D5 		nop
+  78 0080 1F2003D5 		nop
+  79              		
+  80              		 //ble: less than or equal
+  81              		 //bge: greater than or equal
+  82              		 //beq: equal 
+  83              		 //bne: no-equal
+  84              		 
+  85              		 
+  86              		someLabel:
+  87 0084 1F2003D5 		nop
+  88              		
+  89              		
+  90              		//unsigned : lo, hi
+  91 0088 810C80D2 		mov x1, #100
+  92 008c 420680D2 		mov x2, #50
+  93 0090 3F0002EB 		cmp x1, x2
+  94 0094 68000054 		bhi someLabelUS
+  95 0098 1F2003D5 		nop
+  96 009c 1F2003D5 		nop
+  97              		
+  98              		// bls: less than or equal to 
+  99              		// bhs: greater than or equal to
+ 100              		 
+ 101              		someLabelUS:
+ 102 00a0 1F2003D5 		nop
+ 103              		
+ 104              	    
+ 105              	
+ 106              	/* syscall exit(int status) */
+ 107 00a4 000080D2 	    mov x0, #0 
+ 108 00a8 A80B8052 	    mov w8, #93 
+ 109 00ac 010000D4 	    svc #0
+ 110 00b0 00000000 	
+ 110      00000000 
+AARCH64 GAS  main.asm 			page 3
+
+
+ 110      0E000000 
+ 110      00000000 
+AARCH64 GAS  main.asm 			page 4
+
+
+DEFINED SYMBOLS
+            main.asm:4      .data:0000000000000000 msg
+            main.asm:6      *ABS*:000000000000000e len
+            main.asm:13     .text:0000000000000000 _start
+            main.asm:15     .text:0000000000000000 $x
+            main.asm:29     .text:000000000000002c strangeResult
+            main.asm:39     .text:000000000000003c labelname
+            main.asm:59     .text:0000000000000050 zeroFlagSet
+            main.asm:69     .text:0000000000000068 negativeResult
+            main.asm:86     .text:0000000000000084 someLabel
+            main.asm:101    .text:00000000000000a0 someLabelUS
+            main.asm:110    .text:00000000000000b0 $d
+
+NO UNDEFINED SYMBOLS

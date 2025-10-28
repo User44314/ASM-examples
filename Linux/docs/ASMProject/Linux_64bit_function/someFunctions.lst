@@ -1,0 +1,41 @@
+     1                                  global AddTwo
+     2                                  global SubTwo
+     3                                  
+     4                                  
+     5                                  section .data
+     6                                  ;variables with values go here
+     7 00000000 54                      	temp db 'T'
+     8                                  section .bss
+     9                                  ;reserved memory goes here
+    10                                  section .text
+    11                                  
+    12                                  ;description the function will siply add two numbers and return the sum
+    13                                  ;inputs: ebx and ecx are agrumentns
+    14                                  ;return value the sum of rbx and rcx in eax
+    15                                  ;example:
+    16                                  	;mov ebx, 10
+    17                                  	;mov ecx, 20 
+    18                                  	;call AddTwo
+    19                                  	
+    20                                  AddTwo:
+    21 00000000 4889D8                  	mov rax, rbx
+    22 00000003 4801C8                  	add rax, rcx
+    23                                  	
+    24 00000006 C3                      ret
+    25                                  ;end addtwo
+    26                                  
+    27                                  
+    28                                  ;inputs: ebx and ecx are agrumentns
+    29                                  ;return value the difference of rbx and rcx in eax
+    30                                  ;example:
+    31                                  	;mov ebx, 10
+    32                                  	;mov ecx, 20 
+    33                                  	;call AddTwo
+    34                                  ;description the function will siply subtract two numbers and return the subtruction
+    35                                  
+    36                                  SubTwo:
+    37 00000007 4889D8                  	mov rax, rbx
+    38 0000000A 4829C8                  	sub rax, rcx
+    39                                  	
+    40 0000000D C3                      ret
+    41                                  ;end SubTwo

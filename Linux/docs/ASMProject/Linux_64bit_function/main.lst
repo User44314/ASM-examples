@@ -1,0 +1,69 @@
+     1                                  ;extern AddTwo
+     2                                  ;extern SubTwo
+     3                                  
+     4                                  %include "./someFunctions.inc"
+     1                              <1> extern AddTwo
+     2                              <1> extern SubTwo
+     5                                  
+     6                                  section .data
+     7                                  ;variables with values go here
+     8                                  
+     9                                  section .bss
+    10                                  ;reserved memory goes here
+    11                                  section .text
+    12                                  ;Your program code goes here
+    13                                  	global  _start 
+    14                                  	_start:
+    15                                  
+    16 00000000 90                      	nop	
+    17                                  	;Your program code should go here
+    18 00000001 53                      	push rbx ;backup our arguments in register
+    19 00000002 51                      	push rcx ; 
+    20                                  	;push rax
+    21 00000003 BB0A000000              	mov rbx, 10
+    22 00000008 B914000000              	mov rcx, 20 
+    23 0000000D E8(00000000)            	call AddTwo
+    24                                  	;pop rax
+    25 00000012 59                      	pop rcx ; restor our arguments register
+    26 00000013 5B                      	pop rbx
+    27                                  	
+    28                                  	
+    29 00000014 90                      	nop
+    30                                  	;Do not remove/change the lines below
+    31                                  	;These exit out of the application and back
+    32                                  	;to linux in an orderly fashion
+    33 00000015 B83C000000              	mov		rax, 60					;60 = system exit
+    34 0000001A BF00000000              	mov		rdi, 0					;0 = return code
+    35 0000001F 0F05                    	syscall							;Poke the kernel
+    36                                  
+    37                                  
+    38                                  ;description the function will siply add two numbers and return the sum
+    39                                  ;inputs: ebx and ecx are agrumentns
+    40                                  ;return value the sum of rbx and rcx in eax
+    41                                  ;example:
+    42                                  	;mov ebx, 10
+    43                                  	;mov ecx, 20 
+    44                                  	;call AddTwo
+    45                                  	
+    46                                  ;AddTwo:
+    47                                  ;	mov rax, rbx
+    48                                  ;	add rax, rcx
+    49                                  	
+    50                                  ;ret
+    51                                  ;end addtwo
+    52                                  
+    53                                  
+    54                                  ;inputs: ebx and ecx are agrumentns
+    55                                  ;return value the difference of rbx and rcx in eax
+    56                                  ;example:
+    57                                  	;mov ebx, 10
+    58                                  	;mov ecx, 20 
+    59                                  	;call AddTwo
+    60                                  ;description the function will siply subtract two numbers and return the subtruction
+    61                                  
+    62                                  ;SubTwo:
+    63                                  ;	mov rax, rbx
+    64                                  ;	sub rax, rcx
+    65                                  	
+    66                                  ;ret
+    67                                  ;end SubTwo

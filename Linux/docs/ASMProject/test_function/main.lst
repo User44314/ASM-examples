@@ -1,0 +1,28 @@
+     1                                  %include "../myLibs/someFunctions.inc"
+     1                              <1> extern AddTwo
+     2                              <1> extern SubTwo
+     2                                  
+     3                                  
+     4                                  section .data
+     5                                  ;variables with values go here
+     6                                  
+     7                                  section .bss
+     8                                  ;reserved memory goes here
+     9                                  section .text
+    10                                  ;Your program code goes here
+    11                                  	global  _start 
+    12                                  	_start:
+    13                                  
+    14 00000000 90                      	nop	
+    15                                  	;Your program code should go here
+    16 00000001 BB20000000              	mov rbx , 20h
+    17 00000006 B930000000              	mov rcx, 30h
+    18 0000000B E8(00000000)            	call AddTwo
+    19                                  
+    20 00000010 90                      	nop
+    21                                  	;Do not remove/change the lines below
+    22                                  	;These exit out of the application and back
+    23                                  	;to linux in an orderly fashion
+    24 00000011 B83C000000              	mov		rax, 60					;60 = system exit
+    25 00000016 BF00000000              	mov		rdi, 0					;0 = return code
+    26 0000001B 0F05                    	syscall							;Poke the kernel

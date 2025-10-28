@@ -1,0 +1,2 @@
+.extern AddTwo
+.extern AddTree
