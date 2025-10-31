@@ -1,0 +1,97 @@
+     1                                  
+     2                                  section .data
+     3                                  ;variables with values go here
+     4                                  
+     5                                  section .bss
+     6                                  ;reserved memory goes here
+     7                                  section .text
+     8                                  ;Your program code goes here
+     9                                  	global  _start 
+    10                                  	_start:
+    11                                  
+    12 00000000 90                      	nop	
+    13                                  	;Your program code should go here
+    14 00000001 E874000000              	call someFunction
+    15 00000006 B800010000              	mov rax, 100h
+    16 0000000B 50                      	push rax
+    17 0000000C B800020000              	mov rax, 200h
+    18 00000011 50                      	push rax
+    19 00000012 6800010000              	push 100h 
+    20 00000017 58                      	pop rax
+    21                                  	;call addTwo
+    22 00000018 E80D000000              	call addTwo1
+    23                                  
+    24 0000001D 90                      	nop
+    25                                  	;Do not remove/change the lines below
+    26                                  	;These exit out of the application and back
+    27                                  	;to linux in an orderly fashion
+    28 0000001E B83C000000              	mov		rax, 60					;60 = system exit
+    29 00000023 BF00000000              	mov		rdi, 0					;0 = return code
+    30 00000028 0F05                    	syscall							;Poke the kernel
+    31                                  
+    32                                  addTwo1:
+    33 0000002A 55                      	push rbp 
+    34 0000002B 4889E5                  	mov rbp, rsp
+    35 0000002E 4883EC08                	sub rsp, 8 ;local variabl 1: [rbp-8]
+    36 00000032 4883EC08                	sub rsp, 8 ; local variabl 2: [rbp -16]
+    37                                  	
+    38 00000036 488B4518                	mov rax, [rbp+24] ;move our first agrument into our local variable
+    39 0000003A 488945F8                	mov [rbp-8], rax
+    40 0000003E 488B4510                	mov rax, [rbp+16] ;move our second argument into our locacl variable
+    41 00000042 488945F0                	mov [rbp-16], rax
+    42 00000046 B800000000              	mov rax, 0
+    43 0000004B 488B45F8                	mov rax, [rbp-8]
+    44 0000004F 488B45F0                	mov rax, [rbp-16]
+    45                                  	
+    46 00000053 488B4518                	mov rax, [rbp+24]
+    47 00000057 48034510                	add rax, [rbp+16]
+    48                                  
+    49 0000005B 4889EC                  	mov rsp, rbp
+    50 0000005E 5D                      	pop rbp
+    51                                  
+    52 0000005F C21000                  ret 16
+    53                                  
+    54                                  addTwo:
+    55                                  ;create the stack frame
+    56 00000062 55                      	push rbp
+    57 00000063 4889E5                  	mov rbp, rsp
+    58 00000066 51                      	push rcx
+    59                                  	
+    60 00000067 488B4518                	mov rax, [rbp+24] ;move our first argument in rax
+    61 0000006B 488B4D10                	mov rcx, [rbp+16]
+    62                                  	;add  rax, [rbp+16] ;add second argument to rax
+    63                                  	;or 
+    64 0000006F 4801C8                  	add rax, rcx
+    65                                  	
+    66 00000072 59                      	pop rcx
+    67                                  ;destroy the stck frame
+    68 00000073 4889EC                  	mov rsp, rbp
+    69 00000076 5D                      	pop rbp
+    70                                  
+    71 00000077 C21000                  ret 16
+    72                                  
+    73                                  
+    74                                  someFunction:
+    75                                  	;create the stack frame
+    76 0000007A 55                      	push rbp    ;32 bit push
+    77 0000007B 4889E5                  	mov rbp, rsp   ;mov ebp, esp
+    78 0000007E 51                      	push rcx   ;backup those registers
+    79 0000007F 52                      	push rdx
+    80                                  	
+    81                                  	;the function code
+    82 00000080 50                      	push rax
+    83 00000081 53                      	push rbx
+    84 00000082 BB00000000              	mov rbx, 0
+    85 00000087 5B                      	pop rbx
+    86 00000088 58                      	pop rax
+    87                                  	
+    88 00000089 5A                      	pop rdx
+    89 0000008A 59                      	pop rcx
+    90                                  	
+    91                                  	;destroy the stack frame 
+    92 0000008B 4889EC                  	mov rsp, rbp
+    93                                  	;pop rdx   ;restore our registers 
+    94                                  	;pop rcx
+    95 0000008E 5D                      	pop rbp
+    96                                  
+    97 0000008F C3                      ret

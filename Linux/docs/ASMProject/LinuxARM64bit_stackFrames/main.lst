@@ -1,0 +1,162 @@
+AARCH64 GAS  main.asm 			page 1
+
+
+   1              	/* ARM 64-bit assembly template */
+   2              	
+   3              	.section .data
+   4              	msg:
+   5 0000 48656C6C 	.ascii "Hello, ARM64!\n"
+   5      6F2C2041 
+   5      524D3634 
+   5      210A
+   6              	len = . - msg
+   7              	
+   8              	.section .bss
+   9              	
+  10              	.section .text
+  11              	.global _start
+  12              	
+  13              	_start:
+  14              	/* syscall write(int fd, const void *buf, size_t count) */
+  15 0000 200080D2 	    mov x0, #1     
+  16 0004 210A0058 	    ldr x1, =msg 
+  17 0008 420A0058 	    ldr x2, =len 
+  18 000c 08088052 	    mov w8, #64 
+  19 0010 010000D4 	    svc #0
+  20              	    
+  21 0014 1F2003D5 	    nop
+  22              	   // bl someFunction  // branch link
+  23              	    //nop
+  24              	    
+  25 0018 012080D2 	    mov x1, #0x100  //our first argument
+  26 001c FF4300D1 	    sub sp, sp, #16 /// make  room for my first argument
+  27 0020 E10300F9 	    str x1, [sp]	//store our first argument in the stack
+  28 0024 024080D2 	    mov x2, #0x200  // our second argument
+  29 0028 FF4300D1 	    sub sp, sp, #16 /// make  room for my second argument
+  30 002c E20300F9 	    str x2, [sp]	//store our second argument in the stack
+  31 0030 07000094 	    bl addTwo2
+  32 0034 FF830091 	    add sp, sp, #32  // clean our arguments in the stack
+  33 0038 1F2003D5 	    nop
+  34              	    
+  35 003c 1F2003D5 	    nop
+  36              	    
+  37              	
+  38              	/* syscall exit(int status) */
+  39 0040 000080D2 	    mov x0, #0 
+  40 0044 A80B8052 	    mov w8, #93 
+  41 0048 010000D4 	    svc #0
+  42              	
+  43              	
+  44              	
+  45              	addTwo2:
+  46              		//create the stack frame
+  47 004c FF4300D1 		 sub sp, sp, #16 //#1 backup the link register
+  48 0050 FE0300F9 		 str lr, [sp]   //str x30, [sp] for returnig from the function
+  49 0054 FF4300D1 		 sub sp, sp, #16  //#2 backup the old frame pointer
+  50 0058 FD0300F9 		 str fp,[sp]  // so the calling function can operate correctley
+  51 005c FD030091 		 mov fp, sp //now bring the old frame pointer up to the stack pointer
+  52 0060 1F2003D5 		 nop
+  53              		 
+  54              		 //create a local variable
+AARCH64 GAS  main.asm 			page 2
+
+
+  55 0064 FFC300D1 		 sub sp, sp, #48
+  56 0068 80070058 		 ldr x0 , =0x99
+  57 006c A00300F9 		 str x0, [fp]  //local variable #1 fp
+  58 0070 A0031FF8 		 str x0, [fp, #-16]  // local variable #2 [fp, #-16] 
+  59 0074 A0031EF8 		 str x0, [fp, #-32] // local variable #2 [fp, #-32] 
+  60              		 
+  61              		 
+  62 0078 1F2003D5 		  nop
+  63              		 
+  64 007c A41B40F9 		 ldr x4, [fp, #48]  //grab our first argument
+  65 0080 A51340F9 		 ldr x5, [fp, #32] // our second argument
+  66 0084 000080D2 		 mov x0, #0x0  // add the two arguments
+  67 0088 8000058B 		 add x0, x4, x5 // add the two arguments
+  68 008c A10340F9 		 ldr x1, [fp]
+  69 0090 0000018B 		 add x0, x0, x1   // our local variable - add it to x0
+  70 0094 A0031FF8 		 str x0, [fp, #-16] // store the sum into local variable #2
+  71 0098 A0031EF8 		 str x0, [fp, #-32] // store the sum into local variable #3
+  72 009c 1F2003D5 		 nop
+  73              		 
+  74              		 
+  75              		 
+  76              		 //destroy the stack frame
+  77 00a0 BF030091 		 mov sp, fp //reset the stack pointer to were it was before the calling
+  78 00a4 FD0340F9 		 ldr fp, [sp]	//restore the calling functions frame pointer from the stack
+  79 00a8 FF430091 		 add sp, sp, #16 // go down one position to the next position in the stack
+  80 00ac FE0741F8 		 ldr lr, [sp], #16 // 
+  81 00b0 C0035FD6 	ret
+  82              	    
+  83              	addTwo:
+  84              		//create the stack frame
+  85 00b4 FF4300D1 		 sub sp, sp, #16 //#1 backup the link register
+  86 00b8 FE0300F9 		 str lr, [sp]   //str x30, [sp] for returnig from the function
+  87 00bc FF4300D1 		 sub sp, sp, #16  //#2 backup the old frame pointer
+  88 00c0 FD0300F9 		 str fp,[sp]  // so the calling function can operate correctley
+  89 00c4 FD030091 		 mov fp, sp //now bring the old frame pointer up to the stack pointer
+  90 00c8 1F2003D5 		 nop
+  91              		 
+  92 00cc FF4300D1 		 sub sp, sp, #16   // backup x4 and x5 the register we'll be using
+  93 00d0 E40300F9 		 str x4, [sp]  //
+  94 00d4 FF4300D1 		 sub sp, sp, #16 //
+  95 00d8 E50300F9 		 str x5, [sp]  //
+  96 00dc 1F2003D5 		 nop
+  97              		 
+  98              		 
+  99 00e0 A41B40F9 		 ldr x4, [fp, #48]
+ 100 00e4 A51340F9 		 ldr x5, [fp, #32]
+ 101 00e8 000080D2 		 mov x0, #0x0
+ 102 00ec 8000058B 		 add x0, x4, x5
+ 103              		 
+ 104 00f0 1F2003D5 		 nop
+ 105              		 
+ 106 00f4 E50340F9 		 ldr x5, [sp]   // restore x4 and x5 previously backed up
+ 107 00f8 FF430091 		 add sp, sp, #16 //
+ 108 00fc E40340F9 		 ldr x4, [sp]  //
+ 109 0100 FF430091 		 add sp, sp, #16  //
+ 110              		 
+ 111              		 //destroy the stack frame
+AARCH64 GAS  main.asm 			page 3
+
+
+ 112 0104 BF030091 		 mov sp, fp //reset the stack pointer to were it was before the calling
+ 113 0108 FD0340F9 		 ldr fp, [sp]	//restore the calling functions frame pointer from the stack
+ 114 010c FF430091 		 add sp, sp, #16 // go down one position to the next position in the stack
+ 115 0110 FE0741F8 		 ldr lr, [sp], #16 // 
+ 116 0114 C0035FD6 	ret
+ 117              	
+ 118              	someFunction:
+ 119              		//create the stack frame
+ 120 0118 FF4300D1 		 sub sp, sp, #16 //#1 backup the link register
+ 121 011c FE0300F9 		 str lr, [sp]   //str x30, [sp] for returnig from the function
+ 122 0120 FF4300D1 		 sub sp, sp, #16  //#2 backup the old frame pointer
+ 123 0124 FD0300F9 		 str fp,[sp]  // so the calling function can operate correctley
+ 124 0128 FD030091 		 mov fp, sp //now bring the old frame pointer up to the stack pointer
+ 125 012c 1F2003D5 		 nop
+ 126              		 
+ 127              		 //destroy the stack frame
+ 128 0130 BF030091 		 mov sp, fp //reset the stack pointer to were it was before the calling
+ 129 0134 FD0340F9 		 ldr fp, [sp]	//restore the calling functions frame pointer from the stack
+ 130 0138 FF430091 		 add sp, sp, #16 // go down one position to the next position in the stack
+ 131 013c FE0741F8 		 ldr lr, [sp], #16 // 
+ 132 0140 C0035FD6 	ret
+ 132      00000000 
+ 132      00000000 
+ 132      00000000 
+ 132      0E000000 
+AARCH64 GAS  main.asm 			page 4
+
+
+DEFINED SYMBOLS
+            main.asm:4      .data:0000000000000000 msg
+            main.asm:6      *ABS*:000000000000000e len
+            main.asm:13     .text:0000000000000000 _start
+            main.asm:15     .text:0000000000000000 $x
+            main.asm:45     .text:000000000000004c addTwo2
+            main.asm:83     .text:00000000000000b4 addTwo
+            main.asm:118    .text:0000000000000118 someFunction
+            main.asm:132    .text:0000000000000148 $d
+
+NO UNDEFINED SYMBOLS
