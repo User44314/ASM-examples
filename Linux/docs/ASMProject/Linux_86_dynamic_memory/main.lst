@@ -1,0 +1,1063 @@
+     1                                  ;
+     2                                  ;This program will test out the functions library to show the user of number formatted output
+     3                                  ;
+     4                                  
+     5                                  ;
+     6                                  ;Include our external functions library functions
+     7                                  %include "./functions.inc"
+     1                              <1> ;
+     2                              <1> ;Include file for the functions library
+     3                              <1> ;
+     4                              <1> sys_exit	equ	1h
+     5                              <1> sys_read	equ	3h
+     6                              <1> sys_write	equ	4h
+     7                              <1> stdin		equ	0h
+     8                              <1> stdout		equ	1h
+     9                              <1> stderr		equ	3h
+    10                              <1> 
+    11                              <1> ;Print the CPU flags which are set
+    12                              <1> ;Stack Contents:
+    13                              <1> ;	None
+    14                              <1> ;Example Usage:
+    15                              <1> ;	call	PrintFlags
+    16                              <1> ;
+    17                              <1> extern PrintFlags:
+    18                              <1> 
+    19                              <1> ;Swap one String with another
+    20                              <1> ;Stack contents:
+    21                              <1> ;	Address of destination string
+    22                              <1> ;	Address of source string
+    23                              <1> ;Example Usage:
+    24                              <1> ;	push	string1Address
+    25                              <1> ;	push	string2Address
+    26                              <1> ;	push	length
+    27                              <1> ;	call	StringSwap
+    28                              <1> ;
+    29                              <1> extern		StringSwap
+    30                              <1> 
+    31                              <1> ;Compare one String with another
+    32                              <1> ;	If source is less than destination, eax = -1
+    33                              <1> ;	If source is greater than destination, eax = 1
+    34                              <1> ;	If source is equal to destination, eax = 0
+    35                              <1> ;Stack contents:
+    36                              <1> ;	Address of destination string
+    37                              <1> ;	Address of source string
+    38                              <1> ;Example Usage:
+    39                              <1> ;	push	string1Address
+    40                              <1> ;	push	string2Address
+    41                              <1> ;	call	StringCompare
+    42                              <1> ;
+    43                              <1> extern		StringCompare
+    44                              <1> 
+    45                              <1> ;Copy one String to another
+    46                              <1> ;Stack contents:
+    47                              <1> ;	Address of destination string
+    48                              <1> ;	Address of source string
+    49                              <1> ;Example Usage:
+    50                              <1> ;	push	string1Address
+    51                              <1> ;	push	string2Address
+    52                              <1> ;	call	StringCopy
+    53                              <1> ;
+    54                              <1> extern		StringCopy
+    55                              <1> 
+    56                              <1> ;Print the data for a current function/procedure's stack frame
+    57                              <1> ;Notes:
+    58                              <1> ;	This function assumes you have created a valid stack frame
+    59                              <1> ;	Call this function after the stack frame is created an all
+    60                              <1> ;	local function variables have been allocated and before you use
+    61                              <1> ;	the stack for any other purposes
+    62                              <1> ;Stack contents:
+    63                              <1> ;	None
+    64                              <1> ;Example Usage:
+    65                              <1> ;	call	PrintStackFrame
+    66                              <1> ;
+    67                              <1> extern		PrintStackFrame
+    68                              <1> 
+    69                              <1> ;Print a tab character to stdout
+    70                              <1> ;Stack contents:
+    71                              <1> ;	None
+    72                              <1> ;Example Usage:
+    73                              <1> ;	call	PrintTab
+    74                              <1> ;
+    75                              <1> extern		PrintTab
+    76                              <1> 
+    77                              <1> ;Print a string which is not null terminated
+    78                              <1> ;Stack contents:
+    79                              <1> ;	The Address of the string to print
+    80                              <1> ;	The length of the string to print
+    81                              <1> ;Example Usage:
+    82                              <1> ;	push	stringVariable
+    83                              <1> ;	push	stringVariable.len
+    84                              <1> ;	call	PrintText
+    85                              <1> ;
+    86                              <1> extern		PrintText
+    87                              <1> 
+    88                              <1> ;Clears the keyboard buffer until \n or null are encountered
+    89                              <1> ;Stack contents:
+    90                              <1> ;	None
+    91                              <1> ;Example Usage:
+    92                              <1> ;	call	ClearKBuffer
+    93                              <1> ;
+    94                              <1> extern		ClearKBuffer
+    95                              <1> 
+    96                              <1> ;Print a new line to the console
+    97                              <1> ;Stack Contents:
+    98                              <1> ;	None
+    99                              <1> ;Example Usage:
+   100                              <1> ;	call	Printendl
+   101                              <1> ;
+   102                              <1> extern		Printendl
+   103                              <1> 
+   104                              <1> ;Convert and then print a 32bit decimal number
+   105                              <1> ;Stack contents:
+   106                              <1> ;	Value to Convert to an Ascii String
+   107                              <1> ;Example Usage:
+   108                              <1> ;	push DWORD [dwordvariable]
+   109                              <1> ;	call	Print32bitNumDecimal
+   110                              <1> ;
+   111                              <1> extern		Print32bitNumDecimal
+   112                              <1> 
+   113                              <1> ;Convert and then print a 32bit signed decimal number
+   114                              <1> ;Stack contents:
+   115                              <1> ;	Value to Convert to an Ascii String
+   116                              <1> ;Example Usage:
+   117                              <1> ;	push DWORD [dwordvariable]
+   118                              <1> ;	call	Print32bitSNumDecimal
+   119                              <1> ;
+   120                              <1> extern		Print32bitSNumDecimal
+   121                              <1> 
+   122                              <1> ;Convert and then print a 32bit binary number
+   123                              <1> ;Stack contents:
+   124                              <1> ;	Value to Convert to an Ascii String
+   125                              <1> ;Example Usage:
+   126                              <1> ;	push DWORD [dwordvariable]
+   127                              <1> ;	call	Print32bitNumBinary
+   128                              <1> ;
+   129                              <1> extern		Print32bitNumBinary
+   130                              <1> 
+   131                              <1> ;Print a full 32bit binary number including leading zeros
+   132                              <1> ;Stack contents:
+   133                              <1> ;	Value to Convert to an Ascii String
+   134                              <1> ;Example Usage:
+   135                              <1> ;	push DWORD [dwordvariable]
+   136                              <1> ;	call	Print32bitFullBinary
+   137                              <1> ;
+   138                              <1> extern		Print32bitFullBinary
+   139                              <1> 
+   140                              <1> ;Print a full 32-bits binary number in Floating Point format.
+   141                              <1> ;Stack contents:
+   142                              <1> ;	Value to Print to an Ascii String
+   143                              <1> extern		Print32bitFloatBinary
+   144                              <1> 
+   145                              <1> ;Convert and then print a 32bit hex number
+   146                              <1> ;Stack contents:
+   147                              <1> ;	Value to Convert to an Ascii String
+   148                              <1> ;Example Usage:
+   149                              <1> ;	push	DWORD [dWordVariable]
+   150                              <1> ;	call	Print32bitNumHex
+   151                              <1> ;
+   152                              <1> extern		Print32bitNumHex
+   153                              <1> 
+   154                              <1> ;Convert and then print a 32bit octal number
+   155                              <1> ;Stack contents:
+   156                              <1> ;	Value to Convert to an Ascii String
+   157                              <1> ;Example Usage:
+   158                              <1> ;	push	DWORD [dWordVariable]
+   159                              <1> ;	call	Print32bitNumOct
+   160                              <1> ;
+   161                              <1> extern		Print32bitNumOct
+   162                              <1> 
+   163                              <1> ;Print all 32bit Registers to the screen
+   164                              <1> ;Stack contents:
+   165                              <1> ;	None
+   166                              <1> ;Example Usage:
+   167                              <1> ;	call	PrintRegisters
+   168                              <1> ;
+   169                              <1> extern		PrintRegisters
+   170                              <1> 
+   171                              <1> ;Print all of the floating point registers ST0 - ST7
+   172                              <1> ;Stack Contents:
+   173                              <1> ;	None
+   174                              <1> ;Return: 	None
+   175                              <1> ;Example Usage:
+   176                              <1> ;	call	PrintFloatingRegisters
+   177                              <1> extern		PrintFloatingRegisters
+   178                              <1> 
+   179                              <1> ;Print a string with an ending 00h delimiter to the console
+   180                              <1> ;Stack contents:
+   181                              <1> ;	The Address of the string to print
+   182                              <1> ;Example Usage:
+   183                              <1> ;	push	stringVariable
+   184                              <1> ;	call	PrintString
+   185                              <1> ;
+   186                              <1> extern		PrintString
+   187                              <1> 
+   188                              <1> ;Print a string with an ending 00h delimiter to the console Right Justified to a print area
+   189                              <1> ;Stack contents:
+   190                              <1> ;	The Address of the string to print
+   191                              <1> ;	Width of the print area to print into
+   192                              <1> ;Example Usage:
+   193                              <1> ;	push	stringVariable
+   194                              <1> ;	push	widthValue
+   195                              <1> ;	call	PrintRight
+   196                              <1> ;
+   197                              <1> extern		PrintRight
+   198                              <1> 
+   199                              <1> ;Print a string with an ending 00h delimiter to the console Left Justified to a print area
+   200                              <1> ;Stack contents:
+   201                              <1> ;	Address of the String (Stack)
+   202                              <1> ;	Width of the print area to print into
+   203                              <1> ;Example Usage:
+   204                              <1> ;	push	stringVariable
+   205                              <1> ;	push	widthValue
+   206                              <1> ;	call	PrintLeft
+   207                              <1> ;
+   208                              <1> extern		PrintLeft
+   209                              <1> 
+   210                              <1> ;Print a string with an ending 00h delimiter to the console Centered to a print area
+   211                              <1> ;Stack contents:
+   212                              <1> ;	Address of the String (Stack)
+   213                              <1> ;	Width of the print area to print into
+   214                              <1> ;Example Usage:
+   215                              <1> ;	push	stringVariable
+   216                              <1> ;	push	widthValue
+   217                              <1> ;	call	PrintCenter
+   218                              <1> ;
+   219                              <1> extern		PrintCenter
+   220                              <1> 
+   221                              <1> ;Print a space to the console
+   222                              <1> ;Stack contents:
+   223                              <1> ;	None
+   224                              <1> ;Example Usage:
+   225                              <1> ;	call	PrintSpace
+   226                              <1> ;
+   227                              <1> extern		PrintSpace
+   228                              <1> 
+   229                              <1> ;Print a comma followed by a space to the console
+   230                              <1> ;Stack contents:
+   231                              <1> ;	None
+   232                              <1> ;Example Usage:
+   233                              <1> ;	call	PrintComma
+   234                              <1> ;
+   235                              <1> extern		PrintComma
+   236                              <1> 
+   237                              <1> ;Print all byte values found in an array in Hex format
+   238                              <1> ;Stack contents:
+   239                              <1> ;	Address of the Array (Stack)
+   240                              <1> ;	Number of items in the array
+   241                              <1> ;Example Usage:
+   242                              <1> ;	push	addressOfArray
+   243                              <1> ;	push	numItemsInArray
+   244                              <1> ;	call	PrintByteArray
+   245                              <1> ;
+   246                              <1> extern		PrintByteArray
+   247                              <1> 
+   248                              <1> ;Print all byte values found in an array in Decimal format
+   249                              <1> ;Stack contents:
+   250                              <1> ;	Address of the Array (Stack)
+   251                              <1> ;	Number of items in the array
+   252                              <1> ;Example Usage:
+   253                              <1> ;	push	addressOfArray
+   254                              <1> ;	push	numItemsInArray
+   255                              <1> ;	call	PrintByteArrayDec
+   256                              <1> ;
+   257                              <1> extern		PrintByteArrayDec
+   258                              <1> 
+   259                              <1> ;Print all signed byte values found in an array in Decimal format
+   260                              <1> ;Stack contents:
+   261                              <1> ;	Address of the Array (Stack)
+   262                              <1> ;	Number of items in the array
+   263                              <1> ;Example Usage:
+   264                              <1> ;	push	addressOfArray
+   265                              <1> ;	push	numItemsInArray
+   266                              <1> ;	call	PrintSByteArrayDec
+   267                              <1> ;
+   268                              <1> extern		PrintSByteArrayDec
+   269                              <1> 
+   270                              <1> ;Print all word values found in an array in Hex format
+   271                              <1> ;Stack contents:
+   272                              <1> ;	Address of the Array (Stack)
+   273                              <1> ;	Number of items in the array
+   274                              <1> ;Example Usage:
+   275                              <1> ;	push	addressOfArray
+   276                              <1> ;	push	numItemsInArray
+   277                              <1> ;	call	PrintWordArray
+   278                              <1> ;
+   279                              <1> extern		PrintWordArray
+   280                              <1> 
+   281                              <1> ;Print all word values found in an array in Decimal format
+   282                              <1> ;Stack contents:
+   283                              <1> ;	Address of the Array (Stack)
+   284                              <1> ;	Number of items in the array
+   285                              <1> ;Example Usage:
+   286                              <1> ;	push	addressOfArray
+   287                              <1> ;	push	numItemsInArray
+   288                              <1> ;	call	PrintWordArrayDec
+   289                              <1> ;
+   290                              <1> extern		PrintWordArrayDec
+   291                              <1> 
+   292                              <1> ;Print all signed word values found in an array in Decimal format
+   293                              <1> ;Stack contents:
+   294                              <1> ;	Address of the Array (Stack)
+   295                              <1> ;	Number of items in the array
+   296                              <1> ;Example Usage:
+   297                              <1> ;	push	addressOfArray
+   298                              <1> ;	push	numItemsInArray
+   299                              <1> ;	call	PrintSWordArrayDec
+   300                              <1> ;
+   301                              <1> extern		PrintSWordArrayDec
+   302                              <1> 
+   303                              <1> ;Print all Double Word values found in an array in Hex format
+   304                              <1> ;Stack contents:
+   305                              <1> ;	Address of the Array (Stack)
+   306                              <1> ;	Number of items in the array
+   307                              <1> ;Example Usage:
+   308                              <1> ;	push	addressOfArray
+   309                              <1> ;	push	numItemsInArray
+   310                              <1> ;	call	PrintDWordArray
+   311                              <1> ;
+   312                              <1> extern		PrintDWordArray
+   313                              <1> 
+   314                              <1> ;Print all Double Word values found in an array in Decimal format
+   315                              <1> ;Stack contents:
+   316                              <1> ;	Address of the Array (Stack)
+   317                              <1> ;	Number of items in the array
+   318                              <1> ;Example Usage:
+   319                              <1> ;	push	addressOfArray
+   320                              <1> ;	push	numItemsInArray
+   321                              <1> ;	call	PrintDWordArrayDec
+   322                              <1> ;
+   323                              <1> extern		PrintDWordArrayDec
+   324                              <1> 
+   325                              <1> ;Print all signed Double Word values found in an array in Decimal format
+   326                              <1> ;Stack contents:
+   327                              <1> ;	Address of the Array (Stack)
+   328                              <1> ;	Number of items in the array
+   329                              <1> ;Example Usage:
+   330                              <1> ;	push	addressOfArray
+   331                              <1> ;	push	numItemsInArray
+   332                              <1> ;	call	PrintSDWordArrayDec
+   333                              <1> ;
+   334                              <1> extern		PrintSDWordArrayDec
+   335                              <1> 
+   336                              <1> ;Print a Double-word floating point number
+   337                              <1> ;This version uses the integer extraction power of the FPU instead of moving bits
+   338                              <1> ;	around to extract the exponent and left/right mantissa's making this a
+   339                              <1> ;	much easier and shorter algorithm
+   340                              <1> ;Stack Contents:
+   341                              <1> ;	The floating point number to print
+   342                              <1> ;	The number of fractional Digits to print
+   343                              <1> ;Return:
+   344                              <1> ;	None
+   345                              <1> ;Example Usage:
+   346                              <1> ;	push	[numberToPrint]
+   347                              <1> ;	push	[fractionalDigits]
+   348                              <1> ;	call	PrintDWFloat
+   349                              <1> extern		PrintDWFloat
+   350                              <1> 
+   351                              <1> ;Print a Double-word floating point number in scientific notation
+   352                              <1> ;This version uses the integer extraction power of the FPU instead of moving bits
+   353                              <1> ;	around to extract the exponent and left/right mantissa's making this a
+   354                              <1> ;	much easier and shorter algorithm
+   355                              <1> ;Stack Contents:
+   356                              <1> ;	The floating point number to print
+   357                              <1> ;	The number of fractional Digits to print
+   358                              <1> ;Return:
+   359                              <1> ;	None
+   360                              <1> ;Example Usage:
+   361                              <1> ;	push	[numberToPrint]
+   362                              <1> ;	push	[fractionalDigits]
+   363                              <1> ;	call	PrintDWFloatSN
+   364                              <1> extern		PrintDWFloatSN
+   365                              <1> 
+   366                              <1> ;Get a random number from the CPU
+   367                              <1> ;Stack contents:
+   368                              <1> ;	The maximum value of the random number
+   369                              <1> ;	Signed = 1, Unsigned = 0
+   370                              <1> ;Return Value:
+   371                              <1> ;	eax = Random number value
+   372                              <1> ;Example Usage:
+   373                              <1> ;	push 	DWORD 200			;Will create a random number no greater than 200
+   374                              <1> ;	push	DWORD 1				;1 = signed, 0 = uinsigned
+   375                              <1> ;	call	GetRandomInt
+   376                              <1> ;
+   377                              <1> extern		GetRandomInt
+   378                              <1> 
+   379                              <1> ;Call the necessary interrupt with the necessary register values to read data from the keyboard
+   380                              <1> ;Stack Contents:
+   381                              <1> ;	Address of keyboard buffer
+   382                              <1> ;	Size of the keyboard buffer
+   383                              <1> ;Return:
+   384                              <1> ;	eax will contain the number of characters the user input
+   385                              <1> ;Example Usage:
+   386                              <1> ;	push	readbuffer
+   387                              <1> ;	push	readbuffer.len
+   388                              <1> ;	call	ReadText
+   389                              <1> extern		ReadText
+   390                              <1> 
+   391                              <1> ;Call the necessary interrupt with the necessary register values to read data from the keyboard
+   392                              <1> ;Stack Contents:
+   393                              <1> ;	Address of the string to print
+   394                              <1> ;	Address of keyboard buffer
+   395                              <1> ;	Size of the keyboard buffer
+   396                              <1> ;Return:
+   397                              <1> ;	eax will contain the number of characters input
+   398                              <1> ;Example Usage:
+   399                              <1> ;	push	inputPromptVariable
+   400                              <1> ;	push	keyboardBufferVariable
+   401                              <1> ;	push	keyboardBufferVariable.len  ;This is the maximum size of the buffer
+   402                              <1> ;	call	ReadTextWPrompt
+   403                              <1> extern		ReadTextWPrompt
+   404                              <1> 
+   405                              <1> ;Call the necessary interrupt with the necessary register values to read the system time Hour
+   406                              <1> ;Stack Contents:
+   407                              <1> ;	None
+   408                              <1> ;Return:  
+   409                              <1> ;	eax:  The current hour
+   410                              <1> ;Example Usage:
+   411                              <1> ;	call	GetCurrentHour
+   412                              <1> extern		GetCurrentHour
+   413                              <1> 
+   414                              <1> ;Call the necessary interrupt with the necessary register values to read the system time Minute
+   415                              <1> ;Stack Contents:
+   416                              <1> ;	None
+   417                              <1> ;Return:  
+   418                              <1> ;	eax:  The current minute
+   419                              <1> ;Example Usage:
+   420                              <1> ;	call	GetCurrentMinute
+   421                              <1> extern		GetCurrentMinute
+   422                              <1> 
+   423                              <1> ;Call the necessary interrupt with the necessary register values to read the system time Second
+   424                              <1> ;Stack Contents:
+   425                              <1> ;	None
+   426                              <1> ;Return:  
+   427                              <1> ;	eax:  The current second
+   428                              <1> ;Example Usage:
+   429                              <1> ;	call	GetCurrentSecond
+   430                              <1> extern		GetCurrentSecond
+   431                              <1> 
+   432                              <1> ;Call the function to get the system time and then print it
+   433                              <1> ;Stack Contents:
+   434                              <1> ;	None
+   435                              <1> ;Return:  
+   436                              <1> ;	None
+   437                              <1> ;Example Usage:
+   438                              <1> ;	call	PrintSystemTime
+   439                              <1> extern		PrintSystemTime
+   440                              <1> 
+   441                              <1> ;Call the function to get the CPU's Time Stamp Counter
+   442                              <1> ;Stack Contents:
+   443                              <1> ;	None
+   444                              <1> ;Return:  
+   445                              <1> ;	eax: The time stamp counter int he CPU
+   446                              <1> ;Example Usage:
+   447                              <1> ;	call	GetTSC
+   448                              <1> extern		GetTSC
+   449                              <1> 
+   450                              <1> ;An Internal function used to get the system time hours, minutes, seconds
+   451                              <1> ;Stack Contents:
+   452                              <1> ; None
+   453                              <1> ;Return: 
+   454                              <1> ;	None
+   455                              <1> ;Example Usage
+   456                              <1> ;   call GetSystemTime
+   457                              <1> extern		GetSystemTime
+   458                              <1> 
+   459                              <1> ;Unsigned Int to Ascii
+   460                              <1> ;Convert a 32bit unsigned integer into a decimal Ascii string
+   461                              <1> ;Stack contents:
+   462                              <1> ;	Value to Convert to an Ascii String
+   463                              <1> ;	Address of array where the ascii string should be placed
+   464                              <1> ;Example Usage:
+   465                              <1> ;	push DWORD [dwordvariable]
+   466                              <1> ;	push stringArray
+   467                              <1> ;	call	UInttoA
+   468                              <1> ;
+   469                              <1> extern		UInttoA
+   470                              <1> 
+   471                              <1> ;Signed Int to Ascii
+   472                              <1> ;Convert a 32bit signed integer into a decimal Ascii string
+   473                              <1> ;Stack contents:
+   474                              <1> ;	Value to Convert to an Ascii String
+   475                              <1> ;	Address of array where the ascii string should be placed
+   476                              <1> ;Example Usage:
+   477                              <1> ;	push DWORD [dwordvariable]
+   478                              <1> ;	push stringArray
+   479                              <1> ;	call	SInttoA
+   480                              <1> ;
+   481                              <1> extern		SInttoA
+   482                              <1> 
+   483                              <1> ;Ascii to Unsigned Int
+   484                              <1> ;This function will convert an ascii value as an unsigned integer in the EAX register
+   485                              <1> ;Arguments: Ascii int String address
+   486                              <1> ;Return: 	eax will contain the usigned ingeter
+   487                              <1> ;			Carry flag will be set if the string is an invalid integer
+   488                              <1> ;Example Usage:
+   489                              <1> ;	push	asciiString
+   490                              <1> ;	call	AtoUInt
+   491                              <1> ;	Note: eax will contain the value of the unsigned integer
+   492                              <1> ;	jnc		validInteger
+   493                              <1> ;	Otherwise, an invalid integer was sent to the function
+   494                              <1> extern 		AtoUInt
+   495                              <1> 
+   496                              <1> ;Ascii to Signed Int
+   497                              <1> ;This function will convert an ascii value as an signed integer in the EAX register
+   498                              <1> ;Arguments: Ascii int String address
+   499                              <1> ;Return: 	eax will contain the signed ingeter
+   500                              <1> ;			Carry flag will be set if the string is an invalid integer
+   501                              <1> ;Example Usage:
+   502                              <1> ;	push	asciiString
+   503                              <1> ;	call	AtoSInt
+   504                              <1> ;	Note: eax will contain the value of the signed integer
+   505                              <1> ;	jnc		validInteger
+   506                              <1> ;	Otherwise, an invalid integer was sent to the function
+   507                              <1> extern 		AtoSInt
+   508                              <1> 
+   509                              <1> ;Ascii a Floating Point Number
+   510                              <1> ;This function will scan a string, then it will check it to make sure it
+   511                              <1> ;is a valid floating point number.  It will then convert the ASCII string into a EWORD
+   512                              <1> ;and return that value in the EAX register.
+   513                              <1> ;Stack Contents:
+   514                              <1> ;	None
+   515                              <1> ;Return: 	EAX and ST(0) will contain the number
+   516                              <1> ;			Carry flag will be set if invalid float point number was supplied
+   517                              <1> ;Example Usage:
+   518                              <1> ;	push	someString
+   519                              <1> ;	call	AtoFloat
+   520                              <1> ;	jnc		ValidFloatLabel
+   521                              <1> ;	otherwise, a problem occured - print an error message
+   522                              <1> extern		AtoFloat
+   523                              <1> 
+   524                              <1> 
+   525                              <1> ;Input UnSigned Int
+   526                              <1> ;This function will let the user input an integer returned into the EAX register
+   527                              <1> ;Stack Contents:
+   528                              <1> ;	None
+   529                              <1> ;Return: 	eax will contain the usigned ingeter
+   530                              <1> ;			Carry flag will be set if invalid integer was input
+   531                              <1> ;Example Usage:
+   532                              <1> ;	call	InputInt
+   533                              <1> ;	Note: eax will contain the value of the unsigned integer entered
+   534                              <1> ;	jnc		validIntegerInput
+   535                              <1> ;	Otherwise, an invalid integer was input
+   536                              <1> extern		InputUInt
+   537                              <1> 
+   538                              <1> ;Input Signed Int
+   539                              <1> ;This function will let the user input a signed integer and put the value
+   540                              <1> ;into the EAX register.
+   541                              <1> ;Stack Contents:
+   542                              <1> ;	None
+   543                              <1> ;Return: 	eax will contain the usigned ingeter
+   544                              <1> ;			Carry flag will be set if invalid integer was input
+   545                              <1> ;Example Usage:
+   546                              <1> ;	call	InputSInt
+   547                              <1> ;	Note: eax will contain the value of the signed integer entered
+   548                              <1> ;	jnc		validIntegerInput
+   549                              <1> ;	Otherwise, an invalid integer was input
+   550                              <1> extern		InputSInt
+   551                              <1> 
+   552                              <1> ;Input Binary Number
+   553                              <1> ;This function will let the user input a string, then it will check it to make sure it
+   554                              <1> ;is a binary string.  It will then convert the ASCII string into a DWORD and return
+   555                              <1> ;that value in the EAX register.
+   556                              <1> ;Stack Contents:
+   557                              <1> ;	None
+   558                              <1> ;Return: 	eax will contain the numeric binary value
+   559                              <1> ;			Carry flag will be set if invalid binary number was input
+   560                              <1> ;Example Usage:
+   561                              <1> ;	call	InputBin
+   562                              <1> ;	jnc		ValidBinLabel
+   563                              <1> ;	otherwise, a problem occured - print an error message
+   564                              <1> extern		InputBin
+   565                              <1> 
+   566                              <1> ;This function will let the user input a string, then it will check it to make sure it
+   567                              <1> ;is a hexidecimal string.  It will then convert the ASCII string into a DWORD and return
+   568                              <1> ;that value in the EAX register.
+   569                              <1> ;Stack Contents:
+   570                              <1> ;	None
+   571                              <1> ;Return: 	eax will contain the numeric hexidecimal value
+   572                              <1> ;			Carry flag will be set if invalid hex number was input
+   573                              <1> ;Example Usage:
+   574                              <1> ;	call	InputHex
+   575                              <1> ;	jnc		ValidHexLabel
+   576                              <1> ;	otherwise, a problem occured - print an error message
+   577                              <1> extern		InputHex
+   578                              <1> 
+   579                              <1> ;Input a Floating Point Number
+   580                              <1> ;This function will let the user input a string, then it will check it to make sure it
+   581                              <1> ;is a valid floating point number.  It will then convert the ASCII string into a EWORD
+   582                              <1> ;and return that value in the EAX register.
+   583                              <1> ;Stack Contents:
+   584                              <1> ;	None
+   585                              <1> ;Return: 	eax and ST(0) will contain the number
+   586                              <1> ;			Carry flag will be set if invalid number was input
+   587                              <1> ;Example Usage:
+   588                              <1> ;	call	InputFloat
+   589                              <1> ;	jnc		ValidFloatLabel
+   590                              <1> ;	otherwise, a problem occured - print an error message
+   591                              <1> extern		InputFloat
+   592                              <1> 
+   593                              <1> ;Calculate the Average in a Double Word Array
+   594                              <1> ;Stack Contents:
+   595                              <1> ;			ArrayAddress
+   596                              <1> ;			Number of Items in the Array
+   597                              <1> ;Return:	eax will contain the average
+   598                              <1> ;Example Usage:
+   599                              <1> ;	push	addressofarray
+   600                              <1> ;	push	numberOfItemsInArray
+   601                              <1> ;	call	DWArrayAverage
+   602                              <1> extern		DWArrayAverage
+   603                              <1> 
+   604                              <1> ;Calculate the Average in a Word Array
+   605                              <1> ;Stack Contents:
+   606                              <1> ;			ArrayAddress
+   607                              <1> ;			Number of Items in the Array
+   608                              <1> ;Return:	eax will contain the average
+   609                              <1> ;Example Usage:
+   610                              <1> ;	push	addressofarray
+   611                              <1> ;	push	numberOfItemsInArray
+   612                              <1> ;	call	WArrayAverage
+   613                              <1> extern		WArrayAverage
+   614                              <1> 
+   615                              <1> ;Calculate the Average in a Byte Array
+   616                              <1> ;Stack Contents:
+   617                              <1> ;			ArrayAddress
+   618                              <1> ;			Number of Items in the Array 
+   619                              <1> ;Return:	eax will contain the average
+   620                              <1> ;Example Usage:
+   621                              <1> ;	push	addressofarray
+   622                              <1> ;	push	numberOfItemsInArray
+   623                              <1> ;	call	BArrayAverage
+   624                              <1> extern		BArrayAverage
+   625                              <1> 
+   626                              <1> ;Allocate some memory (x bytes)	and return the high address to EAX
+   627                              <1> ;Stack Contents:
+   628                              <1> ;	Number of BYTES to add to memory
+   629                              <1> ;Return: 	EAX will contain the new high memory address
+   630                              <1> ;Example Usage:
+   631                              <1> ;	push	DWORD 1024			;increase memory by 1024 bytes
+   632                              <1> ;	call	AllocateBytes
+   633                              <1> extern		AllocateBytes
+   634                              <1> 
+   635                              <1> ;Free some memory (x bytes)	and return the high address to EAX
+   636                              <1> ;Stack Contents:
+   637                              <1> ;	Number of BYTES to remove from memory
+   638                              <1> ;Return: 	EAX will contain the new high memory address
+   639                              <1> ;Example Usage:
+   640                              <1> ;	push	DWORD 1024			;reduce memory by 1024 bytes
+   641                              <1> ;	call	FreeBytes
+   642                              <1> extern		FreeBytes
+   643                              <1> 
+   644                              <1> ;Allocate some memory as a-word array
+   645                              <1> ;Stack Contents:
+   646                              <1> ;	Number of WORDS to allocate
+   647                              <1> ;Return:	eax will contain highest address of this memory
+   648                              <1> ;Example Usage:
+   649                              <1> ;	push	DWORD 1024			;increase memory by 2048 bytes
+   650                              <1> ;	call	AllocateWORDArray
+   651                              <1> extern		AllocateWORDArray
+   652                              <1> 
+   653                              <1> ;Allocate some memory as a double-word array
+   654                              <1> ;Stack Contents:
+   655                              <1> ;	Number of DWORDS to allocate 
+   656                              <1> ;Return:	eax will contain highest address of this memory
+   657                              <1> ;Example Usage:
+   658                              <1> ;	push	DWORD 1024			;increase memory by 4096 bytes
+   659                              <1> ;	call	AllocateDWORDArray
+   660                              <1> extern		AllocateDWORDArray
+   661                              <1> 
+   662                              <1> ;Simple xor encryption/decryption of a string using a user entered key
+   663                              <1> ;Stack Contents:
+   664                              <1> ;	String address to encrypt/decrypt (Stack ebp + 24)
+   665                              <1> ;	Length of the string to encrypt (Stack ebp + 20)
+   666                              <1> ;	string address to be used as a key (Stack ebp + 16)
+   667                              <1> ;	integer value indicating the length of the key (Stack ebp + 12)
+   668                              <1> ;	string address where the encrypted/decrypted data should go (Stack ebp + 8)
+   669                              <1> ;Return:	Total bytes encrypted in eax
+   670                              <1> ;Example Usage:
+   671                              <1> ;	push	Stringaddress
+   672                              <1> ;	push	stringlength
+   673                              <1> ;	push	keystringaddress
+   674                              <1> ;	push	lengthofkey
+   675                              <1> ;	push	resultstringaddress
+   676                              <1> ;	call	EncryptString
+   677                              <1> extern		EncryptString
+   678                              <1> 
+   679                              <1> ;Get the length of a string based on a null (00) delimeter
+   680                              <1> ;Stack Contents:
+   681                              <1> ;	Address of the string
+   682                              <1> ;Return:	Size of the string in eax
+   683                              <1> ;Example Usage:
+   684                              <1> ;	push	addressofstring
+   685                              <1> ;	call	StringSize
+   686                              <1> extern		StringSize
+   687                              <1> 
+   688                              <1> ;Calculate the GCD of two numbers passed to this function
+   689                              <1> ;Stack Contents:
+   690                              <1> ;	Integer #1 and Integer #2 in the stack
+   691                              <1> ;Return:	GCD in eax
+   692                              <1> ;Example Usage:
+   693                              <1> ;	push	firstInteger
+   694                              <1> ;	push	secondInteger
+   695                              <1> ;	call	CalcGCD
+   696                              <1> extern		CalcGCD
+   697                              <1> 
+   698                              <1> ;Calculate the factorial of a number passed to this function
+   699                              <1> ;Stack Contents:
+   700                              <1> ;	Integer number in the stack
+   701                              <1> ;Return:	Factorial of x in eax
+   702                              <1> ;Example Usage:
+   703                              <1> ;	push	aninteger
+   704                              <1> ;	call	CalcFactorial
+   705                              <1> extern		CalcFactorial
+   706                              <1> 
+   707                              <1> ;Calculate the factorial of a number passed to this function
+   708                              <1> ;Stack Contents:
+   709                              <1> ;	Integer number in the stack
+   710                              <1> ;Return:	Factorial of x in eax as a floating point value
+   711                              <1> ;Example Usage:
+   712                              <1> ;	push	aninteger
+   713                              <1> ;	call	CalcFactorialFloat
+   714                              <1> extern		CalcFactorialFloat
+   715                              <1> 
+   716                              <1> ;Set the carry flag if the floating poing number pushed onto the Stack
+   717                              <1> ;is a +NAN, -NAN, +Infinity or -Infinity
+   718                              <1> ;Stack Contents:
+   719                              <1> ; 	DWORD Floating Point number (Stack)
+   720                              <1> ;Return: Carry Flag Set if NAN, Clear if OK
+   721                              <1> ;Example Usage
+   722                              <1> ;   push  DWORD [floatingVariable]
+   723                              <1> ;   call  IsNAN
+   724                              <1> extern    IsNAN
+   725                              <1> 
+   726                              <1> ;Copy all bytes from source to destination
+   727                              <1> ;	The string does not need to be null terminated
+   728                              <1> ;Stack contents:
+   729                              <1> ;	Address of the source string of bytes
+   730                              <1> ;   Address of the destination string of bytes
+   731                              <1> ;   Number of bytes to copy (D-Word)
+   732                              <1> ;Return Value:
+   733                              <1> ;	None
+   734                              <1> ;Example Usage:
+   735                              <1> ;	push 	myString			;Address of the source byte array - string
+   736                              <1> ;   push    newString           ;Address of the destination string
+   737                              <1> ;   push    ecx                 ;Number of bytes to copy
+   738                              <1> ;	call	CopyText
+   739                              <1> ;
+   740                              <1> extern		CopyText
+   741                              <1> 
+   742                              <1> ;Copy all bytes from source to destination until null termination found
+   743                              <1> ;	The string must be null terminated
+   744                              <1> ;Stack contents:
+   745                              <1> ;	Address of the source string of bytes
+   746                              <1> ;   Address of the destination string of bytes
+   747                              <1> ;Return Value:
+   748                              <1> ;	eax = number of cnaracters copied from source to destination
+   749                              <1> ;Example Usage:
+   750                              <1> ;	push 	myString			;Address of the source byte array - string
+   751                              <1> ;   push    newString           ;Address of the destination string
+   752                              <1> ;	call	CopyString
+   753                              <1> ;
+   754                              <1> extern		CopyString
+   755                              <1> 
+   756                              <1> 
+   757                              <1> ;Print the date in the format mm/dd/yyyy
+   758                              <1> ;Stack Contents:
+   759                              <1> ; 	None
+   760                              <1> ;Return: None
+   761                              <1> ;Example Usage
+   762                              <1> ;   call PrintSystemDateEng
+   763                              <1> extern		PrintSystemDateEng
+   764                              <1> 
+   765                              <1> ;Print the date in the format yyyy/mm/dd
+   766                              <1> ;Stack Contents:
+   767                              <1> ; 	None
+   768                              <1> ;Return: None
+   769                              <1> ;Example Usage
+   770                              <1> ;   call PrintSystemDateEuro
+   771                              <1> extern		PrintSystemDateEuro
+   772                              <1> 
+   773                              <1> ;Convert and then return in a byte array a64-but number in decimal format
+   774                              <1> ;Stack contents:
+   775                              <1> ;	Value to Convert to an Ascii String
+   776                              <1> ;	Address of byte array to contain the result
+   777                              <1> ;Return Value:
+   778                              <1> ;	eax = Number of characters returned
+   779                              <1> ;Example Usage:
+   780                              <1> ;	push 	DWORD [doublewordvariable]
+   781                              <1> ;	push 	stringbuffer
+   782                              <1> ;	call	ToString32bitNumDecimal
+   783                              <1> ;
+   784                              <1> extern		ToString32bitNumDecimal
+   785                              <1> 
+   786                              <1> ;Convert and then return in a byte array a 64bit signed number in decimal format
+   787                              <1> ;Stack contents:
+   788                              <1> ;	Value to Convert to an Ascii String
+   789                              <1> ;	Address of byte array to contain the result
+   790                              <1> ;Return Value:
+   791                              <1> ;	eax = Number of characters returned
+   792                              <1> ;Example Usage:
+   793                              <1> ;	push 	DWORD [doublewordvariable]
+   794                              <1> ;	push 	stringbuffer
+   795                              <1> ;	call	ToString32bitSNumDecimal
+   796                              <1> ;
+   797                              <1> extern		ToString32bitSNumDecimal
+   798                              <1> 
+   799                              <1> ;Get the system date in English format and return to the calling function in th array
+   800                              <1> ;	provided
+   801                              <1> ;Stack contents:
+   802                              <1> ;	Address of byte array to contain the result
+   803                              <1> ;Return Value:
+   804                              <1> ;	eax = Number of characters returned
+   805                              <1> ;Example Usage:
+   806                              <1> ;	push 	stringbuffer
+   807                              <1> ;	call	GetEngDateString
+   808                              <1> ;
+   809                              <1> extern		GetEngDateString
+   810                              <1> 
+   811                              <1> ;Get the system date in European format and return to the calling function in th array
+   812                              <1> ;	provided
+   813                              <1> ;Stack contents:
+   814                              <1> ;	Address of byte array to contain the result
+   815                              <1> ;Return Value:
+   816                              <1> ;	eax = Number of characters returned
+   817                              <1> ;Example Usage:
+   818                              <1> ;	push 	stringbuffer
+   819                              <1> ;	call	GetEuroDateString
+   820                              <1> ;
+   821                              <1> extern		GetEuroDateString
+   822                              <1> 
+   823                              <1> ;Get the system time and return to the calling function in th array
+   824                              <1> ;	provided
+   825                              <1> ;Stack contents:
+   826                              <1> ;	Address of byte array to contain the result
+   827                              <1> ;Return Value:
+   828                              <1> ;	eax = Number of characters returned
+   829                              <1> ;Example Usage:
+   830                              <1> ;	push 	stringbuffer
+   831                              <1> ;	call	GetTimeString
+   832                              <1> ;
+   833                              <1> extern		GetTimeString
+   834                              <1> 
+   835                              <1> ;Calculate the Variance from an array of numbers
+   836                              <1> ;Stack contents:
+   837                              <1> ;	Address of sample array of Double words
+   838                              <1> ;	The number of samples to process
+   839                              <1> ;Return Value:
+   840                              <1> ;	eax = Calculated Variance
+   841                              <1> ;Example Usage:
+   842                              <1> ;	push 	sampleArray			;Address of the array of numeric samples
+   843                              <1> ;	push	10					;process 10 of the numbers in the array
+   844                              <1> ;	call	CalcVariance
+   845                              <1> ;
+   846                              <1> extern		CalcVariance
+   847                              <1> 
+   848                              <1> ;Calculate the Standard Deviation from an array of numbers
+   849                              <1> ;Stack contents:
+   850                              <1> ;	Address of sample array of Double words
+   851                              <1> ;	The number of samples to process
+   852                              <1> ;Return Value:
+   853                              <1> ;	eax = Calculated Standard Deviation
+   854                              <1> ;Example Usage:
+   855                              <1> ;	push 	sampleArray			;Address of the array of numeric samples
+   856                              <1> ;	push	10					;process 10 of the numbers in the array
+   857                              <1> ;	call	CalcStdDev
+   858                              <1> ;
+   859                              <1> extern		CalcStdDev
+   860                              <1> 
+   861                              <1> ;Calculate the Mean from an array of numbers
+   862                              <1> ;Stack contents:
+   863                              <1> ;	Address of sample array of Double words
+   864                              <1> ;	The number of samples to process
+   865                              <1> ;Return Value:
+   866                              <1> ;	eax = Calculated Mean
+   867                              <1> ;Example Usage:
+   868                              <1> ;	push 	sampleArray			;Address of the array of numeric samples
+   869                              <1> ;	push	10					;process 10 of the numbers in the array
+   870                              <1> ;	call	CalcMean
+   871                              <1> ;
+   872                              <1> extern		CalcMean
+   873                              <1> 
+   874                              <1> ;Fills an array with random double values
+   875                              <1> ;Stack contents:
+   876                              <1> ;	Address of array of Double words
+   877                              <1> ;	The number of samples to process
+   878                              <1> ;	Maximum value of the random number(s)
+   879                              <1> ;	Signed = 1, Unsigned = 0
+   880                              <1> ;Return Value:
+   881                              <1> ;	Nothing
+   882                              <1> ;Example Usage:
+   883                              <1> ;	push 	sampleArray			;Address of the array of numeric samples
+   884                              <1> ;	push	10					;process 10 of the numbers in the array
+   885                              <1> ;	push	500					;The maximum random value should be 500
+   886                              <1> ;	push	0					;Unsigned only
+   887                              <1> ;	call	RandomArray
+   888                              <1> ;
+   889                              <1> extern		RandomArray
+   890                              <1> 
+   891                              <1> ;Convert all lower case ASCII alphabetic characters to upper case
+   892                              <1> ;	The string must be null terminated
+   893                              <1> ;Stack contents:
+   894                              <1> ;	Address of the string array of bytes
+   895                              <1> ;Return Value:
+   896                              <1> ;	eax = number of cnaracters converted to upper case
+   897                              <1> ;Example Usage:
+   898                              <1> ;	push 	myString			;Address of the byte array - string
+   899                              <1> ;	call	ToUpper
+   900                              <1> ;
+   901                              <1> extern		ToUpper
+   902                              <1> 
+   903                              <1> ;Convert all upper case ASCII alphabetic characters to lower case
+   904                              <1> ;	The string must be null terminated
+   905                              <1> ;Stack contents:
+   906                              <1> ;	Address of the string array of bytes
+   907                              <1> ;Return Value:
+   908                              <1> ;	eax = number of cnaracters converted to lower case
+   909                              <1> ;Example Usage:
+   910                              <1> ;	push 	myString			;Address of the byte array - string
+   911                              <1> ;	call	ToLower
+   912                              <1> ;
+   913                              <1> extern		ToLower
+   914                              <1> 
+   915                              <1> ;Using select sort, sort an unsigned double array in ascending or descening order
+   916                              <1> ;Stack contents:
+   917                              <1> ;	Address of a Double-word array
+   918                              <1> ;	Size of the Double-word array
+   919                              <1> ;	Sort ordere: 0- = ascending, 1 = descending.
+   920                              <1> ;Return Values:
+   921                              <1> ;	EAX = number of swaps done
+   922                              <1> ;	EAX = 0: array is sorted, or, the number of items indicated is 0 or less than 0
+   923                              <1> ;Example Usage:
+   924                              <1> ;	push	theArray	;Address of the quad-word array
+   925                              <1> ;	push	10h			;Number of items in the array
+   926                              <1> ;	push	0h			;Ascending sort
+   927                              <1> ;	call	selectUDsort
+   928                              <1> ;
+   929                              <1> extern selectUDsort
+   930                              <1> 
+   931                              <1> ;Using select sort, sort an signed double word array in ascending or descening order
+   932                              <1> ;Stack contents:
+   933                              <1> ;	Address of a Double-word array
+   934                              <1> ;	Size of the Double-word array
+   935                              <1> ;	Sort ordere: 0- = ascending, 1 = descending.
+   936                              <1> ;Return Values:
+   937                              <1> ;	EAX = number of swaps done
+   938                              <1> ;	EAX = 0: array is sorted, or, the number of items indicated is 0 or less than 0
+   939                              <1> ;Example Usage:
+   940                              <1> ;	push	theArray	;Address of the quad-word array
+   941                              <1> ;	push	10h			;Number of items in the array
+   942                              <1> ;	push	0h			;Ascending sort
+   943                              <1> ;	call	selectSQsort
+   944                              <1> ;
+   945                              <1> extern selectSDsort
+   946                              <1> 
+     8                                  
+     9                                  SECTION .data
+    10 00000000 57656C636F6D652074-     	openPrompt	db	"Welcome to my Program", 0h
+    10 00000009 6F206D792050726F67-
+    10 00000012 72616D00           
+    11 00000016 50726F6772616D2065-     	closePrompt	db	"Program ending, have a nice day", 0h
+    11 0000001F 6E64696E672C206861-
+    11 00000028 76652061206E696365-
+    11 00000031 2064617900         
+    12                                  	
+    13 00000036 14000000                	arraySize dd 20
+    14                                  	
+    15                                  	;intPtr dd 0
+    16                                  	
+    17                                  SECTION .bss
+    18 00000000 ????????                	bssBass resd 1 ;contain the original limit of my .bss section
+    19 00000004 ????????                	intPtr resd 1   ;contain the adress of dynamic integer
+    20 00000008 ????????                	arrayPtr resd 1 ;the adress of our array
+    21                                  
+    22                                  SECTION     .text
+    23                                  	global      _start
+    24                                  
+    25                                  _start:
+    26 00000000 90                      	nop
+    27                                  	
+    28 00000001 68[00000000]                push	openPrompt
+    29 00000006 E8(00000000)                call	PrintString
+    30 0000000B E8(00000000)                call	Printendl
+    31                                      
+    32                                      ;obtain and save limit of my cuurent .bss section
+    33 00000010 BB00000000                  mov ebx, 0   ;get the limit of the curent bss section
+    34                                  		;rdi =0
+    35 00000015 B82D000000                  mov eax, 45  ;execute the sys_brk function within the OS
+    36                                  		;rax =0ch
+    37 0000001A CD80                        int 80h ;tickle the kernel
+    38                                  		;syscall
+    39 0000001C A3[00000000]            	mov [bssBass], eax ;save the original bss section limit
+    40 00000021 A3[04000000]                mov [intPtr], eax
+    41                                      
+    42 00000026 8B1D[04000000]              mov ebx, [intPtr]   ; Allocated the 4 bytes at the bottom of the .bss
+    43 0000002C 83C304                      add ebx, 4   		;
+    44 0000002F B82D000000                  mov eax, 45			;
+    45 00000034 CD80                        int 80h				;
+    46 00000036 83F800                      cmp eax, 0			; check to be sure it work
+    47 00000039 7425                        je memoryAllocationError
+    48                                      
+    49 0000003B 8B35[04000000]              mov esi, [intPtr]
+    50 00000041 C70699000000                mov [esi], DWORD 99h
+    51                                      
+    52                                      
+    53 00000047 8B1D[00000000]              mov ebx, [bssBass]   ;delete out integer variable
+    54 0000004D B82D000000                  mov eax, 45
+    55 00000052 CD80                        int 80h
+    56 00000054 C705[04000000]0000-         mov [intPtr], DWORD 0h  ; null out the pointer
+    56 0000005C 0000               
+    57                                      
+    58                                      
+    59 0000005E EB65                        jmp endItAll
+    60                                      memoryAllocationError:
+    61 00000060 90                      		nop
+    62                                      
+    63                                     
+    64                                      
+    65                                      ;Dynamically allocated an array
+    66                                      ;obtain and save limit of my cuurent .bss section
+    67 00000061 BB00000000                  mov ebx, 0   ;get the limit of the curent bss section
+    68                                  		;rdi =0
+    69 00000066 B82D000000                  mov eax, 45  ;execute the sys_brk function within the OS
+    70                                  		;rax =0ch
+    71 0000006B CD80                        int 80h ;tickle the kernel
+    72                                  		;syscall
+    73 0000006D A3[00000000]            	mov [bssBass], eax ;save the original bss section limit
+    74 00000072 A3[08000000]                mov [arrayPtr], eax ; the adress of our dynamic allocated integer
+    75                                      
+    76                                      
+    77 00000077 A1[36000000]                mov eax, [arraySize]
+    78 0000007C BB04000000                  mov ebx, 4
+    79 00000081 F7E3                        mul ebx 
+    80 00000083 8B1D[08000000]              mov ebx, [arrayPtr ]   ; Allocated the 4 bytes at the bottom of the .bss   
+    81 00000089 01C3                        add ebx, eax 		;
+    82 0000008B B82D000000                  mov eax, 45			;
+    83 00000090 CD80                        int 80h				;
+    84 00000092 83F800                      cmp eax, 0			; check to be sure it work
+    85 00000095 74C9                        je memoryAllocationError
+    86                                      
+    87 00000097 8B0D[36000000]              mov ecx, [arraySize]
+    88 0000009D 8B35[08000000]              mov esi, [arrayPtr]
+    89                                      fillLoop:
+    90 000000A3 C70699000000            		mov [esi], DWORD 99h
+    91 000000A9 83C604                  		add esi, 4
+    92 000000AC E2F5                    	loop fillLoop
+    93                                      
+    94                                      
+    95 000000AE 8B1D[00000000]              mov ebx, [bssBass]
+    96 000000B4 B82D000000                  mov eax, 45
+    97 000000B9 CD80                        int 80h
+    98 000000BB C705[08000000]0000-         mov [arrayPtr], DWORD 0h  ; null out the pointer
+    98 000000C3 0000               
+    99                                      
+   100                                       endItAll:
+   101 000000C5 68[16000000]                push	closePrompt			;The prompt address - argument #1
+   102 000000CA E8(00000000)                call  	PrintString
+   103 000000CF E8(00000000)                call  	Printendl
+   104                                      
+   105 000000D4 90                          nop
+   106                                  ;
+   107                                  ;Setup the registers for exit and poke the kernel
+   108 000000D5 B801000000              	mov		eax,sys_exit				;What are we going to do? Exit!
+   109 000000DA BB00000000              	mov		ebx,0						;Return code
+   110 000000DF CD80                    	int		80h							;Poke the kernel

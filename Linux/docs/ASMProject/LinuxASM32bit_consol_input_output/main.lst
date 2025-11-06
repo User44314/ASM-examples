@@ -1,0 +1,107 @@
+     1                                  ; Assembler 32bit template
+     2                                  
+     3                                  sys_write equ 4h
+     4                                  sys_read equ 3h
+     5                                  stdout equ 1h
+     6                                  stdin equ 0h
+     7                                  
+     8                                  bits 32
+     9                                  section .data
+    10                                  ;variables with values go here
+    11                                  
+    12 00000000 77656C636F6D20746F-     	welcomeString db "welcom to my program", 0h
+    12 00000009 206D792070726F6772-
+    12 00000012 616D00             
+    13                                  		.lengthof equ $-welcomeString
+    14 00000015 0A0D00                  	newline db 0ah, 0dh, 0h
+    15                                  		.lengthof equ $-newline
+    16 00000018 706C6561736520656E-     	inputPrompt db "please enter some date ", 0h
+    16 00000021 74657220736F6D6520-
+    16 0000002A 646174652000       
+    17                                  		.lengthof equ $-inputPrompt
+    18                                  section .bss
+    19                                  ;reserved memory goes here
+    20                                  
+    21 00000000 <res 80h>               	inputBuffer resb 128
+    22                                  		.lengthof equ $-inputBuffer
+    23                                  		
+    24                                  section .text
+    25                                  ;Your program code goes here
+    26                                  
+    27                                  	global _start
+    28                                  _start:
+    29 00000000 90                          nop
+    30                                  	
+    31                                  	;Your program code should go here
+    32                                  	;write out our welocome srceen promt
+    33 00000001 68[00000000]            	push welcomeString
+    34 00000006 6A15                    	push welcomeString.lengthof
+    35 00000008 E87D000000              	call writeSring
+    36                                  	
+    37 0000000D 68[00000000]            	push inputBuffer
+    38 00000012 6880000000              	push inputBuffer.lengthof
+    39 00000017 E855000000              	call readString
+    40                                  	
+    41                                  	;write out our inputed string 
+    42 0000001C 68[00000000]            	push inputBuffer
+    43 00000021 50                      	push eax
+    44 00000022 E863000000              	call writeSring
+    45                                  	;write out our velvom promt
+    46 00000027 68[15000000]            	push newline
+    47 0000002C 6A03                    	push newline.lengthof
+    48 0000002E E857000000              	call writeSring
+    49                                  	
+    50 00000033 68[18000000]            	push inputPrompt
+    51 00000038 6A18                    	push inputPrompt.lengthof
+    52 0000003A E84B000000              	call writeSring
+    53                                  	
+    54                                  	;write out our welcome promt
+    55 0000003F B804000000              	mov eax, sys_write ;write
+    56 00000044 BB01000000              	mov ebx, stdout ;where do write it -stdout	
+    57 00000049 B9[00000000]            	mov ecx, welcomeString ; the adress of the string to write
+    58 0000004E BA15000000              	mov edx, welcomeString.lengthof ; the length of the string 
+    59 00000053 CD80                    	int 80h ; poke the kernal
+    60                                   
+    61                                  
+    62                                   	
+    63 00000055 B9[15000000]            	mov ecx, newline ; the adress of the string to write
+    64 0000005A BA03000000              	mov edx, newline.lengthof ; the length of the string 
+    65 0000005F E826000000                  call writeSring
+    66                                  	
+    67                                  	;Do not remove/change the lines below here.
+    68                                  	;These exit out of the application and back
+    69                                  	;to linux in an orderly fashion
+    70 00000064 90                      	nop
+    71 00000065 B801000000              	mov eax,1      ; Exit system call value
+    72 0000006A BB00000000              	mov ebx,0      ; Exit return code
+    73 0000006F CD80                    	int 80h        ; Call the kernel
+    74                                  
+    75                                  
+    76                                  readString:
+    77 00000071 55                      	push ebp 
+    78 00000072 89E5                    	mov ebp, esp
+    79                                  	
+    80 00000074 B803000000              	mov eax, sys_read ;write
+    81 00000079 BB00000000              	mov ebx, stdin ;where do write it -stdout
+    82 0000007E 8B4D0C                  	mov ecx, [ebp+12] ;the adress of the inpu t buffer
+    83 00000081 8B5508                  	mov edx, [ebp+8]  ; the length of the input buffer length
+    84 00000084 CD80                    	int 80h ; poke the kernel
+    85                                  	
+    86 00000086 89EC                    	mov esp, ebp  ; remove our stack frame
+    87 00000088 5D                      	pop ebp
+    88 00000089 C3                      ret
+    89                                  
+    90                                  
+    91                                  writeSring:
+    92 0000008A 55                      	push ebp
+    93 0000008B 89E5                    	mov ebp, esp
+    94                                  	
+    95 0000008D B804000000              	mov eax, sys_write ;write
+    96 00000092 BB01000000              	mov ebx, stdout ;where do write it -stdout
+    97 00000097 8B4D0C                  	mov ecx, [ebp+12]
+    98 0000009A 8B5508                  	mov edx, [ebp+8]
+    99 0000009D CD80                    	int 80h
+   100                                  	
+   101 0000009F 89EC                    	mov esp, ebp
+   102 000000A1 5D                      	pop ebp
+   103 000000A2 C3                      ret

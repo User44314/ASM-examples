@@ -1,0 +1,143 @@
+     1                                  ; Assembler 32bit template
+     2                                  
+     3                                  sys_write equ 4h
+     4                                  sys_read equ 3h
+     5                                  stdout equ 1h
+     6                                  stdin equ 0h
+     7                                  
+     8                                  bits 32
+     9                                  section .data
+    10                                  ;variables with values go here
+    11                                  
+    12 00000000 77656C636F6D20746F-     	welcomeString db "welcom to my program", 0h
+    12 00000009 206D792070726F6772-
+    12 00000012 616D00             
+    13                                  		.lengthof equ $-welcomeString
+    14                                  
+    15 00000015 706C6561736520656E-     	inputPrompt db "please enter some date ", 0h
+    15 0000001E 74657220736F6D6520-
+    15 00000027 646174652000       
+    16                                  		.lengthof equ $-inputPrompt
+    17                                  		
+    18 0000002D 706C6561736520656E-     	inputInteger db "please enter am integer ", 0h
+    18 00000036 74657220616D20696E-
+    18 0000003F 74656765722000     
+    19                                  		.lengthof equ $-inputInteger
+    20                                  		
+    21 00000046 0A0D00                  	newline	db 0ah, 0dh, 0h
+    22                                  		.lengthof equ $-newline
+    23                                  	
+    24 00000049 00000000                	theTotal dd 0h
+    25                                  	
+    26                                  section .bss
+    27                                  ;reserved memory goes here
+    28                                  
+    29 00000000 <res 80h>               	inputBuffer resb 128
+    30                                  		.lengthof equ $-inputBuffer
+    31                                  		
+    32                                  section .text
+    33                                  ;Your program code goes here
+    34                                  
+    35                                  	global _start
+    36                                  _start:
+    37 00000000 90                          nop
+    38                                      
+    39 00000001 68[00000000]                push welcomeString
+    40 00000006 6A15                        push welcomeString.lengthof
+    41 00000008 E895000000                  call writeSring
+    42                                      
+    43                                      ;write out our inputed string
+    44 0000000D 68[46000000]                push newline
+    45 00000012 6A03                        push newline.lengthof
+    46 00000014 E889000000                  call writeSring
+    47                                      
+    48                                      ;push inputPrompt
+    49                                      ;push inputPrompt.lengthof
+    50                                      ;call writeSring
+    51                                      
+    52                                      ;push inputBuffer
+    53                                      ;push inputBuffer.lengthof
+    54                                      ;call readString
+    55                                   
+    56                                  	
+    57                                  	;write out our inputed string 
+    58 00000019 68[00000000]            	push inputBuffer
+    59 0000001E 50                      	push eax
+    60 0000001F E87E000000              	call writeSring
+    61                                  
+    62 00000024 68[2D000000]            	push inputInteger
+    63 00000029 6A19                    	push inputInteger.lengthof
+    64 0000002B E872000000              	call writeSring
+    65 00000030 68[00000000]            	push inputBuffer
+    66 00000035 6880000000              	push inputBuffer.lengthof
+    67 0000003A E84A000000              	call readString
+    68                                  	
+    69                                  	;123
+    70 0000003F 89C1                    	mov ecx, eax  ;safe the number digital enters
+    71 00000041 49                      	dec ecx    ;ignore \n the enter by the used
+    72 00000042 BE[00000000]            	mov esi, inputBuffer   ;the adresss of the input enteres
+    73 00000047 01CE                    	add esi ,ecx   ;point the last digit
+    74 00000049 4E                      	dec esi
+    75 0000004A BB01000000              	mov ebx, 1   ;power of 10 counter
+    76 0000004F B800000000              	mov eax, 0    ; initialize our acumulatore register
+    77                                  	convertLoop:
+    78 00000054 8A06                    		mov al, [esi]   ;place an ascii digit into al
+    79                                  		;make sure the value is between 30h and 39h (0 - 9)
+    80                                  		;if not set the carry flag and leave the loop
+    81 00000056 B41E                    		mov ah, 30
+    82 00000058 38E0                    		cmp al, ah
+    83 0000005A 7220                    		jb  entryError
+    84 0000005C 2C30                    		sub al, 30h    ;remove the asxii portion
+    85 0000005E F7E3                    		mul ebx    ;multipy by power of ten to deal with destion position
+    86 00000060 0105[49000000]          		add [theTotal], eax  ;add the value to our total variable
+    87 00000066 4E                      		dec esi    ;point to the next power of the digital
+    88 00000067 89D8                    		mov eax, ebx   ;setting up oir next power of 10
+    89 00000069 BB0A000000              		mov ebx, 10
+    90 0000006E F7E3                    		mul ebx
+    91 00000070 89C3                    		mov ebx, eax
+    92 00000072 E2E0                    	loop convertLoop
+    93                                  	
+    94 00000074 A1[49000000]            	mov eax, [theTotal]
+    95 00000079 40                      	inc eax
+    96 0000007A EB00                    	jmp endProgram
+    97                                  	
+    98                                  	entryError:
+    99                                  		;display an error message
+   100                                  	
+   101                                  	endProgram:
+   102                                  		 
+   103                                  	
+   104 0000007C 90                      	nop
+   105 0000007D B801000000              	mov eax,1      ; Exit system call value
+   106 00000082 BB00000000              	mov ebx,0      ; Exit return code
+   107 00000087 CD80                    	int 80h        ; Call the kernel
+   108                                  
+   109                                  
+   110                                  readString:
+   111 00000089 55                      	push ebp 
+   112 0000008A 89E5                    	mov ebp, esp
+   113                                  	
+   114 0000008C B803000000              	mov eax, sys_read ;write
+   115 00000091 BB00000000              	mov ebx, stdin ;where do write it -stdout
+   116 00000096 8B4D0C                  	mov ecx, [ebp+12] ;the adress of the inpu t buffer
+   117 00000099 8B5508                  	mov edx, [ebp+8]  ; the length of the input buffer length
+   118 0000009C CD80                    	int 80h ; poke the kernel
+   119                                  	
+   120 0000009E 89EC                    	mov esp, ebp  ; remove our stack frame
+   121 000000A0 5D                      	pop ebp
+   122 000000A1 C3                      ret
+   123                                  
+   124                                  
+   125                                  writeSring:
+   126 000000A2 55                      	push ebp
+   127 000000A3 89E5                    	mov ebp, esp
+   128                                  	
+   129 000000A5 B804000000              	mov eax, sys_write ;write
+   130 000000AA BB01000000              	mov ebx, stdout ;where do write it -stdout
+   131 000000AF 8B4D0C                  	mov ecx, [ebp+12]
+   132 000000B2 8B5508                  	mov edx, [ebp+8]
+   133 000000B5 CD80                    	int 80h
+   134                                  	
+   135 000000B7 89EC                    	mov esp, ebp
+   136 000000B9 5D                      	pop ebp
+   137 000000BA C3                      ret

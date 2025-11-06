@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\alexB\\source\\repos\\consoleOut_64\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3CFB7991-D002-4F80-ABA8-844F8C5F8633}|consoleOut_64\\consoleOut_64.vcxproj|C:\\Users\\alexB\\source\\repos\\consoleOut_64\\consoleOut_64\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{3CFB7991-D002-4F80-ABA8-844F8C5F8633}|consoleOut_64\\consoleOut_64.vcxproj|solutionrelative:consoleOut_64\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.asm",
+              "DocumentMoniker": "C:\\Users\\alexB\\source\\repos\\consoleOut_64\\consoleOut_64\\main.asm",
+              "RelativeDocumentMoniker": "consoleOut_64\\main.asm",
+              "ToolTip": "C:\\Users\\alexB\\source\\repos\\consoleOut_64\\consoleOut_64\\main.asm",
+              "RelativeToolTip": "consoleOut_64\\main.asm",
+              "ViewState": "AgIAADcAAAAAAAAAAAAmwDsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-11-03T16:54:12.705Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+     1                                  
+     2                                  sys_write equ 01h
+     3                                  sys_read equ 00h
+     4                                  stdout equ 1h
+     5                                  stdin equ 0h
+     6                                  
+     7                                  
+     8                                  ;bits 64
+     9                                  section .data
+    10                                  ;variables with values go here
+    11 00000000 77656C636F6D20746F-     	welcomeString db "welcom to my program", 0h
+    11 00000009 206D792070726F6772-
+    11 00000012 616D00             
+    12                                  		.lengthof equ $-welcomeString
+    13                                  		
+    14 00000015 0A0D00                  	newline db 0ah, 0dh, 0h
+    15                                   		.lengthof equ $-newline 
+    16                                  		
+    17                                  section .bss
+    18                                  ;reserved memory goes here
+    19 00000000 <res 80h>               	inputBuffer resb  128
+    20                                  		.lengthof equ $-inputBuffer
+    21                                  section .text
+    22                                  ;Your program code goes here
+    23                                  	global  _start 
+    24                                  	_start:
+    25                                  
+    26 00000000 90                      	nop	
+    27                                  	;Your program code should go here
+    28 00000001 68[00000000]            	push welcomeString
+    29 00000006 6A15                    	push welcomeString.lengthof
+    30 00000008 E847000000              	call writeSring
+    31                                  	
+    32                                  	
+    33 0000000D 68[15000000]            	push newline
+    34 00000012 6A03                    	push newline.lengthof
+    35 00000014 E83B000000              	call writeSring
+    36                                  	
+    37 00000019 68[00000000]            	push inputBuffer
+    38 0000001E 6880000000              	push inputBuffer.lengthof
+    39 00000023 E80D000000              	call readString
+    40                                  
+    41 00000028 90                      	nop
+    42                                  	;Do not remove/change the lines below
+    43                                  	;These exit out of the application and back
+    44                                  	;to linux in an orderly fashion
+    45 00000029 B83C000000              	mov		rax, 60					;60 = system exit
+    46 0000002E BF00000000              	mov		rdi, 0					;0 = return code
+    47 00000033 0F05                    	syscall							;Poke the kernel
+    48                                  
+    49                                  
+    50                                  readString:
+    51 00000035 55                      	push rbp
+    52 00000036 4889E5                  	mov rbp, rsp
+    53                                  	
+    54 00000039 B800000000              	mov rax, sys_read ;write
+    55 0000003E BF00000000              	mov rdi, stdin ;where do write it -stdin
+    56 00000043 488B7518                	mov rsi, [rbp+24] ; the adress of the input buffer
+    57 00000047 488B5510                	mov rdx, [rbp+16] ; the length of the input buffer 
+    58 0000004B 0F05                    	syscall  ;poke the kernal
+    59                                  	
+    60 0000004D 4889EC                  	mov rsp, rbp  ;remove our stack frame
+    61 00000050 5D                      	pop rbp   ;
+    62 00000051 C21000                  ret 16
+    63                                  
+    64                                  
+    65                                  writeSring:
+    66 00000054 55                      	push rbp
+    67 00000055 4889E5                  	mov rbp, rsp
+    68                                  	
+    69 00000058 B801000000              	mov rax, sys_write ;write
+    70 0000005D BF01000000              	mov rdi, stdout ;where do write it -stdout
+    71 00000062 488B7518                	mov rsi, [rbp+24]
+    72 00000066 488B5510                	mov rdx, [rbp+16]
+    73 0000006A 0F05                    	syscall 
+    74                                  	
+    75 0000006C 4889EC                  	mov rsp, rbp
+    76 0000006F 5D                      	pop rbp
+    77 00000070 C21000                  ret 16
