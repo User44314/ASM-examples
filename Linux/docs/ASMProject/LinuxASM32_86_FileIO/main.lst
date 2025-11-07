@@ -1,0 +1,140 @@
+     1                                  ; Assembler 32bit template
+     2                                  
+     3                                  bits 32
+     4                                  section .data
+     5                                  ;variables with values go here
+     6                                  
+     7 00000000 746869732069732073-     	someString  db "this is some strig data", 0h
+     7 00000009 6F6D65207374726967-
+     7 00000012 206461746100       
+     8                                  		.lengthof equ $-someString
+     9                                  		
+    10 00000018 0A0D                    	endl		db 0ah, 0dh
+    11                                  		.lengthof equ $-endl
+    12                                  		
+    13 0000001A 736F6D65446174612E-     	fileName	db "someData.bin", 0h
+    13 00000023 62696E00           
+    14                                  	
+    15 00000027 45230100                	intData1	dd 12345h
+    16 0000002B 90780600                	intData2	dd 67890h
+    17                                  	
+    18                                  	
+    19                                  section .bss
+    20                                  ;reserved memory goes here
+    21                                  
+    22 00000000 ????????                	outputFileHandle	resd 1 
+    23 00000004 ????????                	inputFileHandle		resd 1 
+    24                                  
+    25                                  section .text
+    26                                  ;Your program code goes here
+    27                                  
+    28                                  	global _start
+    29                                  _start:
+    30 00000000 90                          nop
+    31                                  	
+    32                                  	;Your program code should go here
+    33                                  	
+    34                                  	;open file for  output
+    35 00000001 B808000000              	mov eax, 8h  ;create the file
+    36 00000006 BB[1A000000]            	mov ebx, fileName   ;the name of the file
+    37 0000000B B9C0010000              	mov ecx, 700o   ;file attributes
+    38 00000010 CD80                    	int 80h   ;tickle the kernal
+    39 00000012 83F800                  	cmp eax, 0h
+    40 00000015 0F84E8000000            	je	errorOpen
+    41 0000001B A3[00000000]            	mov 	[outputFileHandle], eax ;save the file handle
+    42                                  	
+    43                                  	
+    44                                  	;write data to the file
+    45                                  	
+    46 00000020 B804000000              	mov eax, 4h					;write to the file
+    47 00000025 8B1D[00000000]          	mov ebx, [outputFileHandle] ; the file were we wish to write  to
+    48 0000002B B9[00000000]            	mov ecx, someString    ;what we wish to write to the fiel 
+    49 00000030 BA18000000              	mov edx, someString.lengthof   ;the length of the string
+    50 00000035 CD80                    	int 80h    ; tickle the kernal
+    51                                  	
+    52                                  	
+    53                                  	;write data to the file
+    54                                  	
+    55 00000037 B804000000              	mov eax, 4h					;write to the file
+    56 0000003C 8B1D[00000000]          	mov ebx, [outputFileHandle] ; the file were we wish to write  to
+    57 00000042 B9[18000000]            	mov ecx, endl    ;what we wish to write to the fiel 
+    58 00000047 BA02000000              	mov edx, endl.lengthof   ;the length of the string
+    59 0000004C CD80                    	int 80h    ; tickle the kernal
+    60 0000004E 83F800                  	cmp eax, 0h
+    61 00000051 0F84B0000000            	je errorWrite
+    62                                  	
+    63                                  	
+    64                                  	;write data to the file   int
+    65                                  	
+    66 00000057 B804000000              	mov eax, 4h					;write to the file
+    67 0000005C 8B1D[00000000]          	mov ebx, [outputFileHandle] ; the file were we wish to write  to
+    68 00000062 B9[27000000]            	mov ecx, intData1    ;what we wish to write to the fiel 
+    69 00000067 BA04000000              	mov edx, 4   ;the length of the string
+    70 0000006C CD80                    	int 80h    ; tickle the kernal
+    71 0000006E 83F800                  	cmp eax, 0h
+    72 00000071 0F8490000000            	je errorWrite
+    73 00000077 B804000000              	mov eax, 4h					;write to the file
+    74 0000007C 8B1D[00000000]          	mov ebx, [outputFileHandle] ; the file were we wish to write  to
+    75 00000082 B9[27000000]            	mov ecx, intData1    ;what we wish to write to the fiel 
+    76 00000087 BA04000000              	mov edx, 4   ;the length of the string
+    77 0000008C CD80                    	int 80h    ; tickle the kernal
+    78 0000008E 83F800                  	cmp eax, 0h
+    79 00000091 7474                    	je errorWrite
+    80                                  	
+    81                                  	;close the file
+    82                                  	
+    83 00000093 B806000000              	mov eax, 6h   ;cloth the file
+    84 00000098 8B1D[00000000]          	mov ebx, [outputFileHandle]   ;what file we will clothed
+    85                                  	
+    86                                  	
+    87                                  	;1) open the file for input only
+    88 0000009E B805000000              	mov eax, 5h			;open the file for input
+    89 000000A3 BB[1A000000]            	mov ebx, fileName   ; the file name to open
+    90 000000A8 B900000000              	mov ecx, 0h			; the accsess specifire
+    91 000000AD CD80                    	int 80h				; tickel the kernel
+    92 000000AF 83F800                  	cmp eax, 0
+    93 000000B2 7C4F                    	jl errorOpen
+    94                                  	
+    95                                  	;2) read from the file
+    96 000000B4 C705[27000000]0000-     	mov [intData1], DWORD 0h
+    96 000000BC 0000               
+    97 000000BE C705[2B000000]0000-     	mov [intData2], DWORD 0h
+    97 000000C6 0000               
+    98                                  	
+    99 000000C8 B803000000              	mov eax , 3h   ;read
+   100 000000CD 8B1D[04000000]          	mov ebx, [inputFileHandle]   ;the file we wish to read from
+   101 000000D3 B9[27000000]            	mov ecx, intData1			; where to read the data into
+   102 000000D8 BA04000000              	mov edx, 4				; the size of an integer
+   103 000000DD CD80                    	int 80h				; tickel the kernel
+   104                                  	
+   105 000000DF B803000000              	mov eax , 3h   ;read
+   106 000000E4 8B1D[04000000]          	mov ebx, [inputFileHandle]   ;the file we wish to read from
+   107 000000EA B9[2B000000]            	mov ecx, intData2			; where to read the data into
+   108 000000EF BA04000000              	mov edx, 4				; the size of an integer
+   109 000000F4 CD80                    	int 80h				; tickel the kernel
+   110                                  	
+   111                                  	
+   112                                  	;3)close the file
+   113 000000F6 B806000000              	mov eax, 6h   ;cloth the file
+   114 000000FB 8B1D[04000000]          	mov ebx, [inputFileHandle]   ;what file we will clothed
+   115                                  	
+   116 00000101 EB01                    	jmp endItAll
+   117                                  	
+   118                                  	errorOpen:
+   119 00000103 90                      		nop 
+   120                                  	
+   121                                  	endItAll:
+   122 00000104 90                      		nop
+   123 00000105 EBFD                    		jmp endItAll
+   124                                  	
+   125                                  	errorWrite:
+   126 00000107 90                      		nop
+   127 00000108 EBFA                    		jmp endItAll
+   128                                  	
+   129                                  	;Do not remove/change the lines below here.
+   130                                  	;These exit out of the application and back
+   131                                  	;to linux in an orderly fashion
+   132 0000010A 90                      	nop
+   133 0000010B B801000000              	mov eax,1      ; Exit system call value
+   134 00000110 BB00000000              	mov ebx,0      ; Exit return code
+   135 00000115 CD80                    	int 80h        ; Call the kernel
