@@ -1,0 +1,113 @@
+     1                                  
+     2                                  section .data
+     3                                  ;variables with values go here
+     4                                  
+     5 00000000 746869732069732074-     	string1 db "this is the first part of string", 0h
+     5 00000009 686520666972737420-
+     5 00000012 70617274206F662073-
+     5 0000001B 7472696E6700       
+     6                                  		.lengthof equ $-string1
+     7 00000021 20616E642074686973-     	string2 db " and this the second part of string", 0h
+     7 0000002A 20746865207365636F-
+     7 00000033 6E642070617274206F-
+     7 0000003C 6620737472696E6700 
+     8                                  		.lengthof equ $-string2
+     9                                  	
+    10 00000045 7465787446696C652E-     	fileName db "textFile.txt", 0h
+    10 0000004E 74787400           
+    11                                  
+    12                                  section .bss
+    13                                  ;reserved memory goes here
+    14                                  	
+    15 00000000 ????????????????        	inputFileHandle resq 1
+    16 00000008 ????????????????        	outputFileHandle resq 1
+    17                                  
+    18                                  section .text
+    19                                  ;Your program code goes here
+    20                                  	global  _start 
+    21                                  	_start:
+    22                                  
+    23 00000000 90                      	nop	
+    24                                  	;Your program code should go here
+    25                                  	
+    26                                  	;create the file and put some date into it
+    27                                  	;1)CREATE the file
+    28 00000001 B855000000              	mov rax, 85    ; create the file 
+    29 00000006 48BF-                   	mov rdi, fileName   ; adress of the file name string
+    29 00000008 [4500000000000000] 
+    30 00000010 BEFF010000              	mov rsi, 777o    ;access to all
+    31 00000015 0F05                    	syscall
+    32 00000017 4883F800                	cmp rax, 0     ; error
+    33 0000001B 0F8EA1000000            	jle errorOpeningFile  ; yes error and end the file
+    34 00000021 48890425[08000000]      	mov [outputFileHandle], rax  ; no error, so save the file handle
+    35                                  	
+    36                                  	
+    37                                  	;2)write to  the file
+    38 00000029 B801000000              	mov rax, 1    ;write
+    39 0000002E 488B3C25[08000000]      	mov rdi, [outputFileHandle]   ; the file to write
+    40 00000036 48BE-                   	mov rsi, string1    ;the adresss to write to the file
+    40 00000038 [0000000000000000] 
+    41 00000040 BA21000000              	mov rdx, string1.lengthof  ; the length of the string
+    42 00000045 0F05                    	syscall
+    43                                  	
+    44                                  	
+    45                                  	;3)close the file
+    46 00000047 B803000000              	mov rax, 3    ; close the file 
+    47 0000004C 488B3C25[08000000]      	mov rdi, [outputFileHandle] ; the file to close
+    48 00000054 0F05                    	syscall
+    49                                  	
+    50                                  	;-------------------------------------------------------------------
+    51                                  	;APPEND TO THE FILE
+    52                                  	;1)OPEN the file fo input / output
+    53 00000056 B802000000              	mov rax, 2    ; open the file
+    54 0000005B 48BF-                   	mov rdi, fileName   ; adress of the file name string
+    54 0000005D [4500000000000000] 
+    55 00000065 BE02000000              	mov rsi, 2h   ;file open flag   0- read only, 1 - write only, 2 - read/write 
+    56 0000006A 0F05                    	syscall
+    57 0000006C 4883F800                	cmp rax, 0     ; error
+    58 00000070 7E50                    	jle errorOpeningFile  ; yes error and end the file
+    59 00000072 48890425[08000000]      	mov [outputFileHandle], rax  ; no error, so save the file handle
+    60                                  	
+    61                                  	;2)posstiton to the end of the file to append it later
+    62 0000007A B808000000              	mov rax, 8   ;mov to the postion pointer
+    63 0000007F 488B3C25[08000000]      	mov rdi, [outputFileHandle]   ; the file to move the pointer
+    64 00000087 BE00000000              	mov rsi, 0h   ; move 'n' bytes from below
+    65 0000008C BA02000000              	mov rdx, 2    ; 0 - begining 1 - current position, 2 -end
+    66 00000091 0F05                    	syscall
+    67                                  	
+    68                                  	
+    69                                  	;3)write to  the file
+    70 00000093 B801000000              	mov rax, 1    ;write
+    71 00000098 488B3C25[08000000]      	mov rdi, [outputFileHandle]   ; the file to write
+    72 000000A0 48BE-                   	mov rsi, string2    ;the adresss to write to the file
+    72 000000A2 [2100000000000000] 
+    73 000000AA BA24000000              	mov rdx, string2.lengthof  ; the length of the string
+    74 000000AF 0F05                    	syscall
+    75                                  	
+    76                                  	
+    77                                  	;3)close the file
+    78 000000B1 B803000000              	mov rax, 3    ; close the file 
+    79 000000B6 488B3C25[08000000]      	mov rdi, [outputFileHandle] ; the file to close
+    80 000000BE 0F05                    	syscall
+    81                                  	
+    82 000000C0 EB03                    	jmp endItAll
+    83                                  	
+    84                                  	errorOpeningFile:
+    85 000000C2 90                      		nop
+    86 000000C3 EB00                    		jmp endItAll
+    87                                  	
+    88                                  	endItAll:
+    89 000000C5 90                      		nop
+    90                                  	
+    91                                  
+    92 000000C6 90                      	nop
+    93                                  	;Do not remove/change the lines below
+    94                                  	;These exit out of the application and back
+    95                                  	;to linux in an orderly fashion
+    96 000000C7 B83C000000              	mov		rax, 60					;60 = system exit
+    97 000000CC BF00000000              	mov		rdi, 0					;0 = return code
+    98 000000D1 0F05                    	syscall							;Poke the kernel
+    99                                  
+   100                                  
+   101                                  ;./main
+   102                                  ;cat ./textFile.txt
