@@ -1,0 +1,1 @@
+a string shoe how to append to the file and  this is the second sting of my sentens
