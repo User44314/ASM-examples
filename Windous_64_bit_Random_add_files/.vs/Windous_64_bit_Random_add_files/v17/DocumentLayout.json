@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\alexB\\source\\repos\\Windous_64_bit_Random_add_files\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2121054-3AA8-4CAA-A2A8-6A21EE7F4FD3}|Windous_64_bit_Random_add_files\\Windous_64_bit_Random_add_files.vcxproj|C:\\Users\\alexB\\source\\repos\\Windous_64_bit_Random_add_files\\Windous_64_bit_Random_add_files\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2121054-3AA8-4CAA-A2A8-6A21EE7F4FD3}|Windous_64_bit_Random_add_files\\Windous_64_bit_Random_add_files.vcxproj|solutionrelative:Windous_64_bit_Random_add_files\\main.asm||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.asm",
+              "DocumentMoniker": "C:\\Users\\alexB\\source\\repos\\Windous_64_bit_Random_add_files\\Windous_64_bit_Random_add_files\\main.asm",
+              "RelativeDocumentMoniker": "Windous_64_bit_Random_add_files\\main.asm",
+              "ToolTip": "C:\\Users\\alexB\\source\\repos\\Windous_64_bit_Random_add_files\\Windous_64_bit_Random_add_files\\main.asm",
+              "RelativeToolTip": "Windous_64_bit_Random_add_files\\main.asm",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAAAKMAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-11-19T12:51:12.705Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

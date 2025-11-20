@@ -1190,33 +1190,35 @@
    172 0000019B E8(00000000)            		call Printendl
    173 000001A0 EB22                    		jmp endItAll
    174                                  
-   175                                  	errorWritingFile:
-   176 000001A2 68[65000000]            		push fileWriteError
-   177 000001A7 E8(00000000)            		call PrintString
-   178 000001AC E8(00000000)            		call Printendl
-   179 000001B1 EB11                    		jmp endItAll
-   180                                  		
-   181                                  	errorOpeningFile:
-   182 000001B3 68[36000000]            		push fileCreateError
-   183 000001B8 E8(00000000)            		call PrintString
-   184 000001BD E8(00000000)            		call Printendl
-   185 000001C2 EB00                    		jmp endItAll
-   186                                  
-   187                                  
-   188                                  	endItAll:
-   189 000001C4 68[16000000]            		push closePrompt
-   190 000001C9 E8(00000000)            		call PrintString
-   191 000001CE E8(00000000)            		call Printendl
-   192                                  		 
-   193 000001D3 68[16000000]                push	closePrompt			;The prompt address - argument #1
-   194 000001D8 E8(00000000)                call  	PrintString
-   195 000001DD E8(00000000)                call  	Printendl
-   196                                      
-   197 000001E2 90                          nop
-   198                                  ;
-   199                                  ;Setup the registers for exit and poke the kernel
-   200                                  ;Exit: 
-   201                                  Exit:
-   202 000001E3 B83C000000              	mov		rax, 60					;60 = system exit
-   203 000001E8 BF00000000              	mov		rdi, 0					;0 = return code
-   204 000001ED 0F05                    	syscall							;Poke the kernel
+   175                                  ;writing to file failed for reason
+   176                                  	errorWritingFile:
+   177 000001A2 68[65000000]            		push fileWriteError
+   178 000001A7 E8(00000000)            		call PrintString
+   179 000001AC E8(00000000)            		call Printendl
+   180 000001B1 EB11                    		jmp endItAll
+   181                                  
+   182                                  ;the creation and opening of the output failed		
+   183                                  	errorOpeningFile:
+   184 000001B3 68[36000000]            		push fileCreateError
+   185 000001B8 E8(00000000)            		call PrintString
+   186 000001BD E8(00000000)            		call Printendl
+   187 000001C2 EB00                    		jmp endItAll
+   188                                  
+   189                                  
+   190                                  	endItAll:
+   191 000001C4 68[16000000]            		push closePrompt
+   192 000001C9 E8(00000000)            		call PrintString
+   193 000001CE E8(00000000)            		call Printendl
+   194                                  		 
+   195 000001D3 68[16000000]                push	closePrompt			;The prompt address - argument #1
+   196 000001D8 E8(00000000)                call  	PrintString
+   197 000001DD E8(00000000)                call  	Printendl
+   198                                      
+   199 000001E2 90                          nop
+   200                                  ;
+   201                                  ;Setup the registers for exit and poke the kernel
+   202                                  ;Exit: 
+   203                                  Exit:
+   204 000001E3 B83C000000              	mov		rax, 60					;60 = system exit
+   205 000001E8 BF00000000              	mov		rdi, 0					;0 = return code
+   206 000001ED 0F05                    	syscall							;Poke the kernel

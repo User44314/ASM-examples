@@ -172,12 +172,14 @@ _start:
 		call Printendl
 		jmp endItAll
 
+;writing to file failed for reason
 	errorWritingFile:
 		push fileWriteError
 		call PrintString
 		call Printendl
 		jmp endItAll
-		
+
+;the creation and opening of the output failed		
 	errorOpeningFile:
 		push fileCreateError
 		call PrintString
