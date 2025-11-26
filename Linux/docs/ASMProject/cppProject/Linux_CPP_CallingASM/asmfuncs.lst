@@ -1,0 +1,41 @@
+     1                                  section .data
+     2                                  
+     3                                  section .bss
+     4                                  
+     5                                  section .text
+     6                                  
+     7                                  global getAFive
+     8                                  global addTwo
+     9                                  global addArray
+    10                                  
+    11                                  getAFive:
+    12 00000000 90                      	nop
+    13 00000001 B805000000              	mov rax, 5
+    14 00000006 C3                      	ret
+    15                                  ; end getAFile'
+    16                                  
+    17                                  addTwo:
+    18 00000007 90                      	nop
+    19 00000008 4889F8                  	mov rax, rdi  ;our first argument
+    20 0000000B 4801F0                  	add rax, rsi   ; our second argument
+    21                                  	
+    22 0000000E C3                      ret
+    23                                  ;end addTwo
+    24                                  
+    25                                  addArray:
+    26 0000000F 90                      	nop
+    27                                  	
+    28 00000010 51                      	push rcx
+    29 00000011 56                      	push rsi
+    30 00000012 4889F1                  	mov rcx, rsi ; move the second argument array size into rcx
+    31 00000015 4889FE                  	mov rsi, rdi  ; move the first argument -array adress into rsi
+    32 00000018 B800000000              	mov rax, 0
+    33                                  	AA_Loop:
+    34 0000001D 480306                  		add rax, [rsi]  ;add an array value to rax
+    35 00000020 4883C608                		add rsi, 8  ; go to the next array position
+    36 00000024 E2F7                    	loop AA_Loop 
+    37 00000026 5E                      	pop rsi
+    38 00000027 59                      	pop rcx
+    39 00000028 C3                      ret
+    40                                  ;enf addArray
+    41                                  

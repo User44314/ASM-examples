@@ -1,0 +1,9 @@
+     1                                  section .text
+     2                                  
+     3                                  global getFive
+     4                                  
+     5                                  getFive:
+     6 00000000 90                      	nop
+     7 00000001 B805000000              	mov rax, 5
+     8 00000006 C3                      ret
+     9                                  ;end getFive
