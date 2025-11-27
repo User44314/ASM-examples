@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\alexB\\source\\repos\\C_CallingASM\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9BE79E77-EA55-40F6-809D-D37C156C2220}|C_CallingASM\\C_CallingASM.vcxproj|C:\\Users\\alexB\\source\\repos\\C_CallingASM\\C_CallingASM\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9BE79E77-EA55-40F6-809D-D37C156C2220}|C_CallingASM\\C_CallingASM.vcxproj|solutionrelative:C_CallingASM\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BE79E77-EA55-40F6-809D-D37C156C2220}|C_CallingASM\\C_CallingASM.vcxproj|C:\\Users\\alexB\\source\\repos\\C_CallingASM\\C_CallingASM\\asmfunc.asm||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{9BE79E77-EA55-40F6-809D-D37C156C2220}|C_CallingASM\\C_CallingASM.vcxproj|solutionrelative:C_CallingASM\\asmfunc.asm||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "asmfunc.asm",
+              "DocumentMoniker": "C:\\Users\\alexB\\source\\repos\\C_CallingASM\\C_CallingASM\\asmfunc.asm",
+              "RelativeDocumentMoniker": "C_CallingASM\\asmfunc.asm",
+              "ToolTip": "C:\\Users\\alexB\\source\\repos\\C_CallingASM\\C_CallingASM\\asmfunc.asm",
+              "RelativeToolTip": "C_CallingASM\\asmfunc.asm",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-11-27T10:42:42.557Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.c",
+              "DocumentMoniker": "C:\\Users\\alexB\\source\\repos\\C_CallingASM\\C_CallingASM\\main.c",
+              "RelativeDocumentMoniker": "C_CallingASM\\main.c",
+              "ToolTip": "C:\\Users\\alexB\\source\\repos\\C_CallingASM\\C_CallingASM\\main.c",
+              "RelativeToolTip": "C_CallingASM\\main.c",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAmwA0AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-11-27T10:42:14.648Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
