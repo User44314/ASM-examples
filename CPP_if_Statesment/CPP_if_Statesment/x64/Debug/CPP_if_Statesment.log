@@ -1,0 +1,3 @@
+﻿  CPP_if_Statesment.cpp
+C:\Users\alexB\source\repos\CPP_if_Statesment\CPP_if_Statesment\CPP_if_Statesment.cpp(44,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  CPP_if_Statesment.vcxproj -> C:\Users\alexB\source\repos\CPP_if_Statesment\x64\Debug\CPP_if_Statesment.exe

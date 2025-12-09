@@ -1,0 +1,144 @@
+AARCH64 GAS  main.asm 			page 1
+
+
+   1              	/* ARM 64-bit assembly template */
+   2              	
+   3              	.section .data
+   4 0000 48656C6C 	Hellomsg: .ascii "Hello, ARM64!\n"
+   4      6F2C2041 
+   4      524D3634 
+   4      210A
+   5              		Hellomsg_len = . - Hellomsg
+   6              		
+   7 000e 50726F67 	Byemsg: .ascii "Programming anding have a nice day!\n"
+   7      72616D6D 
+   7      696E6720 
+   7      616E6469 
+   7      6E672068 
+   8              		Byemsg_len = . - Byemsg 
+   9              		
+  10 0032 0A       	Newline: .ascii "\n"
+  11              		Newline_len = . - Newline
+  12              	
+  13              	.section .bss
+  14              	
+  15              	.section .text
+  16              	.global _start
+  17              	
+  18              	_start:
+  19              	/* syscall write(int fd, const void *buf, size_t count) */
+  20 0000 200080D2 	    mov x0, #1     
+  21 0004 21070058 	    ldr x1, =Hellomsg 
+  22 0008 42070058 	    ldr x2, =Hellomsg_len 
+  23 000c 08088052 	    mov w8, #64 
+  24 0010 010000D4 	    svc #0
+  25              	    
+  26              	    
+  27              	    
+  28 0014 E40340F9 	    ldr x4, [sp]   /*copy the numner of arguments into x4*/
+  29 0018 050180D2 		mov x5, #8    /* adress offset from the stack poijnter to strt */
+  30              		
+  31              		mainLoop:
+  32 001c 200080D2 			mov x0, #1
+  33 0020 E2030091 			mov x2, sp
+  34 0024 4200058B 			add x2, x2, x5
+  35 0028 410040F9 			ldr x1, [x2]  /*put that de-refffernce adress  into x1*/
+  36 002c 430040F9 			ldr x3, [x2]   /*put that de-refffernce adress  into x3*/
+  37 0030 1D000094 			bl x3Length   /*get the lenght of the string in x3 into x2 */
+  38 0034 08088052 			mov w8, #64   /*write to stdout */
+  39 0038 010000D4 			svc #0     /*tickle the kernel*/
+  40 003c 25000094 			bl printNewLine 
+  41 0040 A5200091 			add x5, x5, #8   /* go to the next arguments */
+  42 0044 840400D1 			sub x4, x4, #1   /*subtract from out argument counter*/
+  43 0048 9F0000F1 			cmp x4, #00   /* are we in the end of our arguments */ 
+  44 004c 40000054 			beq endAll   /*yes so lets end the loop */
+  45 0050 F3FFFF17 	   b mainLoop
+  46              	   
+  47              	   endAll:
+  48 0054 1F2003D5 		nop
+  49 0058 1F2003D5 		nop
+  50              	    
+AARCH64 GAS  main.asm 			page 2
+
+
+  51 005c 200080D2 	    mov x0, #1     /*write */
+  52 0060 E2030091 	    mov x2, sp    /*(stack pointer) The adress of the top pf the stack    */  
+  53 0064 42200091 	    add x2, x2, #8   /*go to the first agrument address in the stack*/
+  54 0068 410040F9 	    ldr x1, [x2]  /*put that de-refffernce adress  into x1*/
+  55 006c 430040F9 	    ldr x3, [x2]   /*put that de-refffernce adress  into x3*/
+  56 0070 0D000094 	    bl x3Length   /*get the lenght of the string in x3 into x2 */
+  57              	     
+  58 0074 08088052 	    mov w8, #64   /*write to stdout */
+  59 0078 010000D4 	    svc #0     /*tickle the kernel*/
+  60              	    
+  61 007c 15000094 	    bl printNewLine 
+  62              	    
+  63              	   
+  64              	    
+  65 0080 200080D2 	    mov x0, #1     /*write */
+  66 0084 E2030091 	    mov x2, sp    /*(stack pointer) The adress of the top pf the stack    */  
+  67 0088 42400091 	    add x2, x2, #16   /*go to the secomd agrument address in the stack*/
+  68 008c 410040F9 	    ldr x1, [x2]  /*put that de-refffernce adress  into x1*/
+  69 0090 430040F9 	    ldr x3, [x2] 
+  70 0094 04000094 	    bl x3Length 
+  71              	     
+  72 0098 08088052 	    mov w8, #64   /*write to stdout */
+  73 009c 010000D4 	    svc #0     /*tickle the kernel*/
+  74 00a0 0C000094 	    bl printNewLine
+  75              	    
+  76              	    x3Length:
+  77              			/*input x3 will contain */
+  78              			/*output x2 will contain the lenght of the string */
+  79 00a4 020080D2 			mov x2, #0   /*zero out our counter */
+  80              			xL_Start:
+  81 00a8 6000C039 			   ldrsb W0, [x3]        /*put a single byte into w0*/
+  82 00ac 1F000071 			   cmp W0, #00    /*are we at the end of multy terminated string */
+  83 00b0 80000054 			   beq xL_Endit
+  84 00b4 63040091 			   add x3, x3, #1   /*no so go to next byte */
+  85 00b8 42040091 			   add x2, x2, #1   /*increamnent our character counter */
+  86 00bc FBFFFF17 			b xL_Start
+  87              			xL_Endit:
+  88              				
+  89              		
+  90 00c0 C0035FD6 		ret
+  91              	
+  92              	/* syscall exit(int status) */
+  93 00c4 000080D2 	    mov x0, #0 
+  94 00c8 A80B8052 	    mov w8, #93 
+  95 00cc 010000D4 	    svc #0
+  96              	
+  97              	printNewLine:   /*print a new line */
+  98 00d0 200080D2 		mov x0, #1
+  99 00d4 21010058 		ldr x1, = Newline
+ 100 00d8 42010058 		ldr x2, = Newline_len
+ 101 00dc 08088052 		mov w8, #64
+ 102 00e0 010000D4 		svc #0
+ 103 00e4 C0035FD6 	ret
+ 103      00000000 
+ 103      00000000 
+ 103      0E000000 
+ 103      00000000 
+AARCH64 GAS  main.asm 			page 3
+
+
+AARCH64 GAS  main.asm 			page 4
+
+
+DEFINED SYMBOLS
+            main.asm:4      .data:0000000000000000 Hellomsg
+            main.asm:5      *ABS*:000000000000000e Hellomsg_len
+            main.asm:7      .data:000000000000000e Byemsg
+            main.asm:8      *ABS*:0000000000000024 Byemsg_len
+            main.asm:10     .data:0000000000000032 Newline
+            main.asm:11     *ABS*:0000000000000001 Newline_len
+            main.asm:18     .text:0000000000000000 _start
+            main.asm:20     .text:0000000000000000 $x
+            main.asm:31     .text:000000000000001c mainLoop
+            main.asm:76     .text:00000000000000a4 x3Length
+            main.asm:97     .text:00000000000000d0 printNewLine
+            main.asm:47     .text:0000000000000054 endAll
+            main.asm:80     .text:00000000000000a8 xL_Start
+            main.asm:87     .text:00000000000000c0 xL_Endit
+            main.asm:103    .text:00000000000000e8 $d
+
+NO UNDEFINED SYMBOLS
