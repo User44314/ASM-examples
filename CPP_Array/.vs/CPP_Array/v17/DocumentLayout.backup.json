@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\alexB\\source\\repos\\CPP_Array\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2881F27-45EE-447D-8C39-001A59E996A5}|CPP_Array\\CPP_Array.vcxproj|C:\\Users\\alexB\\source\\repos\\CPP_Array\\CPP_Array\\CPP_Array.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2881F27-45EE-447D-8C39-001A59E996A5}|CPP_Array\\CPP_Array.vcxproj|solutionrelative:CPP_Array\\CPP_Array.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CPP_Array.cpp",
+              "DocumentMoniker": "C:\\Users\\alexB\\source\\repos\\CPP_Array\\CPP_Array\\CPP_Array.cpp",
+              "RelativeDocumentMoniker": "CPP_Array\\CPP_Array.cpp",
+              "ToolTip": "C:\\Users\\alexB\\source\\repos\\CPP_Array\\CPP_Array\\CPP_Array.cpp",
+              "RelativeToolTip": "CPP_Array\\CPP_Array.cpp",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAD4AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-11T13:06:53.678Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

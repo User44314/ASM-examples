@@ -1,0 +1,39 @@
+/*
+ * PuppyDog.cpp
+ *
+ *  Created on: Dec 16, 2025
+ *      Author: linuxuser
+ */
+
+#include "PuppyDog.hpp"
+
+PuppyDog::PuppyDog() {
+	// TODO Auto-generated constructor stub
+	WeightInOnces = 0;
+}
+
+PuppyDog::~PuppyDog() {
+	// TODO Auto-generated destructor stub
+}
+
+int PuppyDog::getWeightInOnces() const {
+	return WeightInOnces;
+}
+
+void PuppyDog::setWeightInOnces(int weightInOnces) {
+	WeightInOnces = weightInOnces;
+}
+
+PuppyDog PuppyDog::operator++(){
+	return *this;
+}
+PuppyDog PuppyDog::operator--(){
+	return *this;
+}
+
+PuppyDog PuppyDog::operator++(int){
+	return *this;
+}
+PuppyDog PuppyDog::operator--(int){
+	return *this;
+}

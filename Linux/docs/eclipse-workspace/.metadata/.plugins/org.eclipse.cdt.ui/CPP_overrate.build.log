@@ -1,0 +1,6 @@
+09:24:41 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+
+09:24:41 Build Finished. 0 errors, 0 warnings. (took 145ms)
+

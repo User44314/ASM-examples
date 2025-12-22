@@ -1,0 +1,215 @@
+08:15:09 **** Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o   
+Finished building target: CPP_overrate
+ 
+08:20:47 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+08:25:52 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+08:26:28 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+08:37:51 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building file: ../src/PuppyDog.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PuppyDog.d" -MT"src/PuppyDog.o" -o "src/PuppyDog.o" "../src/PuppyDog.cpp"
+Finished building: ../src/PuppyDog.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o ./src/PuppyDog.o   
+Finished building target: CPP_overrate
+ 
+08:42:01 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o ./src/PuppyDog.o   
+Finished building target: CPP_overrate
+ 
+08:42:04 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+08:42:49 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o ./src/PuppyDog.o   
+Finished building target: CPP_overrate
+ 
+08:42:51 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+08:59:13 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o ./src/PuppyDog.o   
+Finished building target: CPP_overrate
+ 
+08:59:15 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+08:59:39 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o ./src/PuppyDog.o   
+Finished building target: CPP_overrate
+ 
+08:59:41 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+09:01:04 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o ./src/PuppyDog.o   
+Finished building target: CPP_overrate
+ 
+09:01:07 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+09:07:23 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building file: ../src/PuppyDog.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PuppyDog.d" -MT"src/PuppyDog.o" -o "src/PuppyDog.o" "../src/PuppyDog.cpp"
+Finished building: ../src/PuppyDog.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o ./src/PuppyDog.o   
+Finished building target: CPP_overrate
+ 
+09:07:27 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building file: ../src/PuppyDog.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PuppyDog.d" -MT"src/PuppyDog.o" -o "src/PuppyDog.o" "../src/PuppyDog.cpp"
+Finished building: ../src/PuppyDog.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o ./src/PuppyDog.o   
+Finished building target: CPP_overrate
+ 
+09:16:04 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building file: ../src/PuppyDog.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/PuppyDog.d" -MT"src/PuppyDog.o" -o "src/PuppyDog.o" "../src/PuppyDog.cpp"
+Finished building: ../src/PuppyDog.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o ./src/PuppyDog.o   
+Finished building target: CPP_overrate
+ 
+09:16:07 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+09:20:08 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o ./src/PuppyDog.o   
+Finished building target: CPP_overrate
+ 
+09:20:10 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+09:22:00 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o ./src/PuppyDog.o   
+Finished building target: CPP_overrate
+ 
+09:22:03 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+09:22:59 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+Building file: ../src/CPP_overrate.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/CPP_overrate.d" -MT"src/CPP_overrate.o" -o "src/CPP_overrate.o" "../src/CPP_overrate.cpp"
+Finished building: ../src/CPP_overrate.cpp
+ 
+Building target: CPP_overrate
+Invoking: GCC C++ Linker
+g++  -o "CPP_overrate" ./src/CPP_overrate.o ./src/PuppyDog.o   
+Finished building target: CPP_overrate
+ 
+09:23:02 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.
+09:24:41 **** Incremental Build of configuration Debug for project CPP_overrate ****
+make all 
+make: Nothing to be done for 'all'.

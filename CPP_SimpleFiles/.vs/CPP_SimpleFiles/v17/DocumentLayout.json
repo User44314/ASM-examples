@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\alexB\\source\\repos\\CPP_SimpleFiles\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E908D1B4-D065-4162-97D0-3F6050F6E6A0}|CPP_SimpleFiles\\CPP_SimpleFiles.vcxproj|C:\\Users\\alexB\\source\\repos\\CPP_SimpleFiles\\CPP_SimpleFiles\\CPP_SimpleFiles.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{E908D1B4-D065-4162-97D0-3F6050F6E6A0}|CPP_SimpleFiles\\CPP_SimpleFiles.vcxproj|solutionrelative:CPP_SimpleFiles\\CPP_SimpleFiles.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CPP_SimpleFiles.cpp",
+              "DocumentMoniker": "C:\\Users\\alexB\\source\\repos\\CPP_SimpleFiles\\CPP_SimpleFiles\\CPP_SimpleFiles.cpp",
+              "RelativeDocumentMoniker": "CPP_SimpleFiles\\CPP_SimpleFiles.cpp",
+              "ToolTip": "C:\\Users\\alexB\\source\\repos\\CPP_SimpleFiles\\CPP_SimpleFiles\\CPP_SimpleFiles.cpp",
+              "RelativeToolTip": "CPP_SimpleFiles\\CPP_SimpleFiles.cpp",
+              "ViewState": "AgIAACEAAAAAAAAAAAAswCcAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-09T17:38:10.607Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

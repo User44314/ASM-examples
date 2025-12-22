@@ -1,0 +1,19 @@
+/*
+ * PuppyDog.hpp
+ *
+ *  Created on: Dec 16, 2025
+ *      Author: linuxuser
+ */
+
+#ifndef PUPPYDOG_HPP_
+#define PUPPYDOG_HPP_
+
+class PuppyDog {
+public:
+	PuppyDog();
+	virtual ~PuppyDog();
+private:
+	int WeightInOnces;
+};
+
+#endif /* PUPPYDOG_HPP_ */

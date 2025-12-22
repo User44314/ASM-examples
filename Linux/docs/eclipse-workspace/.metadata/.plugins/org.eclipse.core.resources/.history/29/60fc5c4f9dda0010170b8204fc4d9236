@@ -1,0 +1,18 @@
+/*
+ * PuppyDog.cpp
+ *
+ *  Created on: Dec 16, 2025
+ *      Author: linuxuser
+ */
+
+#include "PuppyDog.hpp"
+
+PuppyDog::PuppyDog() {
+	// TODO Auto-generated constructor stub
+	WeightInOnces = 0;
+}
+
+PuppyDog::~PuppyDog() {
+	// TODO Auto-generated destructor stub
+}
+

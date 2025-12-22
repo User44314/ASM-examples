@@ -1,0 +1,34 @@
+//============================================================================
+// Name        : CPP_overrate.cpp
+// Author      : 
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
+#include <iostream>
+#include "PuppyDog.hpp"
+
+using namespace std;
+
+int main() {
+	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+	int someInteger = 0;
+
+	    cout << someInteger << endl;
+	    someInteger++;
+	    cout << someInteger << endl;
+	    someInteger--;
+	    cout << someInteger << endl;
+
+	    cout << someInteger++ << endl;
+	    cout << someInteger << endl;
+
+	    cout << ++someInteger << endl;
+	    cout << someInteger << endl;
+
+	    cout << endl;
+
+	cout << "Programming ending" << endl;
+	return 0;
+}

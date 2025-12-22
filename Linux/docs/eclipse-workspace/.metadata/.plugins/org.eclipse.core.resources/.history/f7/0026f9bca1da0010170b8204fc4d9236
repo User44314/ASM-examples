@@ -1,0 +1,31 @@
+/*
+ * PuppyDog.hpp
+ *
+ *  Created on: Dec 16, 2025
+ *      Author: linuxuser
+ */
+
+#ifndef PUPPYDOG_HPP_
+#define PUPPYDOG_HPP_
+
+class PuppyDog {
+public:
+	PuppyDog();
+	virtual ~PuppyDog();
+	int getWeightInOnces() const;
+	void setWeightInOnces(int weightInOnces);
+
+	//overloading the ++Puppydog
+	PuppyDog operator++();
+	PuppyDog operator--();
+
+	//overloading the ++Puppydog
+		PuppyDog operator++(int);
+		PuppyDog operator--(int);
+
+
+private:
+	int WeightInOnces;
+};
+
+#endif /* PUPPYDOG_HPP_ */

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.equinox.internal.p2.ui.dialogs.InstallWizard.WizardSettings">
+		<item key="DIALOG_X_ORIGIN" value="-158"/>
+		<item key="DIALOG_Y_ORIGIN" value="-43"/>
+		<item key="DIALOG_WIDTH" value="1341"/>
+		<item key="DIALOG_HEIGHT" value="900"/>
+		<item key="DIALOG_FONT_NAME" value="1|Ubuntu|16.0|0|GTK|1|"/>
+	</section>
+</section>
