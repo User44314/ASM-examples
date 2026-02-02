@@ -7,3 +7,15 @@ the rstrip() method
 
 the left side of a string using the lstrip() method
 
+
+# Here’s how to generate a random number between 1 and 6:
+>>> from random import randint
+>>> randint(1, 6)
+
+
+
+>>> from random import choice
+>>> players = ['charles', 'martina', 'michael', 'florence', 'eli']
+>>> first_up = choice(players)
+>>> first_up
+'florence'
