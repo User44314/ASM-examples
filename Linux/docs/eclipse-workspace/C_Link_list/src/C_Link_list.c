@@ -248,7 +248,7 @@ int size(llNode* theHead){
 
 
 /*
-void clearlist(llNode** theHead){
+void clearlist(llNode* *theHead){
 	llNode* currentNode = *theHead;
 	llNode* tempNode = NULL;
 
